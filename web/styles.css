@@ -22,23 +22,3 @@
 .content h1 {
   padding: 20px 0 0;
 }
-
-/*
-.banner {
-  height: 75px;
-  width: 100%;
-  display: inline-flex;
-  position: absolute;
-  background-color: #53e65f;
-  border-bottom: solid 2px #46C951;
-}
-
-.banner-cont {
-  position: absolute;
-  display: inline-flex;
-  right: 0;
-  background-color: red;
-  height: 100%;
-  width: 100px;
-}
-*/
