@@ -1,12 +1,13 @@
 .left {
-
+  
   display: inline-flex;
   width: 15%;
   height: 100vh;
   background-color: #53e65f;
-  position: sticky;
-   top: 0;
+  position: fixed;
+  top: 0;
   transition-duration: 0.5s;
+  z-index: 1000;
 }
 
 section {
@@ -150,7 +151,6 @@ section .ola4 {
 }
 
 .toggle::before {
-  content:'\f053';
   color: white;
   font-family: fontAwesome;
   position: absolute;
@@ -159,10 +159,13 @@ section .ola4 {
   line-height: 40px;
   font-size: 16px;
   text-align: center;
+  animation: rotateArrow2 0.5s;
+  content:'\f053';
 }
 
 .toggle.Tactive::before {
   content:'\f054';
+  animation: rotateArrow 0.5s;
 }
 /*
 .toggle.Tactive {
@@ -171,6 +174,27 @@ section .ola4 {
   transition-duration: 0.5s; 
 }
 */
+
+@keyframes rotateArrow {
+  0%{
+    transform: rotateZ(180deg); 
+  }
+
+  100%{
+    transform: rotateZ(360deg); 
+  }
+}
+
+@keyframes rotateArrow2 {
+  0%{
+    transform: rotateZ(-180deg); 
+  }
+
+  100%{
+    transform: rotateZ(-360deg); 
+  }
+}
+
 @keyframes animate {
   0%{
     background-position-x: 0;
