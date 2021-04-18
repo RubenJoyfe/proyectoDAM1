@@ -9,6 +9,7 @@
 .content {
   height: 5000px;
   margin: 0px 19%;
+  margin-right: 60px;
   z-index: 100;
   transition-duration: 0.5s;
 }
@@ -17,8 +18,29 @@
   transition-duration: 0.5s;
   transition-timing-function: ease-in-out;
   margin: 0px 120px;
+  margin-right: 60px;
 }
 
 .content h1 {
   padding: 20px 0 0;
 }
+
+/*
+.banner {
+  height: 75px;
+  width: 100%;
+  display: inline-flex;
+  position: absolute;
+  background-color: #53e65f;
+  border-bottom: solid 2px #46C951;
+}
+
+.banner-cont {
+  position: absolute;
+  display: inline-flex;
+  right: 0;
+  background-color: red;
+  height: 100%;
+  width: 100px;
+}
+*/
