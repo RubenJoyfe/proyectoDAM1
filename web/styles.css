@@ -24,3 +24,27 @@
 .content h1 {
   padding: 20px 0 0;
 }
+
+@media (max-width:1600px) {
+  .content {
+    margin: 0px 30%;
+    margin-right: 60px;
+  }
+
+  .content.Tactive {
+    margin: 0px 120px;
+    margin-right: 60px;
+  }
+}
+
+@media (max-width:800px) {
+  .content {
+    margin: 0px 19%;
+    margin-right: 60px;
+  }
+
+  .content.Tactive {
+    margin: 0px 120px;
+    margin-right: 60px;
+  }
+}
