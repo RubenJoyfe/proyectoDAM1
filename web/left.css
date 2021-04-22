@@ -8,6 +8,7 @@
   top: 0;
   transition-duration: 0.5s;
   z-index: 1000;
+  user-select: none;
 }
 
 section {
@@ -213,6 +214,19 @@ section .ola4 {
 }
 
 @media (max-width:1600px) {
+  .left {
+    width: 20%;
+  }
+  .shide {
+    width: 59px;
+  }
+  .shide2 {
+    width: 60px;
+  }
+
+}
+
+@media (max-width:1200px) {
   .left {
     width: 24%;
   }

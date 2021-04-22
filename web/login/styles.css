@@ -18,7 +18,7 @@ body {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: relative;transition-duration: 0.8s;
 }
 
 .LoginZone {
@@ -53,16 +53,25 @@ body {
 
 
 
+
+@media (max-height: 600px) {
+  .content {
+    height: 100vh;
+    transition-duration: 0.8s;
+    transition-timing-function: ease-in-out;
+  }
+}
+
 @media (max-width:800px) { 
   .content {
-    height: 100%;
+    height: auto;
     margin: 10% 0;
     flex-wrap: wrap;
     transition-duration: 0.2s;
   }
 
   .RegisterZone {
-    width: 60%;
+    width: 60%
   }
   .LoginZone {
     width: 60%;
