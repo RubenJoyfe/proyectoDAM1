@@ -84,6 +84,31 @@
 			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+			<?php 
+				// creación de la conexión a la base de datos con mysql_connect()
+				$conexion = mysqli_connect( "localhost", "Ruben", 1234 ) or die ("No se ha podido conectar al servidor de Base de datos");
+				// Selección del a base de datos a utilizar
+				$db = mysqli_select_db( $conexion, "h15af00" ) or die ( "Upps! No se ha podido conectar a la base de datos" );
+				// establecer y realizar consulta. guardamos en variable.
+				$consulta = "SELECT * FROM juego";
+				$resultado = mysqli_query( $conexion, $consulta);
+
+				$resultado->num_rows;
+				
+				while ($columna = mysqli_fetch_array($resultado)) {
+					$source = $columna['nombre'];
+					echo " <a href='./juegos/juego.php?=" . $source . "'>
+								<div class='juego'>
+									<p>" 
+									. $columna["nombre"] . 
+									"</p>
+								</div>
+							</a>";
+				}
+			 ?>
+			
+			<div class="juego proximamente"> <h2>Proximamente...</h2></div>
 	</div>
 	
 </body>
