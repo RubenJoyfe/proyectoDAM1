@@ -11,7 +11,18 @@
   <link rel="stylesheet" type="text/css" href="rubiclogo.css">
   <link rel="stylesheet" type="text/css" href="left.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
+  <?php 
 
+		$db = new mysqli("localhost:3306", "Ruben", "1234", "h15af00");
+		
+		$stmt = $db->prepare("SELECT src FROM juego WHERE nombre = ?");
+		$stmt->bind_param("s", $_GET['source']);
+		$stmt->execute();
+		$resultado = $stmt->get_result();
+
+		$columna = $resultado->fetch_assoc();
+		$src = $_GET['source'];
+   ?>
 </head>
 <body>
 	<div class="left shide2">
@@ -78,13 +89,15 @@
 	
 	<div class="content" >
 		<div style="width: 20%; height: 85%; background-color: lightgreen;"> </div>
-		<iframe id="inlineFrameExample"
-		    title="Inline Frame Example"
+		<iframe id="iframe"
+			<?php  
+		    	echo "title=".$src."";
+			?>
 		    width="60%"
 		    height="85%"
 		    <?php 
 
-		    echo "src='./clicker/'>";
+		    echo "src='" . $columna["src"] . "'>";
 		    ?>
 		</iframe>
 		<div style="width: 20%; height: 85%; background-color: lightgreen;"> </div>

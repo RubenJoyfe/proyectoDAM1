@@ -95,10 +95,12 @@
 				$resultado = mysqli_query( $conexion, $consulta);
 
 				$resultado->num_rows;
-				
+
+
 				while ($columna = mysqli_fetch_array($resultado)) {
 					$source = $columna['nombre'];
-					echo " <a href='./juegos/juego.php?=" . $source . "'>
+					$redireccion = "./juegos/juego.php?source=".$source."";
+					echo " <a href='" . $redireccion . "'>
 								<div class='juego'>
 									<p>" 
 									. $columna["nombre"] . 
