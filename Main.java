@@ -130,14 +130,18 @@ public class Main extends JFrame {
 	
 	public void insertarUsuario(){
 		CallableStatement cst;
+		
 		try {
 			cst = conexion.prepareCall("{call InsertarUsuario(?,?,?,?,?,?,?)}");
-			cst.setString(1, "mamao");
-			cst.setString(2, "test");
-			cst.setString(3, "test");
-			cst.setString(4, "test");
-			cst.setString(5, "test");
-			cst.setString(6, "testdas@das");
+			for (int i = 1; i < txtEditables.length-3; i++) {
+				cst.setString(i, txtEditables[i].getText());
+			}
+//			cst.setString(1, "mamao");
+//			cst.setString(2, "test");
+//			cst.setString(3, "test");
+//			cst.setString(4, "test");
+//			cst.setString(5, "test");
+//			cst.setString(6, "testdas@das");
 			cst.registerOutParameter(7, java.sql.Types.INTEGER);
 			
 			System.out.println(cst.execute());
@@ -189,6 +193,8 @@ public class Main extends JFrame {
 			
 	
 	}
+	
+	//http://ideasjava.blogspot.com/2008/05/no-mover-columnas-de-un-jtable.html
 
 	public void startEditables(String columnas []) {
 		deleteEditables();
