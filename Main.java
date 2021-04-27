@@ -2,7 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.sql.*;
-import java.util.Hashtable;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +13,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -21,6 +23,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.Font;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.JButton;
 
 public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
@@ -34,12 +40,15 @@ public class Main extends JFrame {
 	private Statement comando;
 	private JPanel panel_tabla;
 	
-	
-	
 	private String titulos [];
 	private Object celdas [][];
 	private JScrollPane scroll = new JScrollPane();
 	private JTable tabla;
+	private JPanel panel_opciones;
+	private JLabel lblNombreTabla;
+	private JTextField[] txtEditables = new JTextField[0];
+	private TextPrompt[] placeHolder = new TextPrompt[0];
+	private JButton btnAceptar;
 
 
 	/**
@@ -71,17 +80,76 @@ public class Main extends JFrame {
 		contentPane.setLayout(null);
 		
 		panel_tabla = new JPanel();
-		panel_tabla.setBounds(10, 11, 618, 502);
+		panel_tabla.setBounds(10, 11, 619, 433);
 		contentPane.add(panel_tabla);
+		
+		panel_opciones = new JPanel();
+		panel_opciones.setBorder(new LineBorder(Color.GRAY));
+		panel_opciones.setBounds(638, 11, 184, 502);
+		contentPane.add(panel_opciones);
+		panel_opciones.setLayout(null);
+		
+		lblNombreTabla = new JLabel("TABLA");
+		lblNombreTabla.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNombreTabla.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreTabla.setBounds(10, 11, 164, 51);
+		panel_opciones.add(lblNombreTabla);
+		
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				insertarUsuario();
+			}
+		});
+		btnAceptar.setBounds(10, 434, 164, 57);
+		panel_opciones.add(btnAceptar);
+		
 		do {
 //			login();
 			nombre = "Ruben";
 			pass = "1234";
 		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
-		startMenu();		
+		startMenu();
+		crearTabla("vacía");
 	}
 	
-	void startMenu() {
+	public void eliminar(){
+		CallableStatement cst;
+		try {
+			cst = conexion.prepareCall("{call EliminarUsuario(?,?)}");
+			cst.setInt(1, 1);
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
+			
+			System.out.println(cst.execute());
+			System.out.println(cst.getInt(2));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertarUsuario(){
+		CallableStatement cst;
+		try {
+			cst = conexion.prepareCall("{call InsertarUsuario(?,?,?,?,?,?,?)}");
+			cst.setString(1, "mamao");
+			cst.setString(2, "test");
+			cst.setString(3, "test");
+			cst.setString(4, "test");
+			cst.setString(5, "test");
+			cst.setString(6, "testdas@das");
+			cst.registerOutParameter(7, java.sql.Types.INTEGER);
+			
+			System.out.println(cst.execute());
+			System.out.println(cst.getInt(7));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void startMenu() {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		mnMostrar = new JMenu("Tablas");
@@ -102,15 +170,13 @@ public class Main extends JFrame {
 			rows=0;
 			while (rs.next()) {
 				String nombreOp = rs.getString("nombre");
-				mntmTabla[rows] = new JMenuItem(rs.getString("nombre").substring(0, 1).toUpperCase()
-						+ rs.getString("nombre").substring(1));
+				String nombreMay = rs.getString("nombre").substring(0, 1).toUpperCase()+ rs.getString("nombre").substring(1);
+				mntmTabla[rows] = new JMenuItem(nombreMay);
 				mnMostrar.add(mntmTabla[rows]);
 				mntmTabla[rows].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						crearTabla(nombreOp);
-						scroll.setViewportView(tabla);
-						scroll.setBounds(0, 0, 618, 502);
-					    panel_tabla.add(scroll);
+						lblNombreTabla.setText(nombreMay);
 					}
 				});
 				rows++;
@@ -124,6 +190,35 @@ public class Main extends JFrame {
 	
 	}
 
+	public void startEditables(String columnas []) {
+		deleteEditables();
+		placeHolder = new TextPrompt [columnas.length];
+		txtEditables = new JTextField [columnas.length];
+		for (int i = 0; i < columnas.length; i++) {
+			txtEditables[i] = new JTextField();
+			if (columnas[i].contains("id_") || columnas[i].contains("fk_")) {
+				txtEditables[i].setEditable(false);
+			} 
+				
+			txtEditables[i].setText("");
+			txtEditables[i].setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
+			contentPane.add(txtEditables[i]);
+			
+			placeHolder[i] = new TextPrompt(columnas[i],txtEditables[i]);
+			placeHolder[i].changeAlpha(0.8f);
+			placeHolder[i].changeStyle(Font.PLAIN);
+			
+			
+		}
+	}
+	
+	public void deleteEditables() {
+		for (int i = 0; i < txtEditables.length; i++) {
+			remove(txtEditables[i]);
+		}
+		contentPane.repaint();
+	}
+	
 	public boolean conexionMysql(String ip, String bbdd, String usuario, String pass) {
 		try {
 			conexion = DriverManager.getConnection(
@@ -162,42 +257,72 @@ public class Main extends JFrame {
 	}
 	
 	public void crearTabla(String tb) {
-		int nCol=0, nRow=0;
-		ResultSet rs;
-		String sql = "SELECT * FROM " + tb +";";
-		String sql2= "SELECT COLUMN_NAME as nombreColumna FROM information_schema.COLUMNS WHERE "
-				+ "TABLE_SCHEMA  LIKE 'h15af00' AND TABLE_NAME = '"+tb+"'";
-		
-		try {
-			int cont=0;
+		if (tb.equals("vacía")) {
+			tabla = new JTable();
+			panel_tabla.setLayout(null);
+			scroll.setViewportView(tabla);
+			scroll.setBounds(0, 0, 618, 502);
+		    panel_tabla.add(scroll);
+		} else {
+			int nCol=0, nRow=0;
+			ResultSet rs;
+			String sql = "SELECT * FROM " + tb +";";
+			String sql2= "SELECT COLUMN_NAME as nombreColumna FROM information_schema.COLUMNS WHERE "
+					+ "TABLE_SCHEMA  LIKE 'h15af00' AND TABLE_NAME = '"+tb+"'";
 			
-			rs = comando.executeQuery(sql2);
-			while (rs.next()) {nCol++;}
-			titulos = new String [nCol];
-	
-			rs = comando.executeQuery(sql2);
-			while (rs.next()) {
-				titulos[cont]=rs.getString("nombreColumna");
-				cont++;
-			}
-			ResultSet rs2 = comando.executeQuery(sql);
-			while (rs2.next()) {nRow++;}
-			celdas=new Object[nRow][nCol];
-			cont=0;
-			int cont2=0;
-			rs2 = comando.executeQuery(sql);
-			while (rs2.next()) {
-				while (cont2<nCol) {
-					celdas[cont][cont2]=rs2.getString(titulos[cont2]);
-					cont2++;
+			try {
+				int cont=0;
+				
+				rs = comando.executeQuery(sql2);
+				while (rs.next()) {nCol++;} //cuenta el numero de columnas
+				titulos = new String [nCol]; //nCol asigna su tamano
+		
+				rs = comando.executeQuery(sql2);
+				while (rs.next()) { 
+					titulos[cont]=rs.getString("nombreColumna");
+					cont++;
 				}
-				cont++;
-				cont2=0;
+				startEditables(titulos);
+				ResultSet rs2 = comando.executeQuery(sql);
+				while (rs2.next()) {nRow++;}
+				celdas=new Object[nRow][nCol];
+				cont=0;
+				int cont2=0;
+				rs2 = comando.executeQuery(sql);
+				while (rs2.next()) {
+					while (cont2<nCol) {
+						celdas[cont][cont2]=rs2.getString(titulos[cont2]);
+						cont2++;
+					}
+					cont++;
+					cont2=0;
+				}
+				tabla=new JTable(celdas, titulos);
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
 			}
-			tabla=new JTable(celdas, titulos);
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
 		}
+		tabla.setName(tb);
+		panel_tabla.setLayout(null);
+		scroll.setViewportView(tabla);
+		scroll.setBounds(0, 0, 619, 433);
+	    panel_tabla.add(scroll);
+	    tabla.setCellSelectionEnabled(true);
+		tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	        	if(event.getValueIsAdjusting()) {
+	        		System.out.println("columna: " + tabla.getColumnName(tabla.getSelectedColumn()));
+	        		System.out.println("fila: "+tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+	        		System.out.println("Identifier: " + tabla.getColumn("nick").getIdentifier());
+	        		System.out.println("da: " + tabla.getColumn("nick").getModelIndex());
+	        		
+	        		System.out.println("a ver si sale: "+ tabla.getValueAt(1, 1) );
+	        		System.out.println("Nick: " + tabla.getValueAt(tabla.getSelectedRow(), tabla.getColumn("nick").getModelIndex()));
+	        	}
+	            // do some actions here, for example
+	            // print first column value from selected row
+	        }
+	    });
 	}
 }
