@@ -13,7 +13,7 @@ section .ola {
   height: 100px;
   background: url(wave.png);
   background-size: 2000px 100px;
-
+  transition-duration: 0.6s;
 }
 section .ola1 {
   animation: animate 15s linear infinite;
@@ -59,4 +59,13 @@ section .ola4 {
   100%{
     background-position-x: -2000px;
   }
+}
+
+@media (max-height: 600px) {
+  section .ola {
+    transition-duration: 0.6s;
+    transition-timing-function: ease-in-out;
+    bottom: -200px;
+  }
+
 }

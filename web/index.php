@@ -109,7 +109,13 @@
 							</a>";
 				}
 			 ?>
-			
+			<div class='juego'></div>
+			<div class='juego'></div>
+			<div class='juego'></div>
+			<div class='juego'></div>
+			<div class='juego'></div>
+			<div class='juego'></div>
+			<div class='juego'></div>
 			<div class="juego proximamente"> <h2>Proximamente...</h2></div>
 	</div>
 	
