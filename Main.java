@@ -19,6 +19,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
@@ -34,10 +36,11 @@ public class Main extends JFrame {
 	
 	
 	
-	private String titulos []={"Encabezado 1", "Encabezado 2"};
-	private Object celdas [][]=new Object[99][2];
+	private String titulos [];
+	private Object celdas [][];
 	private JScrollPane scroll = new JScrollPane();
-	private JTable tabla=new JTable(celdas, titulos);
+	private JTable tabla;
+
 
 	/**
 	 * Launch the application.
@@ -75,12 +78,7 @@ public class Main extends JFrame {
 			nombre = "Ruben";
 			pass = "1234";
 		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
-		
-		startMenu();
-		scroll.setViewportView(tabla);
-		scroll.setBounds(20, 20, 200, 100);
-	    panel_tabla.add(scroll);
-		
+		startMenu();		
 	}
 	
 	void startMenu() {
@@ -103,9 +101,18 @@ public class Main extends JFrame {
 			
 			rows=0;
 			while (rs.next()) {
+				String nombreOp = rs.getString("nombre");
 				mntmTabla[rows] = new JMenuItem(rs.getString("nombre").substring(0, 1).toUpperCase()
 						+ rs.getString("nombre").substring(1));
 				mnMostrar.add(mntmTabla[rows]);
+				mntmTabla[rows].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						crearTabla(nombreOp);
+						scroll.setViewportView(tabla);
+						scroll.setBounds(0, 0, 618, 502);
+					    panel_tabla.add(scroll);
+					}
+				});
 				rows++;
 			}
 			
@@ -155,14 +162,42 @@ public class Main extends JFrame {
 	}
 	
 	public void crearTabla(String tb) {
-		String sql = "SELECT * FROM "+tb+";";
-		try { ResultSet rs = comando.executeQuery(sql);}
-		catch (SQLException e) {e.printStackTrace();}
+		int nCol=0, nRow=0;
+		ResultSet rs;
+		String sql = "SELECT * FROM " + tb +";";
+		String sql2= "SELECT COLUMN_NAME as nombreColumna FROM information_schema.COLUMNS WHERE "
+				+ "TABLE_SCHEMA  LIKE 'h15af00' AND TABLE_NAME = '"+tb+"'";
 		
-		titulos = new String [1];
-		celdas  = new Object [1][1];
-		JScrollPane scroll = new JScrollPane();
-		tabla=new JTable(celdas, titulos);
+		try {
+			int cont=0;
+			
+			rs = comando.executeQuery(sql2);
+			while (rs.next()) {nCol++;}
+			titulos = new String [nCol];
 	
+			rs = comando.executeQuery(sql2);
+			while (rs.next()) {
+				titulos[cont]=rs.getString("nombreColumna");
+				cont++;
+			}
+			ResultSet rs2 = comando.executeQuery(sql);
+			while (rs2.next()) {nRow++;}
+			celdas=new Object[nRow][nCol];
+			cont=0;
+			int cont2=0;
+			rs2 = comando.executeQuery(sql);
+			while (rs2.next()) {
+				while (cont2<nCol) {
+					celdas[cont][cont2]=rs2.getString(titulos[cont2]);
+					cont2++;
+				}
+				cont++;
+				cont2=0;
+			}
+			tabla=new JTable(celdas, titulos);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
