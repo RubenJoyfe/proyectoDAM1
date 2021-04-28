@@ -32,4 +32,42 @@ public class Inserts {
 		}
 		return 2;
 	}
+	
+	public int insertarUsuarioDesbloqueo(JTextField[] txtEditables){
+
+		try {
+			int longT = txtEditables.length;
+			cst = conexion.prepareCall("{call InsertarUsuario_desbloqueo(?,?,?)}");
+			for (int i = 2; i < longT; i++) {
+				cst.setString(i-1, txtEditables[i].getText());
+			}
+			cst.registerOutParameter(3, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(3);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 2;
+	}
+	
+	public int insertarUsuarioJuego(JTextField[] txtEditables){
+
+		try {
+			int longT = txtEditables.length;
+			cst = conexion.prepareCall("{call InsertarUsuario_Juego(?,?,?)}");
+			for (int i = 3; i < longT; i++) {
+				cst.setString(i-2, txtEditables[i].getText());
+			}
+			cst.registerOutParameter(3, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(3);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 2;
+	}
 }

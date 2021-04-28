@@ -99,13 +99,7 @@ public class Main extends JFrame {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!lblNombreTabla.getText().toLowerCase().equals("tabla")) {
-					System.out.println(insertacion.insertarUsuario(txtEditables));
-					crearTabla(lblNombreTabla.getText().toLowerCase());
-				}
-				else {
-					System.out.println("no se puede realizar la accion");
-				}
+				inserts(); // --------------------------------------------------------------------> Listener accion
 			}
 		});
 		btnAceptar.setBounds(10, 434, 164, 57);
@@ -120,6 +114,54 @@ public class Main extends JFrame {
 		crearTabla("vacía");
 		insertacion = new Inserts(conexion);
 	}
+	
+	public void inserts() { // -------------------------------------------------------------------->inserts
+		int resultado=1;
+		String acTab=lblNombreTabla.getText().toLowerCase();
+		
+		switch (acTab) {
+		case "usuario":
+			resultado = insertacion.insertarUsuario(txtEditables);
+			break;
+			
+		case "desbloqueo":
+			
+			break;
+			
+		case "usuario_desbloqueo":
+			resultado = insertacion.insertarUsuarioDesbloqueo(txtEditables);
+			break;
+			
+		case "usuario_juego":
+			resultado = insertacion.insertarUsuarioJuego(txtEditables);
+			break;
+			
+		case "puntuacion":
+			
+			break;
+			
+		case "juego":
+			
+			break;
+			
+		case "ajuste":
+			
+			break;
+			
+		default:
+			JOptionPane.showMessageDialog(null, "Tabla no especificada", "Error", JOptionPane.ERROR_MESSAGE, null);
+			break;
+		}
+		System.out.println(resultado);
+//			System.out.println(insertacion.insertarUsuario(txtEditables));
+		if (resultado==0) {
+			crearTabla(acTab);
+		}
+//			
+	
+
+	}
+	
 	
 	public void eliminar(){
 		CallableStatement cst;
@@ -188,7 +230,7 @@ public class Main extends JFrame {
 		txtEditables = new JTextField [columnas.length];
 		for (int i = 0; i < columnas.length; i++) {
 			txtEditables[i] = new JTextField();
-			if (columnas[i].contains("id_") || columnas[i].contains("fk_")) {
+			if (columnas[i].contains("id_") /*|| columnas[i].contains("fk_")*/) { //alomejor hay que quitar lo de fk_
 				txtEditables[i].setEditable(false);
 			} 
 				
@@ -304,13 +346,16 @@ public class Main extends JFrame {
 		tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	if(event.getValueIsAdjusting()) {
-	        		System.out.println("columna: " + tabla.getColumnName(tabla.getSelectedColumn()));
-	        		System.out.println("fila: "+tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
-	        		System.out.println("Identifier: " + tabla.getColumn("nick").getIdentifier());
-	        		System.out.println("da: " + tabla.getColumn("nick").getModelIndex());
-	        		
-	        		System.out.println("a ver si sale: "+ tabla.getValueAt(1, 1) );
-	        		System.out.println("Nick: " + tabla.getValueAt(tabla.getSelectedRow(), tabla.getColumn("nick").getModelIndex()));
+//	        		System.out.println("columna: " + tabla.getColumnName(tabla.getSelectedColumn()));
+//	        		System.out.println("fila: "+tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+//	        		System.out.println("Identifier: " + tabla.getColumn("nick").getIdentifier());
+//	        		System.out.println("da: " + tabla.getColumn("nick").getModelIndex());
+//	        		System.out.println("a ver si sale: "+ tabla.getValueAt(1, 1) );
+//	        		System.out.println("Nick: " + tabla.getValueAt(tabla.getSelectedRow(), tabla.getColumn("nick").getModelIndex()));
+	        		int fila = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString())-1;
+	        		for (int i = 0; i < txtEditables.length; i++) {
+						txtEditables[i].setText(""+tabla.getValueAt(fila, i));
+					}
 	        	}
 	            // do some actions here, for example
 	            // print first column value from selected row
