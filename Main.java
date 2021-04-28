@@ -31,6 +31,7 @@ import javax.swing.JButton;
 public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
 	
+	private Inserts insertacion;
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu mnMostrar;
@@ -98,7 +99,13 @@ public class Main extends JFrame {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				insertarUsuario();
+				if (!lblNombreTabla.getText().toLowerCase().equals("tabla")) {
+					System.out.println(insertacion.insertarUsuario(txtEditables));
+					crearTabla(lblNombreTabla.getText().toLowerCase());
+				}
+				else {
+					System.out.println("no se puede realizar la accion");
+				}
 			}
 		});
 		btnAceptar.setBounds(10, 434, 164, 57);
@@ -111,6 +118,7 @@ public class Main extends JFrame {
 		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
 		startMenu();
 		crearTabla("vacía");
+		insertacion = new Inserts(conexion);
 	}
 	
 	public void eliminar(){
@@ -128,29 +136,7 @@ public class Main extends JFrame {
 		}
 	}
 	
-	public void insertarUsuario(){
-		CallableStatement cst;
-		
-		try {
-			cst = conexion.prepareCall("{call InsertarUsuario(?,?,?,?,?,?,?)}");
-			for (int i = 1; i < txtEditables.length-3; i++) {
-				cst.setString(i, txtEditables[i].getText());
-			}
-//			cst.setString(1, "mamao");
-//			cst.setString(2, "test");
-//			cst.setString(3, "test");
-//			cst.setString(4, "test");
-//			cst.setString(5, "test");
-//			cst.setString(6, "testdas@das");
-			cst.registerOutParameter(7, java.sql.Types.INTEGER);
-			
-			System.out.println(cst.execute());
-			System.out.println(cst.getInt(7));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 	
 	
 	public void startMenu() {
