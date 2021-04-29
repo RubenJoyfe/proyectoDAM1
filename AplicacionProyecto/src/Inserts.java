@@ -33,6 +33,25 @@ public class Inserts {
 		return 2;
 	}
 	
+	public int insertarDesbloqueo(JTextField[] txtEditables){
+
+		try {
+			int longT = txtEditables.length;
+			cst = conexion.prepareCall("{call InsertarDesbloqueo(?,?,?,?,?,?,?,?)}");
+			for (int i = 1; i < longT; i++) {
+				cst.setString(i, txtEditables[i].getText());
+			}
+			cst.registerOutParameter(longT, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(longT);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 2;
+	}
+	
 	public int insertarUsuarioDesbloqueo(JTextField[] txtEditables){
 
 		try {
@@ -70,4 +89,59 @@ public class Inserts {
 		}
 		return 2;
 	}
+	
+	public int insertarPuntuacion(JTextField[] txtEditables){
+
+		try {
+			int longT = txtEditables.length;
+			cst = conexion.prepareCall("{call InsertarPuntuacion(?,?,?,?)}");
+			for (int i = 2; i < longT; i++) {
+				cst.setString(i-1, txtEditables[i].getText());
+			}
+			cst.registerOutParameter(longT-1, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(longT-1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 2;
+	}
+	
+	public int insertarJuego(JTextField[] txtEditables){
+
+		try {
+			int longT = txtEditables.length;
+			cst = conexion.prepareCall("{call InsertarJuego(?,?,?)}");
+			for (int i = 1; i < longT-1; i++) {
+				cst.setString(i, txtEditables[i].getText());
+			}
+			cst.registerOutParameter(longT-1, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(longT-1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 2;
+	}
+	
+	public int insertarAjustes(JTextField[] txtEditables){
+
+		try {
+			cst = conexion.prepareCall("{call InsertarAjustes(?,?)}");
+			cst.setString(1, txtEditables[3].getText());
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(2);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 2;
+	}
+	
 }
