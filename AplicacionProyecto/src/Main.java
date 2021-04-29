@@ -49,7 +49,7 @@ public class Main extends JFrame {
 	private JLabel lblNombreTabla;
 	private JTextField[] txtEditables = new JTextField[0];
 	private TextPrompt[] placeHolder = new TextPrompt[0];
-	private JButton btnAceptar;
+	private JButton btnInsertar;
 
 
 	/**
@@ -96,14 +96,22 @@ public class Main extends JFrame {
 		lblNombreTabla.setBounds(10, 11, 164, 51);
 		panel_opciones.add(lblNombreTabla);
 		
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
+		btnInsertar = new JButton("Insertar");
+		btnInsertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				inserts(); // --------------------------------------------------------------------> Listener accion
 			}
 		});
-		btnAceptar.setBounds(10, 434, 164, 57);
-		panel_opciones.add(btnAceptar);
+		btnInsertar.setBounds(10, 434, 164, 57);
+		panel_opciones.add(btnInsertar);
+		
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.setBounds(10, 366, 164, 57);
+		panel_opciones.add(btnModificar);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBounds(10, 298, 164, 57);
+		panel_opciones.add(btnEliminar);
 		
 		do {
 //			login();
@@ -125,7 +133,7 @@ public class Main extends JFrame {
 			break;
 			
 		case "desbloqueo":
-			
+			resultado = insertacion.insertarDesbloqueo(txtEditables);
 			break;
 			
 		case "usuario_desbloqueo":
@@ -137,15 +145,15 @@ public class Main extends JFrame {
 			break;
 			
 		case "puntuacion":
-			
+			resultado = insertacion.insertarPuntuacion(txtEditables);
 			break;
 			
 		case "juego":
-			
+			resultado = insertacion.insertarJuego(txtEditables);		
 			break;
 			
-		case "ajuste":
-			
+		case "ajustes":
+			resultado = insertacion.insertarAjustes(txtEditables);	
 			break;
 			
 		default:
@@ -352,9 +360,10 @@ public class Main extends JFrame {
 //	        		System.out.println("da: " + tabla.getColumn("nick").getModelIndex());
 //	        		System.out.println("a ver si sale: "+ tabla.getValueAt(1, 1) );
 //	        		System.out.println("Nick: " + tabla.getValueAt(tabla.getSelectedRow(), tabla.getColumn("nick").getModelIndex()));
-	        		int fila = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString())-1;
+//	        		
+	        		int fila = tabla.getSelectedRow();
 	        		for (int i = 0; i < txtEditables.length; i++) {
-						txtEditables[i].setText(""+tabla.getValueAt(fila, i));
+	        			txtEditables[i].setText(""+tabla.getModel().getValueAt(fila, i));
 					}
 	        	}
 	            // do some actions here, for example
