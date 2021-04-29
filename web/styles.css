@@ -30,32 +30,27 @@
 }
 
 .juego {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
   height: 150px;
   background-color: rgb(83, 230, 95, 0.2);;
   border-radius: 25px;
-  margin: 5px;
+  margin: 5px;*/
+  min-width: 25%;
 }
 
-.proximamente {
-    flex-grow: 0.78;
-    max-width: 90%;
-  min-width: 250px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-  flex-grow: auto;
+.juego:last-child {
+  flex:1;
 }
 
-
-
+.content a {
+  width: 25%;
+}
 
 @media (max-width:1600px) {
   .content {
-    margin: 0px 30%;
+    margin: 0px 25%;
     margin-right: 60px;
   }
 
@@ -65,11 +60,27 @@
   }
 }
 
+@media (max-width: 1050px) {
+  .content a {
+    width: 33%;
+  }
+  .juego h2 {
+    font-size: 20px;
+  }
+}
+
 @media (max-width:800px) {
   .content {
     margin: 0px 19%;
     margin-right: 60px;
   }
+  .content a {
+    width: 50%;
+  }
+  .juego h2 {
+    font-size: 18px;
+  }
+
 
   .content.Tactive {
     margin: 0px 120px;

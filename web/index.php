@@ -77,13 +77,13 @@
 	</div>
 	
 	<div class="content" >
-			<h1>JUEGOS</h1>
+<!-- 			<h1>JUEGOS</h1>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
 
 			<?php 
 				// creación de la conexión a la base de datos con mysql_connect()
@@ -109,14 +109,7 @@
 							</a>";
 				}
 			 ?>
-			<div class='juego'></div>
-			<div class='juego'></div>
-			<div class='juego'></div>
-			<div class='juego'></div>
-			<div class='juego'></div>
-			<div class='juego'></div>
-			<div class='juego'></div>
-			<div class="juego proximamente"> <h2>Proximamente...</h2></div>
+			<div class="juego"> <h2>Proximamente...</h2></div>
 	</div>
 	
 </body>
