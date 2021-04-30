@@ -111,7 +111,7 @@
 			 ?>
 			<div class="juego"> <h2>Proximamente...</h2></div>
 	</div>
-	
+	<div class="imagen"></div>
 </body>
 
 <script type="text/javascript">
