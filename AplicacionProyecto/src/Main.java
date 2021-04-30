@@ -272,8 +272,7 @@ public class Main extends JFrame {
 			
 	
 	}
-	
-	//http://ideasjava.blogspot.com/2008/05/no-mover-columnas-de-un-jtable.html
+
 
 	public void startEditables(String columnas []) {
 		deleteEditables();
