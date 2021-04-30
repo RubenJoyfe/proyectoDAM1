@@ -1,0 +1,89 @@
+.LoginZone h2,
+.RegisterZone h2{
+  margin: 0 0 20px;
+  padding: 0;
+  color: #406E4B;
+  user-select: none;
+}
+
+.LoginZone h2 span,
+.RegisterZone h2 span {
+  transition-duration: 0.25s;
+}
+
+.LoginZone h2:hover span,
+.RegisterZone h2:hover span{
+  cursor: pointer;
+  color: rgba(47,204,83,1);
+  text-shadow: 0 0 40px rgba(47,204,83,1),
+               0 0 80px rgba(47,204,83,1),
+               0 0 120px rgba(47,204,83,1),
+               0 0 160px rgba(47,204,83,1);
+  transition-duration: 0.25s;
+}
+.LoginZone .user-box,
+.RegisterZone .user-box {
+  position: relative;
+}
+
+.LoginZone .user-box input,
+.RegisterZone .user-box input {
+  width: 100%;
+  padding: 5px 0;
+  font-size: 16px;
+  color: #406E4B;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 1px solid #406E4B;
+  outline: none;
+  background: transparent;
+}
+
+.LoginZone .user-box label,
+.RegisterZone .user-box label  {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 5px 0;
+  font-size: 16px;
+  color: #406E4B;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.LoginZone .user-box input:focus ~ label,
+.LoginZone .user-box input:valid ~ label,
+.RegisterZone .user-box input:focus ~ label,
+.RegisterZone .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #06BC1F;
+  font-size: 12px;
+}
+
+.btnEnviar {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  outline: none;
+  background-color: rgba(27,164,83,1);
+  border: 1px solid  rgba(47,204,83,1);
+  color: white;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btnEnviar:hover {
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  background-color: rgba(47,204,83,1);
+  color: white;
+  font-weight: 700;
+  /*transform: skewY(1200deg);*/
+}
+
+.btnEnviar:active {
+  transform: skewX(-10deg);
+} 

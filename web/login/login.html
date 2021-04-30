@@ -8,7 +8,7 @@
   <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
 
-  <link rel="stylesheet" type="text/css" href="rubiclogo.css">
+  <link rel="stylesheet" type="text/css" href="login.css">
   <link rel="stylesheet" type="text/css" href="left.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
 
@@ -17,11 +17,37 @@
 	
 		<div class="content" >
 			<div class="LoginZone">
-				<p>as</p>
+				<form action="../index.php" method="post">
+					<h2><span>Inicio de sesión</span></h2>
+					<div class="user-box">
+						<input type="text" name="usuario" required>
+						<label>Usuario</label>
+					</div>
+					<div class="user-box">
+						<input type="password" name="usuario" required>
+						<label>Contraseña</label>
+					</div>
+					<input class="btnEnviar" type="submit" value="Iniciar sesión">
+				</form>
 			</div>
 			<div class="ra"></div>
 			<div class="RegisterZone">
-				<p>as</p>
+				<form action="../index.php" method="post">
+					<h2><span>Registrarse</span></h2>
+					<div class="user-box">
+						<input type="text" name="Correo" required autocomplete="off">
+						<label>Correo</label>
+					</div>
+					<div class="user-box">
+						<input type="text" name="Usuario" required autocomplete="off">
+						<label>Usuario</label>
+					</div>
+					<div class="user-box">
+						<input type="password" name="usuario" required>
+						<label>Contraseña</label>
+					</div>
+					<input class="btnEnviar" type="submit" value="Registrarse">
+				</form>
 			</div>
 
 		</div>
