@@ -1,7 +1,6 @@
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 import javax.swing.JTextField;
 
@@ -16,15 +15,12 @@ public class Deletes {
 	
 	
 	public int eliminarUsuario(JTextField[] txtEditables){
-
 		try {
-			cst = conexion.prepareCall("{call InsertarUsuario(?,?,?,?,?,?,?)}");
-			for (int i = 1; i < 7; i++) {
-				cst.setString(i, txtEditables[i].getText());
-			}
-			cst.registerOutParameter(7, java.sql.Types.INTEGER);
+			cst = conexion.prepareCall("{call EliminarUsuario(?,?)}");
+			cst.setString(1, txtEditables[0].getText());
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
 			cst.execute();
-			return cst.getInt(7);
+			return cst.getInt(2);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -34,16 +30,12 @@ public class Deletes {
 	}
 	
 	public int eliminarDesbloqueo(JTextField[] txtEditables){
-
 		try {
-			int longT = txtEditables.length;
-			cst = conexion.prepareCall("{call InsertarDesbloqueo(?,?,?,?,?,?,?,?)}");
-			for (int i = 1; i < longT; i++) {
-				cst.setString(i, txtEditables[i].getText());
-			}
-			cst.registerOutParameter(longT, java.sql.Types.INTEGER);
+			cst = conexion.prepareCall("{call EliminarDesbloqueo(?,?)}");
+			cst.setString(1, txtEditables[0].getText());
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
 			cst.execute();
-			return cst.getInt(longT);
+			return cst.getInt(2);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -53,16 +45,12 @@ public class Deletes {
 	}
 	
 	public int eliminarUsuarioDesbloqueo(JTextField[] txtEditables){
-
 		try {
-			int longT = txtEditables.length;
-			cst = conexion.prepareCall("{call InsertarUsuario_desbloqueo(?,?,?)}");
-			for (int i = 2; i < longT; i++) {
-				cst.setString(i-1, txtEditables[i].getText());
-			}
-			cst.registerOutParameter(3, java.sql.Types.INTEGER);
+			cst = conexion.prepareCall("{call EliminarUsuario_Desbloqueo(?,?)}");
+			cst.setString(1, txtEditables[0].getText());
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
 			cst.execute();
-			return cst.getInt(3);
+			return cst.getInt(2);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -72,16 +60,12 @@ public class Deletes {
 	}
 	
 	public int eliminarUsuarioJuego(JTextField[] txtEditables){
-
 		try {
-			int longT = txtEditables.length;
-			cst = conexion.prepareCall("{call InsertarUsuario_Juego(?,?,?)}");
-			for (int i = 3; i < longT; i++) {
-				cst.setString(i-2, txtEditables[i].getText());
-			}
-			cst.registerOutParameter(3, java.sql.Types.INTEGER);
+			cst = conexion.prepareCall("{call EliminarUsuario_Juego(?,?)}");
+			cst.setString(1, txtEditables[0].getText());
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
 			cst.execute();
-			return cst.getInt(3);
+			return cst.getInt(2);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -91,16 +75,12 @@ public class Deletes {
 	}
 	
 	public int eliminarPuntuacion(JTextField[] txtEditables){
-
 		try {
-			int longT = txtEditables.length;
-			cst = conexion.prepareCall("{call InsertarPuntuacion(?,?,?,?)}");
-			for (int i = 2; i < longT; i++) {
-				cst.setString(i-1, txtEditables[i].getText());
-			}
-			cst.registerOutParameter(longT-1, java.sql.Types.INTEGER);
+			cst = conexion.prepareCall("{call EliminarPuntuacion(?,?)}");
+			cst.setString(1, txtEditables[0].getText());
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
 			cst.execute();
-			return cst.getInt(longT-1);
+			return cst.getInt(2);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -110,16 +90,12 @@ public class Deletes {
 	}
 	
 	public int eliminarJuego(JTextField[] txtEditables){
-
 		try {
-			int longT = txtEditables.length;
-			cst = conexion.prepareCall("{call InsertarJuego(?,?,?)}");
-			for (int i = 1; i < longT-1; i++) {
-				cst.setString(i, txtEditables[i].getText());
-			}
-			cst.registerOutParameter(longT-1, java.sql.Types.INTEGER);
+			cst = conexion.prepareCall("{call EliminarJuego(?,?)}");
+			cst.setString(1, txtEditables[0].getText());
+			cst.registerOutParameter(2, java.sql.Types.INTEGER);
 			cst.execute();
-			return cst.getInt(longT-1);
+			return cst.getInt(2);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -129,10 +105,9 @@ public class Deletes {
 	}
 	
 	public int eliminarAjustes(JTextField[] txtEditables){
-
 		try {
-			cst = conexion.prepareCall("{call InsertarAjustes(?,?)}");
-			cst.setString(1, txtEditables[3].getText());
+			cst = conexion.prepareCall("{call EliminarAjustes(?,?)}");
+			cst.setString(1, txtEditables[0].getText());
 			cst.registerOutParameter(2, java.sql.Types.INTEGER);
 			cst.execute();
 			return cst.getInt(2);

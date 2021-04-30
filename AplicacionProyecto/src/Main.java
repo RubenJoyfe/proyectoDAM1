@@ -32,6 +32,7 @@ public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
 	
 	private Inserts insertacion;
+	private Deletes eliminacion;
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu mnMostrar;
@@ -97,9 +98,9 @@ public class Main extends JFrame {
 		panel_opciones.add(lblNombreTabla);
 		
 		btnInsertar = new JButton("Insertar");
-		btnInsertar.addActionListener(new ActionListener() {
+		btnInsertar.addActionListener(new ActionListener() { // -------------------------> Listener Inserts
 			public void actionPerformed(ActionEvent e) {
-				inserts(); // --------------------------------------------------------------------> Listener accion
+				inserts(); 
 			}
 		});
 		btnInsertar.setBounds(10, 434, 164, 57);
@@ -110,6 +111,19 @@ public class Main extends JFrame {
 		panel_opciones.add(btnModificar);
 		
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() { // ----------------------> Listener Eliminar
+			public void actionPerformed(ActionEvent e) {
+				String msg = "¿Está seguro que quiere eliminar este"
+						+ " registro de la tabla " + lblNombreTabla.getText() + "?";
+				int op = JOptionPane.showConfirmDialog(null, msg,
+			            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				System.out.println(op);
+				if (op==0) {
+					eliminar();
+				}
+				
+			}
+		});
 		btnEliminar.setBounds(10, 298, 164, 57);
 		panel_opciones.add(btnEliminar);
 		
@@ -121,6 +135,7 @@ public class Main extends JFrame {
 		startMenu();
 		crearTabla("vacía");
 		insertacion = new Inserts(conexion);
+		eliminacion = new Deletes(conexion);
 	}
 	
 	public void inserts() { // -------------------------------------------------------------------->inserts
@@ -165,25 +180,53 @@ public class Main extends JFrame {
 		if (resultado==0) {
 			crearTabla(acTab);
 		}
-//			
-	
 
 	}
 	
 	
 	public void eliminar(){
-		CallableStatement cst;
-		try {
-			cst = conexion.prepareCall("{call EliminarUsuario(?,?)}");
-			cst.setInt(1, 1);
-			cst.registerOutParameter(2, java.sql.Types.INTEGER);
+		int resultado=1;
+		String acTab=lblNombreTabla.getText().toLowerCase();
+		
+		switch (acTab) {
+		case "usuario":
+			resultado = eliminacion.eliminarUsuario(txtEditables);
+			break;
 			
-			System.out.println(cst.execute());
-			System.out.println(cst.getInt(2));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		case "desbloqueo":
+			resultado = eliminacion.eliminarDesbloqueo(txtEditables);
+			break;
+			
+		case "usuario_desbloqueo":
+			resultado = eliminacion.eliminarUsuarioDesbloqueo(txtEditables);
+			break;
+			
+		case "usuario_juego":
+			resultado = eliminacion.eliminarUsuarioJuego(txtEditables);
+			break;
+			
+		case "puntuacion":
+			resultado = eliminacion.eliminarPuntuacion(txtEditables);
+			break;
+			
+		case "juego":
+			resultado = eliminacion.eliminarJuego(txtEditables);
+			break;
+			
+		case "ajustes":
+			resultado = eliminacion.eliminarAjustes(txtEditables);
+			break;
+			
+		default:
+			JOptionPane.showMessageDialog(null, "Tabla no especificada", "Error", JOptionPane.ERROR_MESSAGE, null);
+			break;
 		}
+		System.out.println(resultado);
+//			System.out.println(insertacion.insertarUsuario(txtEditables));
+		if (resultado==0) {
+			crearTabla(acTab);
+		}
+
 	}
 	
 
