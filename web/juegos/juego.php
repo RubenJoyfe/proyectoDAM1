@@ -1,3 +1,9 @@
+<?php 
+	session_start();
+	if (isset($_SESSION['usrNick'])) {
+		$usrNick = $_SESSION['usrNick'];
+	}
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +54,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="../">
+					<a href="..\index.php">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="titulo">Home</span>
 					</a>
@@ -66,13 +72,13 @@
 					</a>
 				</li>
 				<li>
-					<a href=".\login\login.html">
+					<a href="..\login\login.php">
 						<span class="icon"><i class="fas fa-user"></i></span>
 						<span class="titulo">Account</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="..\login\logout.php">
 						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
 						<span class="titulo">Cerrar sesión</span>
 					</a>

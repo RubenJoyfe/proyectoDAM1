@@ -1,9 +1,15 @@
+<?php 
+	session_start();
+	if (isset($_SESSION['usrNick'])) {
+		$usrNick = $_SESSION['usrNick'];
+	}
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>prueba olas</title>
+  <title>PuzzleGames</title>
   
   <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
@@ -55,13 +61,13 @@
 					</a>
 				</li>
 				<li>
-					<a href=".\login\login.html">
+					<a href=".\login\login.php">
 						<span class="icon"><i class="fas fa-user"></i></span>
 						<span class="titulo">Account</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href=".\login\logout.php">
 						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
 						<span class="titulo">Cerrar sesión</span>
 					</a>

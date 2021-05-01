@@ -67,7 +67,7 @@
   height: 50px;
   outline: none;
   background-color: rgba(27,164,83,1);
-  border: 1px solid  rgba(47,204,83,1);
+  border: 0 solid  rgba(47,204,83,1);
   color: white;
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
@@ -86,4 +86,12 @@
 
 .btnEnviar:active {
   transform: skewX(-10deg);
-} 
+}
+
+.perror {
+  color: red;
+  font-size: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
