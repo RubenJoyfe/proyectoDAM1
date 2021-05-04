@@ -33,10 +33,8 @@ ul.Tactive {
 }
 
 .shide {
-  width: 59px;
-  transition-duration: 0.4s;
-  transition-timing-function: ease-in; 
-  transition-delay: 0.2s;
+  width: 100%;
+
 }
 .shide2 {
   width: 60px;
@@ -216,9 +214,6 @@ section .ola4 {
   .left {
     width: 18%;
   }
-  .shide {
-    width: 59px;
-  }
   .shide2 {
     width: 60px;
   }
@@ -228,9 +223,6 @@ section .ola4 {
 @media (max-width:1200px) {
   .left {
     width: 24%;
-  }
-  .shide {
-    width: 59px;
   }
   .shide2 {
     width: 60px;
@@ -242,11 +234,6 @@ section .ola4 {
 
   .left {
     width: 59px;
-  }
-
-  .shide {
-    width: 99.9%;
-
   }
   .shide2 {
     width: 50%;
