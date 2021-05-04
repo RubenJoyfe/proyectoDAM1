@@ -6,6 +6,44 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.imagen {
+  position: fixed;
+  top: -350px;
+  left: -700px;
+  margin: 0;
+  width: 200vw;
+  height: 200vh;
+  background-repeat: repeat;
+  background-image: url(wpattern.png);
+  opacity: 0.07;
+  z-index: -1;
+  animation: mover 60s linear infinite;
+}
+
+@keyframes mover {
+  0%{
+    transform: translatex(0);
+    transform: translatey(0);
+    opacity: 0.07;
+  }
+  20%{
+    opacity: 0.05;
+  }
+  40%{
+    opacity: 0.03;
+  }
+  60%{
+    opacity: 0;
+  }
+  80%{
+    opacity: 0.05;
+  }
+  100%{
+    opacity: 0.07;
+    transform: translatex(700px) translatey(350px);
+  }
+}
+
 .content {
   height: 100vh;
   margin: 60px 120px;
@@ -27,6 +65,8 @@
 
 
 
-@media (max-width:1600px) {
-
+@media (max-width:1200px) {
+  .content {
+    margin: 60px 60px 60px 120px;
+  }
 }

@@ -24,6 +24,7 @@
 .LoginZone .user-box,
 .RegisterZone .user-box {
   position: relative;
+  margin-bottom: 5px;
 }
 
 .LoginZone .user-box input,
@@ -49,13 +50,14 @@
   color: #406E4B;
   pointer-events: none;
   transition: .5s;
+  user-select: none;
 }
 
 .LoginZone .user-box input:focus ~ label,
 .LoginZone .user-box input:valid ~ label,
 .RegisterZone .user-box input:focus ~ label,
 .RegisterZone .user-box input:valid ~ label {
-  top: -20px;
+  top: -15px;
   left: 0;
   color: #06BC1F;
   font-size: 12px;
@@ -94,4 +96,37 @@
   position: absolute;
   bottom: 0;
   right: 0;
+  display: none;
+}
+
+.perror2 {
+  color: red;
+  font-size: 12px;
+  position: absolute;
+  bottom: 33px;
+  right: 0;
+  cursor: pointer;
+  display: flex;
+}
+
+.perror2:hover ~ .perror{
+  display: inline;
+}
+
+.perror3 {
+  color: red;
+  font-size: 10px;
+}
+
+.perror4{
+  color: red;
+  font-size: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+
+.bad-email:hover ~ .perror4{
+  display: inline;
 }

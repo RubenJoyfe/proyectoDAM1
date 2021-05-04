@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>prueba olas</title>
+  <title>PuzzleGames</title>
   
   <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
@@ -94,21 +94,20 @@
 	</div>
 	
 	<div class="content" >
-		<div style="width: 20%; height: 85%; background-color: lightgreen;"> </div>
 		<iframe id="iframe"
 			<?php  
 		    	echo "title=".$src."";
 			?>
-		    width="60%"
+		    width="80%"
 		    height="85%"
 		    <?php 
 
 		    echo "src='" . $columna["src"] . "'>";
 		    ?>
 		</iframe>
-		<div style="width: 20%; height: 85%; background-color: lightgreen;"> </div>
+		<!-- <div style="width: 20%; height: 85%; background-color: lightgreen;"> </div> -->
 	</div>
-	
+	<div class="imagen"></div>
 </body>
 
 <script type="text/javascript">
