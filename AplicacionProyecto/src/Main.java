@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.sql.*;
-import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,8 +20,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -31,28 +28,31 @@ import javax.swing.JButton;
 public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
 	
-	private Inserts insertacion;
-	private Deletes eliminacion;
 	private JPanel contentPane;
-	private JMenuBar menuBar;
+	private JPanel panel_opciones;
+	private JPanel panel_tabla;
+	private JButton btnInsertar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JLabel lblNombreTabla;
 	private JMenu mnMostrar;
-	private String nombre,  pass;
+	private JMenuBar menuBar;
 	private JMenuItem mntmTabla[];
+	private JTable tabla;
+	private JScrollPane scroll = new JScrollPane();
+	private String titulos [];
+	private String tipos[];
+	private String[] txtEditables;
+	private String nombre  = "",  pass = "";
+	
 	private Connection conexion;
 	private Statement comando;
-	private JPanel panel_tabla;
-	
-	private String titulos [];
+	private Inserts insertacion;
+	private Deletes eliminacion;
+	private Updates modificacion;
 	private Object celdas [][];
-	private JScrollPane scroll = new JScrollPane();
-	private JTable tabla;
-	private JPanel panel_opciones;
-	private JLabel lblNombreTabla;
-	private JTextField[] txtEditables = new JTextField[0];
-	private TextPrompt[] placeHolder = new TextPrompt[0];
-	private JButton btnInsertar;
-
-
+	private Editables[] editaciones = new Editables[0];
+	
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +62,8 @@ public class Main extends JFrame {
 				try {
 					Main frame = new Main();
 					frame.setVisible(true);
+					frame.setTitle("Base de Datos h15af00");
+					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -100,25 +102,39 @@ public class Main extends JFrame {
 		btnInsertar = new JButton("Insertar");
 		btnInsertar.addActionListener(new ActionListener() { // -------------------------> Listener Inserts
 			public void actionPerformed(ActionEvent e) {
+				getEditableString();
 				inserts(); 
 			}
 		});
 		btnInsertar.setBounds(10, 434, 164, 57);
 		panel_opciones.add(btnInsertar);
 		
-		JButton btnModificar = new JButton("Modificar");
+		btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() { // ----------------------> Listener Modificar
+			public void actionPerformed(ActionEvent e) {
+				String msg = "¿Está seguro que quiere modificar este"
+						+ " registro de la tabla " + lblNombreTabla.getText() + "?";
+				int op = JOptionPane.showConfirmDialog(null, msg,
+			            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if (op==0) {
+					getEditableString();
+					modificar();
+				}
+				
+			}
+		});
 		btnModificar.setBounds(10, 366, 164, 57);
 		panel_opciones.add(btnModificar);
 		
-		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() { // ----------------------> Listener Eliminar
 			public void actionPerformed(ActionEvent e) {
 				String msg = "¿Está seguro que quiere eliminar este"
 						+ " registro de la tabla " + lblNombreTabla.getText() + "?";
 				int op = JOptionPane.showConfirmDialog(null, msg,
 			            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				System.out.println(op);
 				if (op==0) {
+					getEditableString();
 					eliminar();
 				}
 				
@@ -129,16 +145,18 @@ public class Main extends JFrame {
 		
 		do {
 //			login();
-			nombre = "Ruben";
-			pass = "1234";
+			nombre = "root";
+			pass = "";
 		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
 		startMenu();
 		crearTabla("vacía");
 		insertacion = new Inserts(conexion);
 		eliminacion = new Deletes(conexion);
+		modificacion = new Updates(conexion);
 	}
 	
-	public void inserts() { // -------------------------------------------------------------------->inserts
+	//********************************* Operaciones MYSQL *****************************************
+	public void inserts() {
 		int resultado=1;
 		String acTab=lblNombreTabla.getText().toLowerCase();
 		
@@ -175,14 +193,13 @@ public class Main extends JFrame {
 			JOptionPane.showMessageDialog(null, "Tabla no especificada", "Error", JOptionPane.ERROR_MESSAGE, null);
 			break;
 		}
-		System.out.println(resultado);
-//			System.out.println(insertacion.insertarUsuario(txtEditables));
 		if (resultado==0) {
 			crearTabla(acTab);
+			JOptionPane.showMessageDialog(null, "Todo correcto", "Success", JOptionPane.INFORMATION_MESSAGE, null);
+		} else {
+			JOptionPane.showMessageDialog(null, "Error "+resultado, "Error", JOptionPane.ERROR_MESSAGE, null);
 		}
-
 	}
-	
 	
 	public void eliminar(){
 		int resultado=1;
@@ -221,16 +238,61 @@ public class Main extends JFrame {
 			JOptionPane.showMessageDialog(null, "Tabla no especificada", "Error", JOptionPane.ERROR_MESSAGE, null);
 			break;
 		}
-		System.out.println(resultado);
-//			System.out.println(insertacion.insertarUsuario(txtEditables));
 		if (resultado==0) {
 			crearTabla(acTab);
+			JOptionPane.showMessageDialog(null, "Todo correcto", "Success", JOptionPane.INFORMATION_MESSAGE, null);
+		} else {
+			JOptionPane.showMessageDialog(null, "Error "+resultado, "Error", JOptionPane.ERROR_MESSAGE, null);
 		}
-
 	}
 	
-
+	public void modificar(){
+		int resultado=1;
+		String acTab=lblNombreTabla.getText().toLowerCase();
+		
+		switch (acTab) {
+		case "usuario":
+			resultado = modificacion.ModificarUsuario(txtEditables);
+			break;
+			
+		case "desbloqueo":
+//			resultado = ;
+			break;
+			
+		case "usuario_desbloqueo":
+//			resultado = ;
+			break;
+			
+		case "usuario_juego":
+//			resultado = ;
+			break;
+			
+		case "puntuacion":
+//			resultado = ;
+			break;
+			
+		case "juego":
+//			resultado = ;
+			break;
+			
+		case "ajustes":
+//			resultado = ;
+			break;
+			
+		default:
+			JOptionPane.showMessageDialog(null, "Tabla no especificada", "Error", JOptionPane.ERROR_MESSAGE, null);
+			break;
+		}
+		if (resultado==0) {
+			crearTabla(acTab);
+			JOptionPane.showMessageDialog(null, "Todo correcto", "Success", JOptionPane.INFORMATION_MESSAGE, null);
+		} else {
+			JOptionPane.showMessageDialog(null, "Error "+resultado, "Error", JOptionPane.ERROR_MESSAGE, null);
+		}
+	}
 	
+	
+	//********************************* Fin MYSQL *************************************************
 	
 	public void startMenu() {
 		menuBar = new JMenuBar();
@@ -266,41 +328,32 @@ public class Main extends JFrame {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
 	
 	}
 
-
 	public void startEditables(String columnas []) {
 		deleteEditables();
-		placeHolder = new TextPrompt [columnas.length];
-		txtEditables = new JTextField [columnas.length];
+		editaciones = new Editables[columnas.length];
 		for (int i = 0; i < columnas.length; i++) {
-			txtEditables[i] = new JTextField();
-			if (columnas[i].contains("id_") /*|| columnas[i].contains("fk_")*/) { //alomejor hay que quitar lo de fk_
-				txtEditables[i].setEditable(false);
-			} 
-				
-			txtEditables[i].setText("");
-			txtEditables[i].setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
-			contentPane.add(txtEditables[i]);
-			
-			placeHolder[i] = new TextPrompt(columnas[i],txtEditables[i]);
-			placeHolder[i].changeAlpha(0.8f);
-			placeHolder[i].changeStyle(Font.PLAIN);
-			
-			
+			editaciones[i] = new Editables(columnas[i], tipos[i], i,  contentPane);
 		}
 	}
 	
 	public void deleteEditables() {
-		for (int i = 0; i < txtEditables.length; i++) {
-			remove(txtEditables[i]);
+		for (int i = 0; i < editaciones.length; i++) {
+			editaciones[i].remove();
 		}
 		contentPane.repaint();
+	}
+	
+	public void getEditableString() {
+		txtEditables = new String[editaciones.length];
+		for (int i = 0; i < editaciones.length; i++) {
+			txtEditables[i] = editaciones[i].getText();
+		}
 	}
 	
 	public boolean conexionMysql(String ip, String bbdd, String usuario, String pass) {
@@ -353,6 +406,8 @@ public class Main extends JFrame {
 			String sql = "SELECT * FROM " + tb +";";
 			String sql2= "SELECT COLUMN_NAME as nombreColumna FROM information_schema.COLUMNS WHERE "
 					+ "TABLE_SCHEMA  LIKE 'h15af00' AND TABLE_NAME = '"+tb+"'";
+			String sql3 = "SELECT COLUMN_TYPE as tipos FROM information_schema.COLUMNS "
+					+ "WHERE TABLE_NAME = '"+tb+"'";
 			
 			try {
 				int cont=0;
@@ -360,10 +415,16 @@ public class Main extends JFrame {
 				rs = comando.executeQuery(sql2);
 				while (rs.next()) {nCol++;} //cuenta el numero de columnas
 				titulos = new String [nCol]; //nCol asigna su tamano
-		
+				tipos = new String[nCol];
 				rs = comando.executeQuery(sql2);
 				while (rs.next()) { 
 					titulos[cont]=rs.getString("nombreColumna");
+					cont++;
+				}
+				cont = 0;
+				rs = comando.executeQuery(sql3);
+				while (rs.next()) { 
+					tipos[cont]=rs.getString("tipos");
 					cont++;
 				}
 				startEditables(titulos);
@@ -393,23 +454,17 @@ public class Main extends JFrame {
 		scroll.setBounds(0, 0, 619, 433);
 	    panel_tabla.add(scroll);
 	    tabla.setCellSelectionEnabled(true);
+	    tabla.setAutoCreateRowSorter(true);
 		tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	if(event.getValueIsAdjusting()) {
-//	        		System.out.println("columna: " + tabla.getColumnName(tabla.getSelectedColumn()));
-//	        		System.out.println("fila: "+tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
-//	        		System.out.println("Identifier: " + tabla.getColumn("nick").getIdentifier());
-//	        		System.out.println("da: " + tabla.getColumn("nick").getModelIndex());
-//	        		System.out.println("a ver si sale: "+ tabla.getValueAt(1, 1) );
-//	        		System.out.println("Nick: " + tabla.getValueAt(tabla.getSelectedRow(), tabla.getColumn("nick").getModelIndex()));
-//	        		
 	        		int fila = tabla.getSelectedRow();
-	        		for (int i = 0; i < txtEditables.length; i++) {
-	        			txtEditables[i].setText(""+tabla.getModel().getValueAt(fila, i));
+	        		if (fila>=0) {
+						for (int i = 0; i < editaciones.length; i++) {
+							editaciones[i].setText(""+tabla.getModel().getValueAt(fila, i));
+						}
 					}
 	        	}
-	            // do some actions here, for example
-	            // print first column value from selected row
 	        }
 	    });
 	}
