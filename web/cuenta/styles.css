@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  /*user-select: none;*/
+}
+
+.imagen {
+  position: fixed;
+  top: -350px;
+  left: -700px;
+  margin: 0;
+  width: 200vw;
+  height: 200vh;
+  background-repeat: repeat;
+  background-image: url(wpattern.png);
+  opacity: 0.07;
+  z-index: -1;
+  animation: mover 60s linear infinite;
+}
+
+@keyframes mover {
+  0%{
+    transform: translatex(0);
+    transform: translatey(0);
+    opacity: 0.07;
+  }
+  20%{
+    opacity: 0.05;
+  }
+  40%{
+    opacity: 0.03;
+  }
+  60%{
+    opacity: 0;
+  }
+  80%{
+    opacity: 0.05;
+  }
+  100%{
+    opacity: 0.07;
+    transform: translatex(700px) translatey(350px);
+  }
+}
+
+.conf {
+  width: 100%;
+  background: rgba(250,255,255,0.7);
+  align-items: center;
+}
+.conf hr {
+  border: 1px solid;
+  color: rgba(245,245,245,1);
+}
+.conf div{
+  padding: 20px;
+  display: inline-flex;
+}
+.conf .activable {
+  height: 10px;
+  float: right;
+}
+.conf:hover {
+  background: rgba(0,0,0,0.02);
+}
+
+
+/*-------------------------------switcher------------------------*/
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+  }
+
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f1f1f1;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #393e46;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #393e46; /*https://colorhunt.co/palette/117601*/
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(30px);
+    -ms-transform: translateX(30px);
+    transform: translateX(30px);
+    background-color: white;
+  }
+
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+/*-------------------------------ENDswitcher------------------------*/
+
+
+.content {
+  margin: 40px 19%;
+  margin-right: 60px;
+  margin-bottom: 60px;
+  z-index: 100;
+  transition-duration: 0.5s;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.content.Tactive {
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+  margin: 40px 120px;
+  margin-right: 60px;
+}
+
+
+@media (max-width:1920px) {
+
+}
+
+@media (max-width:1600px) {
+  .content {
+    margin: 40px 25%;
+    margin-right: 60px;
+  }
+
+  .content.Tactive {
+    margin: 40px 120px;
+    margin-right: 60px;
+  }
+
+}
+
+@media (max-width: 1050px) {
+  .content a {
+    width: 33%;
+  }
+}
+
+@media (max-width:800px) {
+  .content {
+    margin: 40px 19%;
+    margin-right: 60px;
+  }
+  .content.Tactive {
+    margin: 40px 120px;
+    margin-right: 60px;
+  }
+}

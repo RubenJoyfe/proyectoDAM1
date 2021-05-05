@@ -7,6 +7,31 @@
 			$dineros=$_SESSION['usrDinero'];
 		}
 	}
+	else {
+		header('Location: ../index.php?redireccion=1');
+		exit;
+	}
+	$db = new mysqli("localhost:3306", "root", "", "h15af00");
+	if ($db->connect_errno) {
+	    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
+	}
+	$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario
+			WHERE usuario.nick LIKE '".$usrNick."'";
+	$tema = $db->query($dtsql);
+	$tema = $tema->fetch_assoc();
+	$_SESSION['usrTema'] = $tema['oscuro']; //rescata el valor actual de modo oscuor
+
+	function activarOscuro(){	
+		$dtsql = "UPDATE ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario SET oscuro=1 WHERE usuario.nick LIKE '".$usrNick."';";
+		$db->query($dtsql);
+	}
+	function desactivarOscuro(){
+		$dtsql = "UPDATE ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario SET oscuro=0 WHERE usuario.nick LIKE '".$usrNick."';";
+		$db->query($dtsql);
+	}
+	function darkTheme(){
+		
+	}
  ?>
 <!DOCTYPE html>
 <html>
@@ -47,19 +72,19 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="../index.php">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="titulo">Home</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="">
 						<span class="icon"><i class="fas fa-gamepad"></i></span>
 						<span class="titulo">Games</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="">
 						<span class="icon"><i class="fas fa-star"></i></span>
 						<span class="titulo">Favorites</span>
 					</a>
@@ -68,7 +93,7 @@
 					if (!isset($_SESSION['usrNick'])) {
 				 		echo "
 							<li>
-								<a href='.\login\login.php'>
+								<a href='../login/login.php'>
 									<span class='icon'><i class='fas fa-user'></i></span>
 									<span class='titulo'>Account</span>
 								</a>
@@ -78,7 +103,7 @@
 				 ?>
 				
 				<li>
-					<a href=".\login\logout.php">
+					<a href="..\login\logout.php">
 						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
 						<span class="titulo">Cerrar sesión</span>
 					</a>
@@ -87,7 +112,7 @@
 					if (isset($_SESSION['usrNick'])) {
 				 		echo "
 			 			<li class='cuenta'>
-							<a href='.\cuenta\cuenta.php'>
+							<a href='cuenta.php'>
 								<span class='iconC'><i class='fas fa-user-circle'></i></span>
 								<span class='nombreUsr'>$usrNick</span>
 								<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
@@ -106,45 +131,31 @@
 	    <div class="ola ola4"></div>
 	  </section>
 	</div>
-	
 	<div class="content" >
-<!-- 			<h1>JUEGOS</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+	<h2 style="font-weight: 500; font-size: 30px">Configuración de cuenta</h2>
+	<br><br>
+		<div class="conf">
+			<hr>
+			<div class="info">Modo oscuro</div>
+			<div class="activable">
+				<label class="switch">
+				  <input type="checkbox">
+				  <span class="slider round" onclick="<?php echo darkTheme(); ?>"></span>
+				  <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch -->
+				</label>
+			</div>
+			<hr>
+		</div>
+		<div class="conf">
+			<div class="info">Modo oscuro</div>
+			<hr>
+		</div>
 
-			<?php 
-				// creación de la conexión a la base de datos con mysql_connect()
-				$conexion = mysqli_connect( "localhost", "Ruben", 1234 ) or die ("No se ha podido conectar al servidor de Base de datos");
-				// Selección del a base de datos a utilizar
-				$db = mysqli_select_db( $conexion, "h15af00" ) or die ( "Upps! No se ha podido conectar a la base de datos" );
-				// establecer y realizar consulta. guardamos en variable.
-				$consulta = "SELECT * FROM juego";
-				$resultado = mysqli_query( $conexion, $consulta);
-
-				$resultado->num_rows;
-
-
-				while ($columna = mysqli_fetch_array($resultado)) {
-					$source = $columna['nombre'];
-					$redireccion = "./juegos/juego.php?source=".$source."";
-					echo " <a href='" . $redireccion . "'>
-								<div class='juego'>
-									<p>" 
-									. $columna["nombre"] . 
-									"</p>
-								</div>
-							</a>";
-				}
-			 ?>
-			<div class="juego"> <h2>Proximamente...</h2></div>
+		
+			
 	</div>
 	<div class="imagen"></div>
 </body>
-
 <script type="text/javascript">
 	const left = document.querySelector('.left');
 	const section = document.querySelector('.sect');
@@ -158,4 +169,5 @@
 		section.classList.toggle('shide');
 	}
 </script>
+
 </html>

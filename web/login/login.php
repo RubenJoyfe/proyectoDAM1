@@ -77,7 +77,6 @@
 				$stmt = $db->prepare($sqlLogin);
 				$stmt->bind_param("ss", $usrNick, $pswd);
 				$stmt->execute();
-				echo "string ".$sqlLogin.$usrNick.$pswd;
 				$resultado = $stmt->get_result();
 
 				if ($resultado->num_rows!=1) {
@@ -85,6 +84,10 @@
 					exit;
 				}
 				else {
+					$disql = "SELECT dinero FROM usuario WHERE nick LIKE '".$usrNick."'";
+					$dineros = $db->query($disql);
+					$dineros = $dineros->fetch_assoc();
+					$_SESSION['usrDinero'] = $dineros['dinero'];
 					$_SESSION['usrNick'] = $usrNick;
 					header('Location: ../index.php?redireccion=1');
 					exit;
