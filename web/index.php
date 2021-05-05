@@ -60,18 +60,39 @@
 						<span class="titulo">Favorites</span>
 					</a>
 				</li>
-				<li>
-					<a href=".\login\login.php">
-						<span class="icon"><i class="fas fa-user"></i></span>
-						<span class="titulo">Account</span>
-					</a>
-				</li>
+				<?php
+					if (!isset($_SESSION['usrNick'])) {
+				 		echo "
+							<li>
+								<a href='.\login\login.php'>
+									<span class='icon'><i class='fas fa-user'></i></span>
+									<span class='titulo'>Account</span>
+								</a>
+							</li>
+							";
+				 	} 
+				 ?>
+				
 				<li>
 					<a href=".\login\logout.php">
 						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
 						<span class="titulo">Cerrar sesión</span>
 					</a>
 				</li>
+				<?php
+					if (isset($_SESSION['usrNick'])) {
+				 		echo "
+			 			<li class='cuenta'>
+							<a href='.\cuenta\cuenta.php'>
+								<span class='iconC'><i class='fas fa-user-circle'></i></span>
+								<span class='nombreUsr'>".$usrNick."</span>
+								<span class='dineros'><i class='fas fa-coins'></i>520</span>
+							</a>
+						</li>
+							";
+				 	} 
+				 ?>
+
 			</ul>
 	  	</div>
 	  	

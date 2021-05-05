@@ -93,6 +93,39 @@ ul.Tactive {
   white-space: nowrap;
 }
 
+.navegacion ul li a .iconC {
+  position: relative;
+  display: block;
+  min-width: 60px; /*80px*/
+  font-size: 45px;
+  height: 60px;
+  line-height: 61px;
+  text-align: center;
+}
+
+.navegacion ul li a .nombreUsr{
+  position: absolute;
+  font-size: 16px;
+  top: 5px;
+  left: 60px;
+  white-space: nowrap;
+}
+
+.navegacion ul li a .dineros{
+  position: absolute;
+  border: 1px solid rgba(255,255,255,0.4);
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 25px;
+  padding: 1px 8px 1px 5px;
+  font-size: 12px;
+  bottom: 10px;
+  left: 60px;
+  white-space: nowrap;
+}
+.navegacion ul li a .dineros i{
+  padding: 0 3px;
+}
+  /*---------------------OLAS-----------------------*/
 section .ola {
   position: absolute;
   bottom: 0;

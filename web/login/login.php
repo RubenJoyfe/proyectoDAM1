@@ -77,6 +77,7 @@
 				$stmt = $db->prepare($sqlLogin);
 				$stmt->bind_param("ss", $usrNick, $pswd);
 				$stmt->execute();
+				echo "string ".$sqlLogin.$usrNick.$pswd;
 				$resultado = $stmt->get_result();
 
 				if ($resultado->num_rows!=1) {
