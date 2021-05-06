@@ -49,6 +49,7 @@
   width: 100%;
   background: rgba(250,255,255,0.7);
   align-items: center;
+  display: inline;
 }
 .conf hr {
   border: 1px solid;
@@ -56,7 +57,7 @@
 }
 .conf div{
   padding: 20px;
-  display: inline-flex;
+  display: inline-block;
 }
 .conf .activable {
   height: 10px;
@@ -64,6 +65,57 @@
 }
 .conf:hover {
   background: rgba(0,0,0,0.02);
+}
+
+
+.conf .contPerf {
+  display: inline-flex;
+  margin: 20px;
+  min-height: 50px;
+  background-color: rgba(255,0,0,0.3);
+}
+
+.conf .fotoPerfil {
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  position: relative;
+}
+
+.conf .contPerf .fotoPerfil div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: ;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  float: left;
+}
+.conf .contPerf .fotoPerfil div:hover {
+  opacity: 1;
+}
+.conf .contPerf .fotoPerfil div i {
+  font-size: 24px;
+  opacity: 0.6;
+  margin-left: 5px;
+}
+
+.contPerf div p {
+  width: 100%;
+  padding: 2px 0;
+}
+.contPerf div input{
+  padding: 2px 5px;
+  height: 25px;
+  outline: none;
 }
 
 

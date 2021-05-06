@@ -8,30 +8,17 @@
 		}
 	}
 	else {
-		header('Location: ../index.php?redireccion=1');
+		header('Location: ../login/login.php');
 		exit;
 	}
 	$db = new mysqli("localhost:3306", "root", "", "h15af00");
 	if ($db->connect_errno) {
 	    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 	}
-	$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario
-			WHERE usuario.nick LIKE '".$usrNick."'";
+	$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario WHERE usuario.nick LIKE '".$usrNick."'";
 	$tema = $db->query($dtsql);
 	$tema = $tema->fetch_assoc();
-	$_SESSION['usrTema'] = $tema['oscuro']; //rescata el valor actual de modo oscuor
-
-	function activarOscuro(){	
-		$dtsql = "UPDATE ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario SET oscuro=1 WHERE usuario.nick LIKE '".$usrNick."';";
-		$db->query($dtsql);
-	}
-	function desactivarOscuro(){
-		$dtsql = "UPDATE ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario SET oscuro=0 WHERE usuario.nick LIKE '".$usrNick."';";
-		$db->query($dtsql);
-	}
-	function darkTheme(){
-		
-	}
+	$_SESSION['usrTema'] = $tema['oscuro']; //rescata el valor actual de modo oscuro
  ?>
 <!DOCTYPE html>
 <html>
@@ -139,15 +126,30 @@
 			<div class="info">Modo oscuro</div>
 			<div class="activable">
 				<label class="switch">
-				  <input type="checkbox">
-				  <span class="slider round" onclick="<?php echo darkTheme(); ?>"></span>
+				  <input type="checkbox" id="darksw" <?php if ($tema['oscuro']==1) {
+				  	echo "checked";
+				  } ?>>
+				  <span class="slider round" ></span>
 				  <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch -->
 				</label>
 			</div>
 			<hr>
 		</div>
 		<div class="conf">
-			<div class="info">Modo oscuro</div>
+			<div class="info">Idioma
+			</div>
+			<hr>
+		</div>
+		<div class="conf">
+			<div class="contPerf">
+				<div class="fotoPerfil">
+					<div id="edit"><i class="far fa-edit"></i></div>
+				</div>
+				<div class="infoP">
+					<p>Usuario</p>
+					<input type="text" name="usuario" value="<?php echo $usrNick;?>">
+				</div>
+			</div>
 			<hr>
 		</div>
 
@@ -169,5 +171,5 @@
 		section.classList.toggle('shide');
 	}
 </script>
-
+<script type="text/javascript" src="confx.js"></script>
 </html>
