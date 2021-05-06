@@ -359,10 +359,9 @@ public class Main extends JFrame {
 	public boolean conexionMysql(String ip, String bbdd, String usuario, String pass) {
 		try {
 			conexion = DriverManager.getConnection(
-			        "jdbc:mysql://" + ip + "/" + bbdd, usuario, pass);//jdbc:mysql://<ip>:<puerto>/<nombreDB>,"user","pass"
+			        "jdbc:mysql://" + ip + "/" + bbdd + "?serverTimezone=UTC", usuario, pass);//jdbc:mysql://<ip>:<puerto>/<nombreDB>,"user","pass"
 			return true;
 		} catch (SQLException e) {
-//			System.out.println("No se ha podido conectar a la base de datos. Error: " + e.getMessage());
 			e.printStackTrace();
 		}
 		return false;
@@ -458,8 +457,10 @@ public class Main extends JFrame {
 		tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	if(event.getValueIsAdjusting()) {
-	        		int fila = tabla.getSelectedRow();
-	        		if (fila>=0) {
+	        		int n = tabla.getSelectedRow();
+//	        		System.out.println(tabla.convertRowIndexToModel(fila));
+	        		if (n>=0) {
+	        			int fila = tabla.convertRowIndexToModel(n);
 						for (int i = 0; i < editaciones.length; i++) {
 							editaciones[i].setText(""+tabla.getModel().getValueAt(fila, i));
 						}
