@@ -6,6 +6,20 @@
 		if (isset($_SESSION['usrDinero'])) {  //coger dinero si existe (está declarado)
 			$dineros=$_SESSION['usrDinero'];
 		}
+		if (isset($_SESSION['usrTema'])) {
+			$usrTema=$_SESSION['usrTema'];
+		}
+		else {
+			$db = new mysqli("localhost:3306", "root", "", "h15af00");
+			if ($db->connect_errno) {
+			    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
+			}
+			$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario WHERE usuario.nick LIKE '".$usrNick."'";
+			$tema = $db->query($dtsql);
+			$tema = $tema->fetch_assoc();
+			$_SESSION['usrTema'] = $tema['oscuro'];
+		}
+
 	}
  ?>
 <!DOCTYPE html>

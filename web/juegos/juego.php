@@ -2,6 +2,24 @@
 	session_start();
 	if (isset($_SESSION['usrNick'])) {
 		$usrNick = $_SESSION['usrNick'];
+
+		if (isset($_SESSION['usrDinero'])) {  //coger dinero si existe (está declarado)
+			$dineros=$_SESSION['usrDinero'];
+		}
+		if (isset($_SESSION['usrTema'])) {
+			$usrTema=$_SESSION['usrTema'];
+		}
+		else {
+			$db = new mysqli("localhost:3306", "root", "", "h15af00");
+			if ($db->connect_errno) {
+			    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
+			}
+			$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario WHERE usuario.nick LIKE '".$usrNick."'";
+			$tema = $db->query($dtsql);
+			$tema = $tema->fetch_assoc();
+			$_SESSION['usrTema'] = $tema['oscuro'];
+		}
+
 	}
  ?>
 <!DOCTYPE html>
@@ -71,18 +89,37 @@
 						<span class="titulo">Favorites</span>
 					</a>
 				</li>
-				<li>
-					<a href="..\login\login.php">
-						<span class="icon"><i class="fas fa-user"></i></span>
-						<span class="titulo">Account</span>
-					</a>
-				</li>
+				<?php
+					if (!isset($_SESSION['usrNick'])) {
+				 		echo "
+							<li>
+								<a href='..\login\login.php'>
+									<span class='icon'><i class='fas fa-user'></i></span>
+									<span class='titulo'>Account</span>
+								</a>
+							</li>
+							";
+				 	}
+				 ?>
 				<li>
 					<a href="..\login\logout.php">
 						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
 						<span class="titulo">Cerrar sesión</span>
 					</a>
 				</li>
+				<?php
+					if (isset($_SESSION['usrNick'])) {
+				 		echo "
+			 			<li class='cuenta'>
+							<a href='..\cuenta\cuenta.php'>
+								<span class='iconC'><i class='fas fa-user-circle'></i></span>
+								<span class='nombreUsr'>$usrNick</span>
+								<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
+							</a>
+						</li>
+							";
+				 	} 
+				 ?>
 			</ul>
 	  	</div>
 	  	

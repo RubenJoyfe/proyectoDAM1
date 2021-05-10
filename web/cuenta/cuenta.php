@@ -18,7 +18,7 @@
 	$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario WHERE usuario.nick LIKE '".$usrNick."'";
 	$tema = $db->query($dtsql);
 	$tema = $tema->fetch_assoc();
-	$_SESSION['usrTema'] = $tema['oscuro']; //rescata el valor actual de modo oscuro
+	$_SESSION['usrTema'] = $tema['oscuro'];
  ?>
 <!DOCTYPE html>
 <html>
