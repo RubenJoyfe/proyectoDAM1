@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -256,27 +257,27 @@ public class Main extends JFrame {
 			break;
 			
 		case "desbloqueo":
-//			resultado = ;
+			resultado = modificacion.ModificarDesbloqueo(txtEditables);
 			break;
 			
 		case "usuario_desbloqueo":
-//			resultado = ;
+			resultado = modificacion.ModificarUsuarioDesbloqueo(txtEditables);
 			break;
 			
 		case "usuario_juego":
-//			resultado = ;
+			resultado = modificacion.ModificarUsuarioJuego(txtEditables);
 			break;
 			
 		case "puntuacion":
-//			resultado = ;
+			resultado = modificacion.ModificarPuntuacion(txtEditables);
 			break;
 			
 		case "juego":
-//			resultado = ;
+			resultado = modificacion.ModificarJuego(txtEditables);
 			break;
 			
 		case "ajustes":
-//			resultado = ;
+			resultado = modificacion.ModificarAjustes(txtEditables);
 			break;
 			
 		default:
@@ -392,6 +393,7 @@ public class Main extends JFrame {
 		    pass = new String(password.getPassword());		   
 	}
 	
+	@SuppressWarnings({ "serial", "rawtypes" })
 	public void crearTabla(String tb) {
 		if (tb.equals("vacía")) {
 			tabla = new JTable();
@@ -434,6 +436,8 @@ public class Main extends JFrame {
 				int cont2=0;
 				rs2 = comando.executeQuery(sql);
 				while (rs2.next()) {
+					celdas[cont][cont2]=Integer.parseInt(rs2.getString(titulos[0]));
+					cont2++;
 					while (cont2<nCol) {
 						celdas[cont][cont2]=rs2.getString(titulos[cont2]);
 						cont2++;
@@ -441,7 +445,25 @@ public class Main extends JFrame {
 					cont++;
 					cont2=0;
 				}
-				tabla=new JTable(celdas, titulos);
+				
+				// Establece el tipo de las columnas de enteros
+				Class[] columnasTipo = new Class[tipos.length];
+				for (int i = 0; i < columnasTipo.length; i++) {
+					if (tipos[i].contains("int")) {
+						columnasTipo[i]=Integer.class;
+					} else {
+						columnasTipo[i]=Object.class;
+					}
+				}
+				// Inicializa la tabla con el modelo establecido
+				tabla.setModel(new DefaultTableModel(celdas, titulos){
+					Class[] columnTypes = columnasTipo;
+					@SuppressWarnings({ "unchecked" })
+					public Class getColumnClass(int columnIndex) {
+						return columnTypes[columnIndex];
+					}
+				});				
+				//tabla=new JTable(celdas, titulos);
 			} 
 			catch (SQLException e) {
 				e.printStackTrace();
@@ -458,7 +480,6 @@ public class Main extends JFrame {
 	        public void valueChanged(ListSelectionEvent event) {
 	        	if(event.getValueIsAdjusting()) {
 	        		int n = tabla.getSelectedRow();
-//	        		System.out.println(tabla.convertRowIndexToModel(fila));
 	        		if (n>=0) {
 	        			int fila = tabla.convertRowIndexToModel(n);
 						for (int i = 0; i < editaciones.length; i++) {

@@ -71,13 +71,13 @@ public class Inserts {
 
 		try {
 			int longT = txtEditables.length;
-			cst = conexion.prepareCall("{call InsertarUsuario_Juego(?,?,?)}");
-			for (int i = 3; i < longT; i++) {
-				cst.setString(i-2, txtEditables[i]);
+			cst = conexion.prepareCall("{call InsertarUsuario_Juego(?,?,?,?,?)}");
+			for (int i = 1; i < longT; i++) {
+				cst.setString(i, txtEditables[i]);
 			}
-			cst.registerOutParameter(3, java.sql.Types.INTEGER);
+			cst.registerOutParameter(5, java.sql.Types.INTEGER);
 			cst.execute();
-			return cst.getInt(3);
+			return cst.getInt(5);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
