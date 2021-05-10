@@ -113,7 +113,7 @@ public class Inserts {
 			for (int i = 1; i < longT-1; i++) {
 				cst.setString(i, txtEditables[i]);
 			}
-			cst.registerOutParameter(longT-2, java.sql.Types.INTEGER);
+			cst.registerOutParameter(longT-1, java.sql.Types.INTEGER);
 			cst.execute();
 			return cst.getInt(longT-1);
 			

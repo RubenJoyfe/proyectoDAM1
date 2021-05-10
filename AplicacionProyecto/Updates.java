@@ -124,10 +124,46 @@ public class Updates {
 	}
 	
 	public int ModificarJuego(String[] txtEditables){
+		try {
+			int longT = txtEditables.length;
+			cst = conexion.prepareCall("{call ModificarJuego(?,?,?,?,?)}");
+			for (int i = 0; i < longT; i++) {
+				if (txtEditables[i].equals("null")) {
+					cst.setString(i+1, null);
+				} else {
+					cst.setString(i+1, txtEditables[i]);
+				}
+			}
+			cst.registerOutParameter(5, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(5);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 2;
 	}
 	
 	public int ModificarAjustes(String[] txtEditables){
+		try {
+			int longT = txtEditables.length;
+			cst = conexion.prepareCall("{call ModificarAjustes(?,?,?,?)}");
+			for (int i = 0; i < longT; i++) {
+				if (txtEditables[i].equals("null")) {
+					cst.setString(i+1, null);
+				} else {
+					cst.setString(i+1, txtEditables[i]);
+				}
+			}
+			cst.registerOutParameter(4, java.sql.Types.INTEGER);
+			cst.execute();
+			return cst.getInt(4);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 2;
 	}
 	
