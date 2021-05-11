@@ -153,6 +153,9 @@ public class Editables {
 		case "varchar":
 			return txt.getText();
 		case "date":
+			if (txt.getText().equals("Fecha")) {
+				return null;
+			}
 			return txt.getText();
 		default:
 			System.out.println("Falla el getText");
