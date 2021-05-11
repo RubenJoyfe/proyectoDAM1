@@ -98,17 +98,17 @@
 					</a>
 				</li>
 				<?php
-					if (isset($_SESSION['usrNick'])) {
-				 		echo "
-			 			<li class='cuenta'>
-							<a href='.\cuenta\cuenta.php'>
-								<span class='iconC'><i class='fas fa-user-circle'></i></span>
-								<span class='nombreUsr'>$usrNick</span>
-								<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
-							</a>
-						</li>
-							";
-				 	} 
+					// if (isset($_SESSION['usrNick'])) {
+				 // 		echo "
+			 	// 		<li class='cuenta'>
+					// 		<a href='.\cuenta\cuenta.php'>
+					// 			<span class='iconC'><i class='fas fa-user-circle'></i></span>
+					// 			<span class='nombreUsr'>$usrNick</span>
+					// 			<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
+					// 		</a>
+					// 	</li>
+					// 		";
+				 // 	} 
 				 ?>
 
 			</ul>
@@ -120,7 +120,34 @@
 	    <div class="ola ola4"></div>
 	  </section>
 	</div>
-	
+	<div class="top-menu">
+
+		<ul>
+		<?php
+			if (isset($_SESSION['usrNick'])) {
+		 		echo "
+		 		
+		 			<li class='cuenta'>
+						<a href='.\cuenta\cuenta.php'>
+							<span class='iconC'><i class='fas fa-user-circle'></i></span>
+							<span class='nombreUsr'>$usrNick</span>
+							<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
+						</a>
+					</li>
+				
+					";
+		 	} 
+		 ?>
+			<div class="flexbox">
+				<div class="search">
+					<div>
+						<input type="text" placeholder="Buscar . . ." required>
+					</div>
+				</div>
+			</div>
+		 </ul>
+		<div class="content-menu"></div>
+	</div>
 	<div class="content" >
 <!-- 			<h1>JUEGOS</h1>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

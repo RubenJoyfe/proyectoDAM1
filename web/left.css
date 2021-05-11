@@ -1,5 +1,9 @@
+/*::-webkit-scrollbar {
+  width: 10px;
+  border-left: 1px solid rgba(0,0,0,0.3);
+}*/
+
 .left {
-  
   display: inline-flex;
   width: 15%;
   height: 100vh;
@@ -274,12 +278,12 @@ section .ola4 {
     transition-timing-function: ease-in-out; 
   }
 
-  ul {
+  .menu {
     padding-top: 80px;
 
   }
 
-  ul.Tactive {
+  .menu.Tactive {
     padding-top: 0;
   }
 
@@ -289,4 +293,219 @@ section .ola4 {
   .ola {
     display: none;
   }
+}
+
+
+
+
+/*............................top-menu.................................*/
+
+.top-menu {
+  background-color: rgb(230,230,230,0.5);
+  width: 100%;
+  height: 60px;
+  display: flex;
+}
+
+.top-menu ul {
+  width: 100%;
+}
+
+.top-menu ul li {
+  float: right;
+  list-style: none;
+  width: 200px;
+  font-weight: 500;
+}
+
+.top-menu ul li:hover {
+  background: rgb(0, 0, 0, 0.2);
+}
+.top-menu ul li a {
+  position: relative;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: #6666ff;
+  animation: colorRotate 5s linear infinite;
+}
+
+
+
+@keyframes colorRotate {
+  from {
+    color: #6666ff;
+  }
+  10% {
+    color: #0099ff;
+  }
+  50% {
+    color: #00ff00;
+  }
+  75% {
+    color: #ff3399;
+  }
+  100% {
+    color: #6666ff;
+  }
+}
+
+.top-menu ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px; /*80px*/
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+}
+
+.top-menu ul li a .icon .fas{
+  font-size: 24px;
+}
+
+.top-menu ul li a .titulo{
+  position: relative;
+  display: block;
+  height: 60px;
+  line-height: 60px;
+  white-space: nowrap;
+}
+
+.top-menu ul li a .iconC {
+  position: relative;
+  display: block;
+  min-width: 60px; /*80px*/
+  font-size: 45px;
+  height: 60px;
+  line-height: 61px;
+  text-align: center;
+}
+
+.top-menu ul li a .nombreUsr{
+  position: absolute;
+  font-size: 16px;
+  top: 5px;
+  left: 60px;
+  white-space: nowrap;
+}
+
+.top-menu ul li a .dineros{
+  position: absolute;
+  border: 1px solid rgba(255,255,255,0.4);
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 25px;
+  padding: 1px 8px 1px 5px;
+  font-size: 12px;
+  bottom: 10px;
+  left: 60px;
+  white-space: nowrap;
+}
+.top-menu ul li a .dineros i{
+  padding: 0 3px;
+}
+
+
+/*................busqueda...................*/
+
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+
+* {
+  font-family: Roboto, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.flexbox {
+  height: 93%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  float: right;
+}
+
+.search {
+  margin: 0px;
+}
+
+.search > div {
+  display: inline-block;
+  position: relative;
+  filter: drop-shadow(0 1px #e1e1e1);
+}
+
+.search > div:after {
+  content: "";
+  background: white;
+  width: 4px;
+  height: 15px;
+  position: absolute;
+  top: 29px;
+  right: 1px;
+  transform: rotate(135deg);
+}
+
+.search > div > input {
+  color: white;
+  font-size: 16px;
+  background: transparent;
+  width: 10px;
+  width: 250px; /*quitar si quieres que se reduzca al principio*/
+  height: 10px;
+  padding: 10px;
+  border: solid 3px white;
+  outline: none;
+  border-radius: 35px;
+  transition: width 0.5s;
+  background-color: lightgrey;
+}
+
+.search > div > input::placeholder {
+  color: white;
+  opacity: 1; /*cambiar a 0 para que solo aparezca al darle click*/
+  transition: opacity 150ms ease-out;
+}
+
+.search > div > input:focus::placeholder {
+  opacity: 1;
+}
+
+.search > div > input:focus,
+.search > div > input:not(:placeholder-shown) {
+  width: 250px;
+  background-color: rgb(200,200,200);
+}
+
+
+@media (max-width:630px) { 
+  .search > div > input {
+    width: 150px;
+  }
+
+  .search > div > input:focus,
+  .search > div > input:not(:placeholder-shown) {
+    width: 150px;
+    background-color: rgb(200,200,200);
+  }
+}
+
+@media (max-width:510px) { 
+  .search > div > input {
+    width: 10px;
+  }
+  .search > div > input::placeholder {
+    opacity: 0;
+  }
+  .search > div > input:focus,
+  .search > div > input:not(:placeholder-shown) {
+  width: 100px;
+  background-color: rgb(200,200,200);
+}
+
 }

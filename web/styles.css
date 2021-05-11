@@ -140,3 +140,21 @@
     margin-right: 60px;
   }
 }
+
+@media (max-width:600px) {
+  .content {
+    margin: 40px 19%;
+    margin-right: 60px;
+  }
+  .content a {
+    width: 100%;
+  }
+  .juego h2 {
+    font-size: 18px;
+  }
+
+  .content.Tactive {
+    margin: 40px 120px;
+    margin-right: 60px;
+  }
+}
