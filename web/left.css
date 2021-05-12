@@ -421,6 +421,10 @@ html, body {
   height: 100%;
 }
 
+form {
+  margin-top: 10px;
+}
+
 .flexbox {
   height: 93%;
   display: flex;

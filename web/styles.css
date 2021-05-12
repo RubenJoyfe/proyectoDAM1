@@ -6,6 +6,23 @@
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  /*background: linear-gradient(to bottom right, #00cc66 0%, #66ff99 100%);
+  background: repeating-linear-gradient(-45deg, red 0%, yellow 7.14%, rgb(0,255,0) 14.28%,
+              rgb(0,255,255) 21.4%, cyan 28.56%, blue 35.7%, magenta 42.84%, red 50%);
+  background-size: 1200vw 1200vw;
+  animation: bkRotate 1s linear infinite;*/
+}
+
+@keyframes bkRotate {
+  0% {
+    background-position-x: 0%;
+  }
+  100% {
+    background-position-x: 1200vw;
+  }
+}
+
 .imagen {
   position: fixed;
   top: -350px;

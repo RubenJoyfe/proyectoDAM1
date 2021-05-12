@@ -44,7 +44,7 @@
 	  	<div class="navegacion">
 	  		<ul class="menu">
 	  			<li>
-					<a href="#">
+					<a href="index.php">
 						<span class="icon">
 							<div id="rubic_wrapper">
 								<div id="rubic">
@@ -61,7 +61,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="index.php">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="titulo">Home</span>
 					</a>
@@ -138,13 +138,15 @@
 					";
 		 	} 
 		 ?>
+		<form id="formSearch" method="GET" action="index.php" >
 			<div class="flexbox">
 				<div class="search">
 					<div>
-						<input type="text" placeholder="Buscar . . ." required>
+						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required>
 					</div>
 				</div>
 			</div>
+		</form>
 		 </ul>
 		<div class="content-menu"></div>
 	</div>
@@ -163,12 +165,16 @@
 				// Selección del a base de datos a utilizar
 				$db = mysqli_select_db( $conexion, "h15af00" ) or die ( "Upps! No se ha podido conectar a la base de datos" );
 				// establecer y realizar consulta. guardamos en variable.
-				$consulta = "SELECT * FROM juego";
+				if (isset($_GET['search'])) {
+					// $consulta = "SELECT * FROM juego WHERE nombre LIKE ? ";
+					$consulta = "SELECT * FROM juego WHERE nombre LIKE '".$_GET['search']."%';";
+				}
+				else {
+					$consulta = "SELECT * FROM juego";
+				}
 				$resultado = mysqli_query( $conexion, $consulta);
 
 				$resultado->num_rows;
-
-
 				while ($columna = mysqli_fetch_array($resultado)) {
 					$source = $columna['nombre'];
 					$redireccion = "./juegos/juego.php?source=".$source."";
@@ -186,17 +192,6 @@
 	<div class="imagen"></div>
 </body>
 
-<script type="text/javascript">
-	const left = document.querySelector('.left');
-	const section = document.querySelector('.sect');
-	const ul = document.querySelector('.menu');
-	const content = document.querySelector('.content');
-	document.querySelector('.toggle').onclick = function(){
-		this.classList.toggle('Tactive');
-		ul.classList.toggle('Tactive');
-		content.classList.toggle('Tactive');
-		left.classList.toggle('shide2');
-		section.classList.toggle('shide');
-	}
-</script>
+<script type="text/javascript" src="js.js"></script>
+<!-- SELECT * FROM juego WHERE nombre LIKE "cli%"; -->
 </html>
