@@ -72,7 +72,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="..\index.php">
+					<a href="../index.php">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="titulo">Home</span>
 					</a>
@@ -99,27 +99,15 @@
 								</a>
 							</li>
 							";
-				 	}
+				 	} 
 				 ?>
+				
 				<li>
 					<a href="..\login\logout.php">
 						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
 						<span class="titulo">Cerrar sesión</span>
 					</a>
 				</li>
-				<?php
-					if (isset($_SESSION['usrNick'])) {
-				 		echo "
-			 			<li class='cuenta'>
-							<a href='..\cuenta\cuenta.php'>
-								<span class='iconC'><i class='fas fa-user-circle'></i></span>
-								<span class='nombreUsr'>$usrNick</span>
-								<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
-							</a>
-						</li>
-							";
-				 	} 
-				 ?>
 			</ul>
 	  	</div>
 	  	
@@ -129,7 +117,35 @@
 	    <div class="ola ola4"></div>
 	  </section>
 	</div>
-	
+	<div class="top-menu">
+		<ul>
+		<?php
+			if (isset($_SESSION['usrNick'])) {
+		 		echo "
+		 		
+		 			<li class='cuenta'>
+						<a href='..\cuenta\cuenta.php'>
+							<span class='iconC'><i class='fas fa-user-circle'></i></span>
+							<span class='nombreUsr'>$usrNick</span>
+							<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
+						</a>
+					</li>
+				
+					";
+		 	} 
+		 ?>
+		<form id="formSearch" method="GET" action="..\index.php" >
+			<div class="flexbox">
+				<div class="search">
+					<div>
+						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required>
+					</div>
+				</div>
+			</div>
+		</form>
+		 </ul>
+		<div class="content-menu"></div>
+	</div>
 	<div class="content" >
 		<iframe id="iframe"
 			<?php  

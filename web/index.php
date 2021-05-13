@@ -99,8 +99,8 @@
 				</li>
 				<?php
 					// if (isset($_SESSION['usrNick'])) {
-				 // 		echo "
-			 	// 		<li class='cuenta'>
+				 	//	echo "
+			 		// <li class='cuenta'>
 					// 		<a href='.\cuenta\cuenta.php'>
 					// 			<span class='iconC'><i class='fas fa-user-circle'></i></span>
 					// 			<span class='nombreUsr'>$usrNick</span>
@@ -108,7 +108,7 @@
 					// 		</a>
 					// 	</li>
 					// 		";
-				 // 	} 
+				 	// 	} 
 				 ?>
 
 			</ul>
@@ -142,7 +142,7 @@
 			<div class="flexbox">
 				<div class="search">
 					<div>
-						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required>
+						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required <?php if (isset($_GET['search'])) {echo "value='".$_GET['search']."'";} ?>>
 					</div>
 				</div>
 			</div>
@@ -151,14 +151,6 @@
 		<div class="content-menu"></div>
 	</div>
 	<div class="content" >
-<!-- 			<h1>JUEGOS</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
-
 			<?php 
 				// creación de la conexión a la base de datos con mysql_connect()
 				$conexion = mysqli_connect( "localhost", "Ruben", 1234 ) or die ("No se ha podido conectar al servidor de Base de datos");
@@ -166,13 +158,18 @@
 				$db = mysqli_select_db( $conexion, "h15af00" ) or die ( "Upps! No se ha podido conectar a la base de datos" );
 				// establecer y realizar consulta. guardamos en variable.
 				if (isset($_GET['search'])) {
-					// $consulta = "SELECT * FROM juego WHERE nombre LIKE ? ";
-					$consulta = "SELECT * FROM juego WHERE nombre LIKE '".$_GET['search']."%';";
+					$cad = $_GET['search']."%";
+					$db = new mysqli("localhost:3306", "root", "", "h15af00");
+					$consulta = "SELECT * FROM juego WHERE nombre LIKE ? ;";
+					$stmt = $db->prepare($consulta);
+					$stmt->bind_param("s", $cad);
+					$stmt->execute();
+					$resultado = $stmt->get_result();
 				}
 				else {
 					$consulta = "SELECT * FROM juego";
+					$resultado = mysqli_query( $conexion, $consulta);
 				}
-				$resultado = mysqli_query( $conexion, $consulta);
 
 				$resultado->num_rows;
 				while ($columna = mysqli_fetch_array($resultado)) {

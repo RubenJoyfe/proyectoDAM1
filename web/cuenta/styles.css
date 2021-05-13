@@ -72,7 +72,8 @@
   display: inline-flex;
   margin: 20px;
   min-height: 50px;
-  background-color: rgba(255,0,0,0.3);
+  /*background-color: rgba(255,0,0,0.3);*/
+  border: 1px solid rgba(0,0,0,0.1);
 }
 
 .conf .fotoPerfil {
@@ -82,6 +83,7 @@
   height: 50px;
   cursor: pointer;
   position: relative;
+  flex-shrink: 0;
 }
 
 .conf .contPerf .fotoPerfil div {
@@ -117,7 +119,6 @@
   height: 25px;
   outline: none;
 }
-
 
 /*-------------------------------switcher------------------------*/
 
@@ -233,4 +234,29 @@
     margin: 40px 120px;
     margin-right: 60px;
   }
+}
+.btnGuardar {
+  float: right;
+  background-color: white;
+  border: 1px solid #a1a1a1;
+}
+
+.btnGuardar:hover {
+  background-color: #e1e1e1;
+}
+
+
+/*................................DARK THEME..................................*/
+
+.darkbg {
+  background-color: rgba(16, 18, 20, 1);
+  color: white
+}
+
+.darkbg1 {
+  background-color: rgba(43, 48, 50, 0.6);
+}
+
+.dartkbgtop {
+  background-color: rgb(230,230,230,0.1);
 }

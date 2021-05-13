@@ -42,7 +42,7 @@
 	  	<div class="navegacion">
 	  		<ul class="menu">
 	  			<li>
-					<a href="#">
+					<a href="../index.php">
 						<span class="icon">
 							<div id="rubic_wrapper">
 								<div id="rubic">
@@ -65,13 +65,13 @@
 					</a>
 				</li>
 				<li>
-					<a href="">
+					<a href="#">
 						<span class="icon"><i class="fas fa-gamepad"></i></span>
 						<span class="titulo">Games</span>
 					</a>
 				</li>
 				<li>
-					<a href="">
+					<a href="#">
 						<span class="icon"><i class="fas fa-star"></i></span>
 						<span class="titulo">Favorites</span>
 					</a>
@@ -80,7 +80,7 @@
 					if (!isset($_SESSION['usrNick'])) {
 				 		echo "
 							<li>
-								<a href='../login/login.php'>
+								<a href='..\login\login.php'>
 									<span class='icon'><i class='fas fa-user'></i></span>
 									<span class='titulo'>Account</span>
 								</a>
@@ -96,17 +96,17 @@
 					</a>
 				</li>
 				<?php
-					if (isset($_SESSION['usrNick'])) {
-				 		echo "
-			 			<li class='cuenta'>
-							<a href='cuenta.php'>
-								<span class='iconC'><i class='fas fa-user-circle'></i></span>
-								<span class='nombreUsr'>$usrNick</span>
-								<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
-							</a>
-						</li>
-							";
-				 	} 
+					// if (isset($_SESSION['usrNick'])) {
+				 // 		echo "
+			 	// 		<li class='cuenta'>
+					// 		<a href='.\cuenta\cuenta.php'>
+					// 			<span class='iconC'><i class='fas fa-user-circle'></i></span>
+					// 			<span class='nombreUsr'>$usrNick</span>
+					// 			<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
+					// 		</a>
+					// 	</li>
+					// 		";
+				 // 	} 
 				 ?>
 
 			</ul>
@@ -117,6 +117,36 @@
 	    <div class="ola ola3"></div>
 	    <div class="ola ola4"></div>
 	  </section>
+	</div>
+	<div class="top-menu">
+
+		<ul>
+		<?php
+			if (isset($_SESSION['usrNick'])) {
+		 		echo "
+		 		
+		 			<li class='cuenta'>
+						<a href='cuenta.php'>
+							<span class='iconC'><i class='fas fa-user-circle'></i></span>
+							<span class='nombreUsr'>$usrNick</span>
+							<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
+						</a>
+					</li>
+				
+					";
+		 	} 
+		 ?>
+		<form id="formSearch" method="GET" action="..\index.php" >
+			<div class="flexbox">
+				<div class="search">
+					<div>
+						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required>
+					</div>
+				</div>
+			</div>
+		</form>
+		 </ul>
+		<div class="content-menu"></div>
 	</div>
 	<div class="content" >
 	<h2 style="font-weight: 500; font-size: 30px">Configuración de cuenta</h2>
@@ -145,9 +175,49 @@
 				<div class="fotoPerfil">
 					<div id="edit"><i class="far fa-edit"></i></div>
 				</div>
-				<div class="infoP">
-					<p>Usuario</p>
-					<input type="text" name="usuario" value="<?php echo $usrNick;?>">
+				<?php
+					$db = new mysqli("localhost:3306", "root", "", "h15af00");
+					$consulta = "SELECT * FROM usuario WHERE nick LIKE ? ;";
+					$stmt = $db->prepare($consulta);
+					$stmt->bind_param("s", $usrNick);
+					$stmt->execute();
+					$resultado = $stmt->get_result();
+					$dt = mysqli_fetch_array($resultado);
+
+				//Zona submit Guardar perfil
+					if (isset($_POST['usuario'])) {
+						$sqlGuardar = "CALL GuardarUsuario(?, ?, ?, ?, ?, ?, ?, ?, @res)";
+						$stmt = $db->prepare($sqlGuardar);
+						$stmt->bind_param("ssssssss", $usrNick, $_POST['usuario'], $_POST['pw'], $_POST['newpw'],$_POST['nombre'],$_POST['ape1'],$_POST['ape2'],$_POST['correo']);
+						$stmt->execute();
+						$res = mysqli_query($db,"SELECT @res as resultado");
+						$res = mysqli_fetch_array($res);
+						$rs = $res["resultado"];
+						/*
+						TRATAR ERRORES DE $rs
+						*/
+						header('Location: ./cuenta.php');
+						exit;
+					}
+				// FIN Zona submit Guardar perfil
+				 ?>
+				<div class="infoP" style="padding-top: 0;">
+					<form method="POST" action="cuenta.php">
+						<input class="btnGuardar" type="submit" name="guardar" value="Guardar">
+						<p>Usuario</p>
+						<input type="text" name="usuario" value="<?php echo $usrNick;?>"placeholder="Nombre">
+						<p>Correo</p>
+						<input type="text" name="correo" value="<?php echo $dt['correo'];?>" placeholder="Correo">
+						<p>Nombre</p>
+						<input type="text" name="nombre" value="<?php echo $dt['nombre'];?>"placeholder="Nombre">
+						<p>Apellidos</p>
+						<input type="text" name="ape1" value="<?php echo $dt['apellido_1'];?>"
+						placeholder="Primer apellido">
+						<input type="text" name="ape2" value="<?php echo $dt['apellido_2'];?>" placeholder="Segundo apellido">
+						<p>Contraseña</p>
+						<input type="password" name="pw" value="<?php ?>" placeholder="Contraseña">
+						<input type="password" name="newpw" value="<?php ?>" placeholder="Nueva contraseña">
+					</form>
 				</div>
 			</div>
 			<hr>

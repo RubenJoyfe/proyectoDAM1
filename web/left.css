@@ -319,18 +319,16 @@ section .ola4 {
 }
 
 .top-menu ul li:hover {
-  background: rgb(0, 0, 0, 0.2);
+  background: rgb(0, 0, 0, 0.1);
 }
 .top-menu ul li a {
   position: relative;
   width: 100%;
   display: flex;
   text-decoration: none;
-  color: #6666ff;
-  animation: colorRotate 5s linear infinite;
+  color: #A19393;
+  /*animation: colorRotate 5s linear infinite;*/
 }
-
-
 
 @keyframes colorRotate {
   from {
@@ -510,6 +508,6 @@ form {
   .search > div > input:not(:placeholder-shown) {
   width: 100px;
   background-color: rgb(200,200,200);
-}
+  }
 
 }
