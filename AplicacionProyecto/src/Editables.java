@@ -1,4 +1,10 @@
+//button.setFocusPainted(false);
+
 import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -30,6 +36,7 @@ public class Editables {
 			cp.add(cmb);
 			cmb.addItem(name);
 			cmb.addItem("No "+name);
+			cmb.setToolTipText(name);
 			this.type = "bool";
 		} else if (type.contains("int")) {
 			NumberFormatter nf = new NumberFormatter();
@@ -37,17 +44,37 @@ public class Editables {
 			if (name.contains("id_")) {
 				nmb.setEditable(false);
 			}
-			nmb.setText("");
+			nmb.setToolTipText(name);
+			nmb.setValue(null);
 			nmb.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
 			cp.add(nmb);
 			placeHolder = new TextPrompt(name,nmb);
 			placeHolder.changeAlpha(0.8f);
 			placeHolder.changeStyle(Font.PLAIN);
 			this.type = "int";
+			nmb.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyCode()==10) {
+						if (nmb.getText().isBlank()) {
+							nmb.setValue(null);
+						}
+						contentPane.requestFocus();
+					}
+				}
+			});
+			nmb.addFocusListener(new FocusAdapter() {
+				public void focusLost(FocusEvent e) {
+					if (nmb.getText().isBlank()) {
+						nmb.setValue(null);
+					}
+				}
+			});
 		} else if (type.contains("enum")) {
 			cmb = new JComboBox<String>();
 			cmb.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
 			cp.add(cmb);
+			cmb.setToolTipText(name);
 			String[] str = type.split("'");
 			for (int j = 1; j < str.length-1; j+=2) {
 				cmb.addItem(str[j]);
@@ -59,6 +86,7 @@ public class Editables {
 				txt.setEditable(false);
 			}
 			txt.setText("");
+			txt.setToolTipText(name);
 			txt.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
 			cp.add(txt);
 			placeHolder = new TextPrompt(name,txt);
@@ -68,11 +96,15 @@ public class Editables {
 		} else if (type.contains("date")) {
 			txt = new JTextField();
 			txt.setEditable(false);
-			txt.setText("Fecha");
+			txt.setText("");
+			txt.setToolTipText(name);
 			txt.setFont(new Font("Tahoma", Font.PLAIN, 10));
 			txt.setHorizontalAlignment(SwingConstants.CENTER);
 			txt.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
 			cp.add(txt);
+			placeHolder = new TextPrompt(name,txt);
+			placeHolder.changeAlpha(0.8f);
+			placeHolder.changeStyle(Font.PLAIN);
 			this.type = "date";
 			
 			DateTime dt = new DateTime();
@@ -111,17 +143,25 @@ public class Editables {
 	public void setText(String s) {
 		switch (type) {	//bool - int - enum - varchar - date
 		case "bool":
-			if (s.equals("1")) {
+			if (s == null|| s.equals("1")) {
 				cmb.setSelectedIndex(0);
 			} else {
 				cmb.setSelectedIndex(1);
 			}
 			break;
 		case "enum":
-			cmb.setSelectedItem(s);
+			if (s == null) {
+				cmb.setSelectedIndex(0);
+			} else {
+				cmb.setSelectedItem(s);
+			}
 			break;
 		case "int":
-			nmb.setValue(Integer.parseInt(s));
+			if (s == null||s.isBlank()) {
+				nmb.setValue(null);
+			} else {
+				nmb.setValue(Integer.parseInt(s));
+			}
 			break;
 		case "varchar":
 			txt.setText(s);
@@ -153,7 +193,7 @@ public class Editables {
 		case "varchar":
 			return txt.getText();
 		case "date":
-			if (txt.getText().equals("Fecha")) {
+			if (txt.getText().equals("Fecha")||txt.getText().isBlank()) {
 				return null;
 			}
 			return txt.getText();

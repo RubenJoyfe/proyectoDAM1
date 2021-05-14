@@ -17,7 +17,7 @@ public class Updates {
 			int longT = txtEditables.length;
 			cst = conexion.prepareCall("{call ModificarUsuario(?,?,?,?,?,?,?,?,?,?,?)}");
 			for (int i = 0; i < longT; i++) {
-				if (txtEditables[i].equals("null")) {
+				if (txtEditables[i] == null || txtEditables[i].equals("null")) {
 					cst.setString(i+1, null);
 				} else {
 					cst.setString(i+1, txtEditables[i]);
@@ -40,7 +40,7 @@ public class Updates {
 			int longT = txtEditables.length;
 			cst = conexion.prepareCall("{call ModificarDesbloqueo(?,?,?,?,?,?,?,?,?)}");
 			for (int i = 0; i < longT; i++) {
-				if (txtEditables[i].equals("null")) {
+				if (txtEditables[i] == null || txtEditables[i].equals("null")) {
 					cst.setString(i+1, null);
 				} else {
 					cst.setString(i+1, txtEditables[i]);
@@ -62,7 +62,7 @@ public class Updates {
 			int longT = txtEditables.length;
 			cst = conexion.prepareCall("{call ModificarUsuario_desbloqueo(?,?,?)}");
 			for (int i = 0; i < longT-2; i++) {
-				if (txtEditables[i].equals("null")) {
+				if (txtEditables[i] == null || txtEditables[i].equals("null")) {
 					cst.setString(i+1, null);
 				} else {
 					cst.setString(i+1, txtEditables[i]);
@@ -84,7 +84,7 @@ public class Updates {
 			int longT = txtEditables.length;
 			cst = conexion.prepareCall("{call ModificarUsuario_juego(?,?,?,?)}");
 			for (int i = 0; i < longT-2; i++) {
-				if (txtEditables[i].equals("null")) {
+				if (txtEditables[i] == null || txtEditables[i].equals("null")) {
 					cst.setString(i+1, null);
 				} else {
 					cst.setString(i+1, txtEditables[i]);
@@ -104,9 +104,9 @@ public class Updates {
 	public int ModificarPuntuacion(String[] txtEditables){
 		try {
 			int longT = txtEditables.length;
-			cst = conexion.prepareCall("{call ModificarPuntuacion(?,?,?,?,?)}");
+			cst = conexion.prepareCall("{call ModificarPuntuacion(?,?,?,?)}");
 			for (int i = 0; i < longT-2; i++) {
-				if (txtEditables[i].equals("null")) {
+				if (txtEditables[i] == null || txtEditables[i].equals("null")) {
 					cst.setString(i+1, null);
 				} else {
 					cst.setString(i+1, txtEditables[i]);
@@ -128,7 +128,7 @@ public class Updates {
 			int longT = txtEditables.length;
 			cst = conexion.prepareCall("{call ModificarJuego(?,?,?,?,?)}");
 			for (int i = 0; i < longT; i++) {
-				if (txtEditables[i].equals("null")) {
+				if (txtEditables[i] == null || txtEditables[i].equals("null")) {
 					cst.setString(i+1, null);
 				} else {
 					cst.setString(i+1, txtEditables[i]);
@@ -149,8 +149,8 @@ public class Updates {
 		try {
 			int longT = txtEditables.length;
 			cst = conexion.prepareCall("{call ModificarAjustes(?,?,?,?)}");
-			for (int i = 0; i < longT; i++) {
-				if (txtEditables[i].equals("null")) {
+			for (int i = 0; i < longT-1; i++) {
+				if (txtEditables[i] == null || txtEditables[i].equals("null")) {
 					cst.setString(i+1, null);
 				} else {
 					cst.setString(i+1, txtEditables[i]);

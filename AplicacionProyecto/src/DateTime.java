@@ -48,6 +48,8 @@ public class DateTime extends JDialog {
 	private JLabel lblHora;
 
 	private JTextField txtf;
+
+	private JButton btnLimpiar;
 	/**
 	 * Launch the application.
 	 */
@@ -248,7 +250,7 @@ public class DateTime extends JDialog {
 
 	public void actualizaFecha() {
 		Calendar cal = calendar.getCalendar();
-		lblFecha.setText(cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.DAY_OF_MONTH));
+		lblFecha.setText(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1) + "-" + cal.get(Calendar.DAY_OF_MONTH));
 	}
 
 	public void startButtons() {
@@ -265,7 +267,7 @@ public class DateTime extends JDialog {
 			}
 		});
 		btnCancelar.setBackground(SystemColor.menu);
-		btnCancelar.setBounds(197, 5, 179, 20);
+		btnCancelar.setBounds(259, 5, 117, 20);
 		btnCancelar.setFocusPainted(false);
 		buttonPane.add(btnCancelar);
 
@@ -282,9 +284,21 @@ public class DateTime extends JDialog {
 			}
 		});
 		btnAceptar.setBackground(SystemColor.menu);
-		btnAceptar.setBounds(10, 5, 177, 20);
+		btnAceptar.setBounds(10, 5, 117, 20);
 		btnAceptar.setFocusPainted(false);
 		buttonPane.add(btnAceptar);
+		
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtf.setText(null);
+				dispose();
+			}
+		});
+		btnLimpiar.setBackground(SystemColor.menu);
+		btnLimpiar.setBounds(135, 5, 117, 20);
+		btnLimpiar.setFocusPainted(false);
+		buttonPane.add(btnLimpiar);
 	}
 
 	public void setJTextField(JTextField txt) {

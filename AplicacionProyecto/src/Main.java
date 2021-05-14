@@ -24,7 +24,12 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
+import javax.swing.JTextArea;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
@@ -53,6 +58,10 @@ public class Main extends JFrame {
 	private Updates modificacion;
 	private Object celdas [][];
 	private Editables[] editaciones = new Editables[0];
+	private JTextArea txtCustom;
+	private JLabel lblClear;
+
+	private JButton btnCustom;
 	
 	/**
 	 * Launch the application.
@@ -101,6 +110,7 @@ public class Main extends JFrame {
 		panel_opciones.add(lblNombreTabla);
 		
 		btnInsertar = new JButton("Insertar");
+		btnInsertar.setFocusPainted(false);
 		btnInsertar.addActionListener(new ActionListener() { // -------------------------> Listener Inserts
 			public void actionPerformed(ActionEvent e) {
 				getEditableString();
@@ -111,6 +121,7 @@ public class Main extends JFrame {
 		panel_opciones.add(btnInsertar);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.setFocusPainted(false);
 		btnModificar.addActionListener(new ActionListener() { // ----------------------> Listener Modificar
 			public void actionPerformed(ActionEvent e) {
 				String msg = "¿Está seguro que quiere modificar este"
@@ -128,6 +139,7 @@ public class Main extends JFrame {
 		panel_opciones.add(btnModificar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setFocusPainted(false);
 		btnEliminar.addActionListener(new ActionListener() { // ----------------------> Listener Eliminar
 			public void actionPerformed(ActionEvent e) {
 				String msg = "¿Está seguro que quiere eliminar este"
@@ -143,6 +155,57 @@ public class Main extends JFrame {
 		});
 		btnEliminar.setBounds(10, 298, 164, 57);
 		panel_opciones.add(btnEliminar);
+		
+		txtCustom = new JTextArea();
+		txtCustom.setLineWrap(true);
+		
+		JScrollPane sp = new JScrollPane(txtCustom);
+		sp.setBounds(10, 73, 164, 177);
+		panel_opciones.add(sp);
+		
+		btnCustom = new JButton("Ejecutar");
+		btnCustom.setFocusPainted(false);
+		btnCustom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String sql = txtCustom.getText();
+				String type;
+				if (sql.length()>5) {
+					type = sql.replace(" ","").substring(0, 6).toLowerCase();
+				} else {
+					JOptionPane.showMessageDialog(null, "Script no válido", "Error", 0);
+					return;
+				}
+				switch(type) {
+					case "select":
+					{
+						crearVista(txtCustom.getText());
+						break;
+					}
+					case "insert", "update", "delete":
+					{
+						if (JOptionPane.showConfirmDialog(null, "Ejecutar: "+sql+"?",
+			            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
+							try {
+								int f = comando.executeUpdate(txtCustom.getText());
+								crearTabla(lblNombreTabla.getText().toLowerCase());
+								JOptionPane.showMessageDialog(null, f==1?f+" Fila afectada":f+" Filas afectadas", "Success", 1);
+								txtCustom.setText(null);
+							} catch (SQLException e2) {
+								printSQLException(e2);
+							}
+						}
+						break;
+					}
+					default :
+					{
+						JOptionPane.showMessageDialog(null, "Script no válido", "Error", 0);
+						break;
+					}
+				}
+			}
+		});
+		btnCustom.setBounds(10, 248, 163, 23);
+		panel_opciones.add(btnCustom);
 		
 		do {
 //			login();
@@ -292,15 +355,72 @@ public class Main extends JFrame {
 		}
 	}
 	
+	public static void printSQLException(SQLException ex) {
+	    for (Throwable e : ex) {
+	        if (e instanceof SQLException) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),
+                		"Error Code: " + ((SQLException)e).getErrorCode(), 0);
+                Throwable t = ex.getCause();
+                while(t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+	            }
+	        }
+	    }
+	}
+	
 	
 	//********************************* Fin MYSQL *************************************************
 	
 	public void startMenu() {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		mnMostrar = new JMenu("Tablas");
-
+//		mnMostrar.setPreferredSize(new Dimension(100, mnMostrar.getPreferredSize().height));
+		mnMostrar = new JMenu("   Tablas   ");
+		mnMostrar.setBackground(Color.LIGHT_GRAY);
+		mnMostrar.setForeground(Color.BLACK);
+		mnMostrar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		menuBar.add(mnMostrar);
+		mnMostrar.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				mnMostrar.setOpaque(true);
+				mnMostrar.repaint();
+			}
+			public void mouseExited(MouseEvent e) {
+				mnMostrar.setOpaque(false);
+				mnMostrar.repaint();
+			}
+		});
+		
+		lblClear = new JLabel("   Limpiar Campos   ") {
+			private static final long serialVersionUID = 1L;
+			// Maximum size should be larger than what the JMenuBar will ever be.
+		    @Override
+		    public Dimension getMaximumSize() {
+		        return new Dimension((int)lblClear.getPreferredSize().getWidth(), 1000);
+		    }
+		};
+		lblClear.setBackground(Color.lightGray);
+		lblClear.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		lblClear.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				for (int i = 0; i < editaciones.length; i++) {
+					editaciones[i].setText(null);
+				}
+				txtCustom.setText(null);
+				contentPane.requestFocus();
+			}
+			public void mouseEntered(MouseEvent e) {
+				lblClear.setOpaque(true);
+				lblClear.repaint();
+			}
+			public void mouseExited(MouseEvent e) {
+				lblClear.setOpaque(false);
+				lblClear.repaint();
+			}
+		});
+		menuBar.add(lblClear);
 		
 		String sql = "SELECT table_name AS nombre FROM information_schema.tables"
 				+ " WHERE table_schema = 'h15af00' ORDER BY nombre ASC";
@@ -323,6 +443,7 @@ public class Main extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						crearTabla(nombreOp);
 						lblNombreTabla.setText(nombreMay);
+						enableButtons(true);
 					}
 				});
 				rows++;
@@ -393,8 +514,33 @@ public class Main extends JFrame {
 		    pass = new String(password.getPassword());		   
 	}
 	
+	public void crearVista(String str) {
+		try {
+			comando.executeUpdate("DROP VIEW IF EXISTS custom;");
+			comando.executeUpdate("CREATE VIEW custom AS "+ str +";");
+			crearTabla("custom");
+			enableButtons(false);
+		} 
+		catch (SQLException e) {
+			printSQLException(e);
+		}
+		try {
+			comando.executeUpdate("DROP VIEW IF EXISTS custom;");
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+	}
+	
+	private void enableButtons(boolean b) {
+		btnEliminar.setEnabled(b);
+		btnInsertar.setEnabled(b);
+		btnModificar.setEnabled(b);
+	}
+
 	@SuppressWarnings({ "serial", "rawtypes" })
 	public void crearTabla(String tb) {
+		txtCustom.setText(null);
+		contentPane.requestFocus();
 		if (tb.equals("vacía")) {
 			tabla = new JTable();
 			panel_tabla.setLayout(null);
@@ -436,10 +582,12 @@ public class Main extends JFrame {
 				int cont2=0;
 				rs2 = comando.executeQuery(sql);
 				while (rs2.next()) {
-					celdas[cont][cont2]=Integer.parseInt(rs2.getString(titulos[0]));
-					cont2++;
 					while (cont2<nCol) {
-						celdas[cont][cont2]=rs2.getString(titulos[cont2]);
+						try {	// Guarda Entero si es un entero --> Permite la ordenacion de las columnas
+							celdas[cont][cont2]=Integer.parseInt(rs2.getString(titulos[cont2]));
+						} catch (Exception e) {
+							celdas[cont][cont2]=rs2.getString(titulos[cont2]);
+						}
 						cont2++;
 					}
 					cont++;
@@ -455,10 +603,14 @@ public class Main extends JFrame {
 						columnasTipo[i]=Object.class;
 					}
 				}
+				
 				// Inicializa la tabla con el modelo establecido
 				tabla.setModel(new DefaultTableModel(celdas, titulos){
+					public boolean isCellEditable(int row, int column) {
+						return false;
+					}
 					Class[] columnTypes = columnasTipo;
-					@SuppressWarnings({ "unchecked" })
+					@SuppressWarnings("unchecked")
 					public Class getColumnClass(int columnIndex) {
 						return columnTypes[columnIndex];
 					}

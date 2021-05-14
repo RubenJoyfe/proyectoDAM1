@@ -35,7 +35,6 @@ public class Inserts {
 			int longT = txtEditables.length;
 			cst = conexion.prepareCall("{call InsertarDesbloqueo(?,?,?,?,?,?,?,?)}");
 			for (int i = 1; i < longT; i++) {
-				System.out.println(txtEditables[i]);
 				cst.setString(i, txtEditables[i]);
 			}
 			cst.registerOutParameter(longT, java.sql.Types.INTEGER);
