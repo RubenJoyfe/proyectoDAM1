@@ -101,6 +101,11 @@ body {
 
 .content a {
   width: 25%;
+  text-decoration:none;
+}
+
+.content a:hover {
+  font-size: 20px;
 }
 
 @media (max-width:1920px) {

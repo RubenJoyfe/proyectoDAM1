@@ -1,0 +1,59 @@
+/*................................DARK THEME..................................*/
+
+.darkUsr {
+  position: relative;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: #6666ff;
+  animation: colorRotate 5s linear infinite;
+}
+
+.darkbg {
+  background-color: rgba(16, 18, 20, 1);
+  color: #f1f1f1;
+}
+
+.darkbg1 {
+  background-color: rgba(43, 48, 50, 1);
+  color: white;
+}
+
+.dartkbgtop {
+  background-color: rgb(230,230,230,0.1);
+}
+
+.darkinputbg {
+  border: 1px solid #161B22;
+  background-color: rgb(6, 10, 15,0.5);
+  color: #8B949E;
+}
+
+.darkinputbg:hover,
+.darkinputbg:focus {
+  background-color: #24262b;
+}
+
+.conf .darkhr {
+  color: #31343A;
+}
+
+.conf .fotoPerfil.darkftedit {
+  background-color: #353739;
+}
+
+.search > div > .darkSearch {
+  background-color: #24262b;
+  border: 3px solid #261B22;
+}
+.search > div.darkSearch {
+  filter: drop-shadow(0 0px #261B22);
+}
+.search > div#divbq.darkSearch:after {
+  background-color: #261B22;
+}
+
+.search > div > .darkSearch:hover,
+.search > div > .darkSearch:focus {
+  background-color: #31343A;
+}

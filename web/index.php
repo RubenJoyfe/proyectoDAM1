@@ -10,14 +10,7 @@
 			$usrTema=$_SESSION['usrTema'];
 		}
 		else {
-			$db = new mysqli("localhost:3306", "root", "", "h15af00");
-			if ($db->connect_errno) {
-			    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
-			}
-			$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario WHERE usuario.nick LIKE '".$usrNick."'";
-			$tema = $db->query($dtsql);
-			$tema = $tema->fetch_assoc();
-			$_SESSION['usrTema'] = $tema['oscuro'];
+
 		}
 
 	}
@@ -35,9 +28,10 @@
   <link rel="stylesheet" type="text/css" href="rubiclogo.css">
   <link rel="stylesheet" type="text/css" href="left.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="dark.css">
 
 </head>
-<body>
+<body <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkbg'";} ?>>
 	<div class="left">
 		<div class="toggle"></div>
 	  <section class="sect">
@@ -120,15 +114,14 @@
 	    <div class="ola ola4"></div>
 	  </section>
 	</div>
-	<div class="top-menu">
-
+	<div class="top-menu <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "dartkbgtop";} ?>">
 		<ul>
 		<?php
 			if (isset($_SESSION['usrNick'])) {
 		 		echo "
 		 		
 		 			<li class='cuenta'>
-						<a href='.\cuenta\cuenta.php'>
+						<a href='.\cuenta\cuenta.php'"; if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkUsr'";}echo "> 
 							<span class='iconC'><i class='fas fa-user-circle'></i></span>
 							<span class='nombreUsr'>$usrNick</span>
 							<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
@@ -141,8 +134,8 @@
 		<form id="formSearch" method="GET" action="index.php" >
 			<div class="flexbox">
 				<div class="search">
-					<div>
-						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required <?php if (isset($_GET['search'])) {echo "value='".$_GET['search']."'";} ?>>
+					<div id="divbq" <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkSearch'";} ?>>
+						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required <?php if (isset($_GET['search'])) {echo "value='".$_GET['search']."'";} if( isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkSearch'";} ?>>
 					</div>
 				</div>
 			</div>
@@ -176,7 +169,7 @@
 					$source = $columna['nombre'];
 					$redireccion = "./juegos/juego.php?source=".$source."";
 					echo " <a href='" . $redireccion . "'>
-								<div class='juego'>
+								<div class='juego";if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";}echo "'>
 									<p>" 
 									. $columna["nombre"] . 
 									"</p>
@@ -184,7 +177,7 @@
 							</a>";
 				}
 			 ?>
-			<div class="juego"> <h2>Proximamente...</h2></div>
+			<div class="juego<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";} ?>"> <h2>Proximamente...</h2></div>
 	</div>
 	<div class="imagen"></div>
 </body>

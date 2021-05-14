@@ -246,17 +246,3 @@
 }
 
 
-/*................................DARK THEME..................................*/
-
-.darkbg {
-  background-color: rgba(16, 18, 20, 1);
-  color: white
-}
-
-.darkbg1 {
-  background-color: rgba(43, 48, 50, 0.6);
-}
-
-.dartkbgtop {
-  background-color: rgb(230,230,230,0.1);
-}

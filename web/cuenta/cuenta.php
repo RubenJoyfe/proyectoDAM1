@@ -33,6 +33,7 @@
   <link rel="stylesheet" type="text/css" href="rubiclogo.css">
   <link rel="stylesheet" type="text/css" href="left.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="dark.css">
 
 </head>
 <body>
@@ -139,7 +140,7 @@
 		<form id="formSearch" method="GET" action="..\index.php" >
 			<div class="flexbox">
 				<div class="search">
-					<div>
+					<div id="divbq">
 						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required>
 					</div>
 				</div>
@@ -202,7 +203,7 @@
 				// FIN Zona submit Guardar perfil
 				 ?>
 				<div class="infoP" style="padding-top: 0;">
-					<form method="POST" action="cuenta.php">
+					<form id="perfil" method="POST" action="cuenta.php">
 						<input class="btnGuardar" type="submit" name="guardar" value="Guardar">
 						<p>Usuario</p>
 						<input type="text" name="usuario" value="<?php echo $usrNick;?>"placeholder="Nombre">

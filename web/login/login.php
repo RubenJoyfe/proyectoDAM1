@@ -89,6 +89,12 @@
 					$dineros = $dineros->fetch_assoc();
 					$_SESSION['usrDinero'] = $dineros['dinero'];
 					$_SESSION['usrNick'] = $usrNick;
+					//coge el tema que tengas (oscuro-no oscuro)
+						$dtsql = "SELECT oscuro FROM ajustes JOIN usuario ON ajustes.fk_usuario = usuario.id_usuario WHERE usuario.nick LIKE '".$usrNick."'";
+						$tema = $db->query($dtsql);
+						$tema = $tema->fetch_assoc();
+					$_SESSION['usrTema'] = $tema['oscuro'];
+					//redirige
 					header('Location: ../index.php?redireccion=1');
 					exit;
 				}
