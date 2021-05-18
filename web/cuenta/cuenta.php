@@ -224,9 +224,23 @@
 			</div>
 			<hr>
 		</div>
-
+		<div class="conf">
+			<div id="txtDel" class="info">Suspender cuenta</div>
+			<div class="dangerButton">
+				<input id="btnBaja" type="button" name="delete" value="Dar de baja">
+			</div>
+			<hr>
+		</div>
 		
 			
+	</div>
+	<div id="bgalerta">
+		<div class="alerta">
+			<form id="eliminar" method="POST" action="cuenta.php">
+				<input id="cancelar" type="button" name="cancelar" value="Cancelar">
+				<input id="confirmar" type="button" name="Confirmar" value="Confirmar">
+			</form>
+		</div>
 	</div>
 	<div class="imagen"></div>
 </body>
