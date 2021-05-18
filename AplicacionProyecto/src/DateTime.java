@@ -58,7 +58,7 @@ public class DateTime extends JDialog {
 			DateTime dialog = new DateTime();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-			dialog.setResizable(false);
+			System.out.println(dialog.isResizable()+"asdasd");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,6 +68,7 @@ public class DateTime extends JDialog {
 	 * Create the dialog.
 	 */
 	public DateTime() {
+		setResizable(false);
 		setBounds(10, 10, 400, 340);
 		getContentPane().setLayout(new BorderLayout());
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));

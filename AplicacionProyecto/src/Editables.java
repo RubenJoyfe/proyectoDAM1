@@ -32,7 +32,7 @@ public class Editables {
 		contentPane = cp;
 		if (type.equals("tinyint(1)")) {
 			cmb = new JComboBox<String>();
-			cmb.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
+			cmb.setBounds(104*(i%6), (i/6)*30, 100, 20);
 			cp.add(cmb);
 			cmb.addItem(name);
 			cmb.addItem("No "+name);
@@ -46,7 +46,7 @@ public class Editables {
 			}
 			nmb.setToolTipText(name);
 			nmb.setValue(null);
-			nmb.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
+			nmb.setBounds(104*(i%6), (i/6)*30, 100, 20);
 			cp.add(nmb);
 			placeHolder = new TextPrompt(name,nmb);
 			placeHolder.changeAlpha(0.8f);
@@ -72,7 +72,7 @@ public class Editables {
 			});
 		} else if (type.contains("enum")) {
 			cmb = new JComboBox<String>();
-			cmb.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
+			cmb.setBounds(104*(i%6), (i/6)*30, 100, 20);
 			cp.add(cmb);
 			cmb.setToolTipText(name);
 			String[] str = type.split("'");
@@ -87,7 +87,7 @@ public class Editables {
 			}
 			txt.setText("");
 			txt.setToolTipText(name);
-			txt.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
+			txt.setBounds(104*(i%6), (i/6)*30, 100, 20);
 			cp.add(txt);
 			placeHolder = new TextPrompt(name,txt);
 			placeHolder.changeAlpha(0.8f);
@@ -100,7 +100,7 @@ public class Editables {
 			txt.setToolTipText(name);
 			txt.setFont(new Font("Tahoma", Font.PLAIN, 10));
 			txt.setHorizontalAlignment(SwingConstants.CENTER);
-			txt.setBounds(10+104*(i%6), 455+((i/6)*30), 100, 20);
+			txt.setBounds(104*(i%6), (i/6)*30, 100, 20);
 			cp.add(txt);
 			placeHolder = new TextPrompt(name,txt);
 			placeHolder.changeAlpha(0.8f);
