@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
@@ -62,6 +63,10 @@ public class Main extends JFrame {
 	private JLabel lblClear;
 
 	private JButton btnCustom;
+
+	private JPanel panel_editables;
+
+	private JLabel lblLogOut;
 	
 	/**
 	 * Launch the application.
@@ -93,8 +98,13 @@ public class Main extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		panel_editables = new JPanel();
+		panel_editables.setBounds(10, 523, 619, 0);
+		contentPane.add(panel_editables);
+		panel_editables.setLayout(null);
+		
 		panel_tabla = new JPanel();
-		panel_tabla.setBounds(10, 11, 619, 433);
+		panel_tabla.setBounds(10, 11, 619, 432);
 		contentPane.add(panel_tabla);
 		
 		panel_opciones = new JPanel();
@@ -189,7 +199,6 @@ public class Main extends JFrame {
 								int f = comando.executeUpdate(txtCustom.getText());
 								crearTabla(lblNombreTabla.getText().toLowerCase());
 								JOptionPane.showMessageDialog(null, f==1?f+" Fila afectada":f+" Filas afectadas", "Success", 1);
-								txtCustom.setText(null);
 							} catch (SQLException e2) {
 								printSQLException(e2);
 							}
@@ -204,13 +213,25 @@ public class Main extends JFrame {
 				}
 			}
 		});
-		btnCustom.setBounds(10, 248, 163, 23);
+		btnCustom.setBounds(10, 248, 82, 23);
 		panel_opciones.add(btnCustom);
 		
+		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(btnLimpiar,"¿Seguro que desea borrar el texto?","Borrar texto" ,0)==0) {
+					txtCustom.setText(null);
+				}
+			}
+		});
+		btnLimpiar.setFocusPainted(false);
+		btnLimpiar.setBounds(91, 248, 82, 23);
+		panel_opciones.add(btnLimpiar);
+		
 		do {
-//			login();
-			nombre = "root";
-			pass = "";
+			login();
+//			nombre = "root";
+//			pass = "";
 		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
 		startMenu();
 		crearTabla("vacía");
@@ -408,7 +429,6 @@ public class Main extends JFrame {
 				for (int i = 0; i < editaciones.length; i++) {
 					editaciones[i].setText(null);
 				}
-				txtCustom.setText(null);
 				contentPane.requestFocus();
 			}
 			public void mouseEntered(MouseEvent e) {
@@ -421,6 +441,41 @@ public class Main extends JFrame {
 			}
 		});
 		menuBar.add(lblClear);
+		
+		menuBar.add(Box.createHorizontalGlue());
+		lblLogOut = new JLabel("   Cerrar Sesion   ") {
+			private static final long serialVersionUID = 1L;
+			// Maximum size should be larger than what the JMenuBar will ever be.
+		    @Override
+		    public Dimension getMaximumSize() {
+		        return new Dimension((int)lblClear.getPreferredSize().getWidth(), 1000);
+		    }
+		};
+		lblLogOut.setBackground(Color.lightGray);
+		lblLogOut.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		lblLogOut.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+		        dispose();
+				try {
+					Main frame = new Main();
+					frame.setVisible(true);
+					frame.setTitle("Base de Datos h15af00");
+					frame.setResizable(false);
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			public void mouseEntered(MouseEvent e) {
+				lblLogOut.setOpaque(true);
+				lblLogOut.repaint();
+			}
+			public void mouseExited(MouseEvent e) {
+				lblLogOut.setOpaque(false);
+				lblLogOut.repaint();
+			}
+		});
+		menuBar.add(lblLogOut);
 		
 		String sql = "SELECT table_name AS nombre FROM information_schema.tables"
 				+ " WHERE table_schema = 'h15af00' ORDER BY nombre ASC";
@@ -460,7 +515,7 @@ public class Main extends JFrame {
 		deleteEditables();
 		editaciones = new Editables[columnas.length];
 		for (int i = 0; i < columnas.length; i++) {
-			editaciones[i] = new Editables(columnas[i], tipos[i], i,  contentPane);
+			editaciones[i] = new Editables(columnas[i], tipos[i], i,  panel_editables);
 		}
 	}
 	
@@ -484,7 +539,7 @@ public class Main extends JFrame {
 			        "jdbc:mysql://" + ip + "/" + bbdd + "?serverTimezone=UTC", usuario, pass);//jdbc:mysql://<ip>:<puerto>/<nombreDB>,"user","pass"
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			printSQLException(e);
 		}
 		return false;
 	}
@@ -537,15 +592,17 @@ public class Main extends JFrame {
 		btnModificar.setEnabled(b);
 	}
 
+	//*******************************Crear Tabla****************************
 	@SuppressWarnings({ "serial", "rawtypes" })
 	public void crearTabla(String tb) {
-		txtCustom.setText(null);
 		contentPane.requestFocus();
 		if (tb.equals("vacía")) {
 			tabla = new JTable();
 			panel_tabla.setLayout(null);
+			panel_tabla.setBounds(10, 11, 619, 502);
 			scroll.setViewportView(tabla);
 			scroll.setBounds(0, 0, 618, 502);
+			panel_editables.setBounds(10, 523, 619, 0);
 		    panel_tabla.add(scroll);
 		} else {
 			int nCol=0, nRow=0;
@@ -620,11 +677,14 @@ public class Main extends JFrame {
 			catch (SQLException e) {
 				e.printStackTrace();
 			}
+			int move = 30*(1+(nCol-1)/6);
+			panel_tabla.setBounds(10, 11, 619, 502-move);
+			scroll.setBounds(0, 0, 619, 502-move);
+			panel_editables.setBounds(10, 523-move, 620, move);
 		}
 		tabla.setName(tb);
 		panel_tabla.setLayout(null);
 		scroll.setViewportView(tabla);
-		scroll.setBounds(0, 0, 619, 433);
 	    panel_tabla.add(scroll);
 	    tabla.setCellSelectionEnabled(true);
 	    tabla.setAutoCreateRowSorter(true);
