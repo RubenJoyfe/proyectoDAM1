@@ -32,9 +32,9 @@
 
 </head>
 <body <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkbg'";} ?>>
-	<div class="left">
-		<div class="toggle"></div>
-	  <section class="sect">
+<div class="left">
+		<div class="toggle <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "toogleDark";} ?>"></div>
+	  <section class="sect shide <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "leftDark";} ?>">
 	  	<div class="navegacion">
 	  		<ul class="menu">
 	  			<li>

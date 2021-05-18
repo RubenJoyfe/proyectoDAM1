@@ -35,6 +35,8 @@
   <link rel="stylesheet" type="text/css" href="rubiclogo.css">
   <link rel="stylesheet" type="text/css" href="left.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="dark.css">
+
   <?php 
 
 		$db = new mysqli("localhost:3306", "Ruben", "1234", "h15af00");
@@ -48,10 +50,10 @@
 		$src = $_GET['source'];
    ?>
 </head>
-<body>
+<body <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkbg'";} ?>>
 	<div class="left shide2">
-		<div class="toggle Tactive"></div>
-	  <section class="sect shide">
+		<div class="toggle Tactive <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "toogleDark";} ?>"></div>
+	  <section class="sect shide <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "leftDark";} ?>">
 	  	<div class="navegacion">
 	  		<ul class="menu Tactive">
 	  			<li>
@@ -117,14 +119,14 @@
 	    <div class="ola ola4"></div>
 	  </section>
 	</div>
-	<div class="top-menu">
+	<div class="top-menu <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "dartkbgtop";} ?>">
 		<ul>
 		<?php
 			if (isset($_SESSION['usrNick'])) {
 		 		echo "
 		 		
 		 			<li class='cuenta'>
-						<a href='..\cuenta\cuenta.php'>
+						<a href='..\cuenta\cuenta.php'"; if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkUsr'";}echo "> 
 							<span class='iconC'><i class='fas fa-user-circle'></i></span>
 							<span class='nombreUsr'>$usrNick</span>
 							<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>
@@ -152,7 +154,7 @@
 		    	echo "title=".$src."";
 			?>
 		    width="80%"
-		    height="85%"
+		    height="70%"
 		    <?php 
 
 		    echo "src='" . $columna["src"] . "'>";
