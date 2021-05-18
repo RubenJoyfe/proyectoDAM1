@@ -128,7 +128,7 @@
 		 		echo "
 		 		
 		 			<li class='cuenta'>
-						<a href='cuenta.php'>
+						<a href='cuenta.php'"; if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkUsr'";}echo "> 
 							<span class='iconC'><i class='fas fa-user-circle'></i></span>
 							<span class='nombreUsr'>$usrNick</span>
 							<span class='dineros'><i class='fas fa-coins'></i>";if (isset($_SESSION['usrDinero'])){echo $dineros;}echo"</span>

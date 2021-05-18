@@ -21,6 +21,8 @@ function toogleDark(){
 	const fotoPerfil = document.getElementsByClassName("fotoPerfil");
 	const busqueda = document.getElementById("busqueda");
 	const divbq = document.getElementById("divbq");
+	const toggle = document.getElementsByClassName("toggle");
+	const sect = document.getElementsByClassName("sect");
 
 	console.log(hrs);
 	if (darksw.checked) {
@@ -29,6 +31,8 @@ function toogleDark(){
 		fotoPerfil[0].classList.add("darkftedit");
 		busqueda.classList.add("darkSearch");
 		divbq.classList.add("darkSearch");
+		toggle[0].classList.add("toogleDark");
+		sect[0].classList.add("leftDark");
 
 		for (var i = 0 ; i < conf.length; i++) {
 			conf[i].classList.add("darkbg1");
@@ -46,6 +50,8 @@ function toogleDark(){
 		fotoPerfil[0].classList.remove("darkftedit");
 		busqueda.classList.remove("darkSearch");
 		divbq.classList.remove("darkSearch");
+		toggle[0].classList.remove("toogleDark");
+		sect[0].classList.remove("leftDark");
 
 		for (var i = 0 ; i < conf.length; i++) {
 			conf[i].classList.remove("darkbg1");

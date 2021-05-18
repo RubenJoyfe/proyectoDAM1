@@ -20,7 +20,7 @@
 }
 
 .dartkbgtop {
-  background-color: rgb(230,230,230,0.1);
+  background-color: #2B3032;
 }
 
 .darkinputbg {
@@ -67,7 +67,7 @@
 
 .toogleDark {
   background-color: #000000;
-  background-image: linear-gradient(147deg, #000000 0%, #000000 45%, #000000 80%);
+  background-image: linear-gradient(270deg, #2B3032 0%, #2B3032 38%, #000000 80%);
   border-color: white;
   animation: borderRotate 5s linear infinite;
 }
