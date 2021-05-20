@@ -84,7 +84,8 @@ body {
   padding: 20px 0 0;
 }
 
-.juego {
+.juego,
+.lastjuego {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,9 +94,12 @@ body {
   border-radius: 25px;
   margin: 5px;*/
   min-width: 25%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
-.juego:last-child {
+.lastjuego {
   flex:1;
 }
 
