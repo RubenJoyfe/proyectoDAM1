@@ -29,6 +29,7 @@
   <link rel="stylesheet" type="text/css" href="left.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
   <link rel="stylesheet" type="text/css" href="dark.css">
+  <script type="text/javascript" src="js.js"></script>
 
 </head>
 <body <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkbg'";} ?>>
@@ -167,9 +168,17 @@
 				$resultado->num_rows;
 				while ($columna = mysqli_fetch_array($resultado)) {
 					$source = $columna['nombre'];
+					$visualizar= "
+					'background-image:url(./juegos/" . $source . "/img/portada.png);
+					background-size: contain;
+					'";
+					$gif= "
+						color='red'
+						
+					";
 					$redireccion = "./juegos/juego.php?source=".$source."";
 					echo " <a href='" . $redireccion . "'>
-								<div class='juego";if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";}echo "'>
+								<div data-juego='$source' class='juego";if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";}echo "'>
 									<p>" 
 									. $columna["nombre"] . 
 									"</p>
@@ -177,11 +186,8 @@
 							</a>";
 				}
 			 ?>
-			<div class="juego<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";} ?>"> <h2>Proximamente...</h2></div>
+			<div class="lastjuego<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";} ?>"> <h2>Proximamente...</h2></div>
 	</div>
 	<div class="imagen"></div>
 </body>
-
-<script type="text/javascript" src="js.js"></script>
-<!-- SELECT * FROM juego WHERE nombre LIKE "cli%"; -->
 </html>
