@@ -92,6 +92,7 @@ public class Main extends JFrame {
 	public Main() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 848, 585);
+		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -216,7 +217,7 @@ public class Main extends JFrame {
 		btnCustom.setBounds(10, 248, 82, 23);
 		panel_opciones.add(btnCustom);
 		
-		JButton btnLimpiar = new JButton("Limpiar");
+		JButton btnLimpiar = new JButton("Borrar");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(btnLimpiar,"¿Seguro que desea borrar el texto?","Borrar texto" ,0)==0) {
