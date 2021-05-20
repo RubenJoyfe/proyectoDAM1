@@ -1,7 +1,6 @@
 darksw.onchange = cambiarTema;
 toogleDark();
 function cambiarTema(event) {
-	console.log(darksw.checked);
 	
 	const options = {
 				method: 'POST',
@@ -63,4 +62,21 @@ function toogleDark(){
 			hrs[i].classList.remove("darkhr");
 		}
 	}
+}
+
+
+btnBaja.addEventListener("click", alertBaja);
+	cancelar.addEventListener("click", cancelarBaja);
+	confirmar.addEventListener("click", confirmarBaja);
+
+function alertBaja() {
+	bgalerta.style.display = 'flex';
+}
+
+function cancelarBaja() {
+	bgalerta.style.display = 'none';
+}
+
+function confirmarBaja() {
+	bgalerta.style.display = 'none';
 }
