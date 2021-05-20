@@ -174,7 +174,27 @@
 		<div class="ola ola3"></div>
 		<div class="ola ola4"></div>
 	</section>
-	
+	<section class="example2">
+		<ul class="cuadrados">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</section>
 </body>
   <script src="script.js"></script>
 </html>

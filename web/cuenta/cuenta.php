@@ -246,7 +246,7 @@
 						¿Está seguro de que desea dar de baja su cuenta?
 						<br>
 						<span>
-							(Este cambio puede revertirse en el futuro contactando con nosotros.)
+							(Este cambio puede revertirse en el futuro por un módico precio)
 						</span>
 						<div class="img">
 							<img src="missyou.jpg">	
