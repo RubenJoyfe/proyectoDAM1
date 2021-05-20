@@ -1,0 +1,25 @@
+body {
+	background-color: lightgray;
+}
+
+.resset {
+	background-color: red;
+}
+
+.juego {
+	text-align: center;
+}
+
+.mult_text {
+	width: 50px;
+}
+.tienda {
+	position: fixed;
+	right: 50px;
+	top: 50px;
+}
+
+button {
+	width: 100px;
+	height: 50px;
+}
