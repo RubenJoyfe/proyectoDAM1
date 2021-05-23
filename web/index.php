@@ -1,5 +1,10 @@
 <?php 
 	session_start();
+	if (isset($_SESSION['codbaja'])) {
+		session_destroy();
+		header("Location: index.php");
+		exit;
+	}
 	if (isset($_SESSION['usrNick'])) {
 		$usrNick = $_SESSION['usrNick'];
 
@@ -161,7 +166,7 @@
 					$resultado = $stmt->get_result();
 				}
 				else {
-					$consulta = "SELECT * FROM juego";
+					$consulta = "SELECT * FROM juego LIMIT 50";
 					$resultado = mysqli_query( $conexion, $consulta);
 				}
 

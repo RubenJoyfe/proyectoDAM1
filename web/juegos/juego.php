@@ -136,11 +136,11 @@
 					";
 		 	} 
 		 ?>
-		<form id="formSearch" method="GET" action="..\index.php" >
+		<form id="formSearch" method="GET" action="index.php" >
 			<div class="flexbox">
 				<div class="search">
-					<div>
-						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required>
+					<div id="divbq" <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkSearch'";} ?>>
+						<input id="busqueda" name="search" type="text" placeholder="Buscar . . ." required <?php if (isset($_GET['search'])) {echo "value='".$_GET['search']."'";} if( isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkSearch'";} ?>>
 					</div>
 				</div>
 			</div>

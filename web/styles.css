@@ -106,6 +106,8 @@ body {
 .content a {
   width: 25%;
   text-decoration:none;
+  color: white;
+  text-shadow: 1px 1px black;
 }
 
 .content a:hover {

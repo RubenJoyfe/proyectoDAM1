@@ -29,6 +29,9 @@
 	$db->query($dtsql);
 	
 	$_SESSION['usrTema']=$data['value'];
+	$_SESSION['baja']=$data['baja'];
+
+
 
 
 		//$myJson = json_encode($tema);

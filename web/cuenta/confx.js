@@ -23,7 +23,6 @@ function toogleDark(){
 	const toggle = document.getElementsByClassName("toggle");
 	const sect = document.getElementsByClassName("sect");
 
-	console.log(hrs);
 	if (darksw.checked) {
 		document.body.classList.add("darkbg");
 		topmenu[0].classList.add("dartkbgtop");
@@ -78,5 +77,11 @@ function cancelarBaja() {
 }
 
 function confirmarBaja() {
-	bgalerta.style.display = 'none';
+	const darBaja = {
+				method: 'POST',
+				body: JSON.stringify({baja: 1})
+			}
+	fetch('conf.php', darBaja);
+	eliminar.submit();
+
 }

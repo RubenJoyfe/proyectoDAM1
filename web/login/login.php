@@ -63,7 +63,7 @@
 
 			}
 		}
-		else if (isset($_POST["usuario"]) && isset($_POST["pass"])) { //no es registro
+		else if (isset($_POST["usuario"]) && isset($_POST["pass"])) { //es inicio de sesion
 			$usrNick =  $_POST['usuario'];
 			$pswd = $_POST['pass'];
 
@@ -73,7 +73,7 @@
 			}
 			else {
 				$pswd = md5($pswd);
-				$sqlLogin = "SELECT * FROM usuario WHERE nick LIKE ? AND contrasena LIKE ?";
+				$sqlLogin = "SELECT * FROM usuario WHERE nick LIKE ? AND contrasena LIKE ? AND baja IS NULL";
 				$stmt = $db->prepare($sqlLogin);
 				$stmt->bind_param("ss", $usrNick, $pswd);
 				$stmt->execute();
@@ -130,6 +130,10 @@
 				?>
 				<input class="btnEnviar" type="submit" value="Iniciar sesión">
 			</form>
+			<div class="recuContra">
+				<hr>
+				<p>¿Olvidó su contraseña? Pulse <a href="recuperarCuenta.php">aquí</a>.</p>
+			</div>
 		</div>
 		<div class="ra"></div>
 		<div class="RegisterZone">
@@ -163,7 +167,7 @@
 					<div class='perror'><p>El usuario no puede estar en blanco</p></div>";}
 					?>
 				</div>
-				<input class="btnEnviar" type="submit" value="Registrarse">
+				<input id="btnSend" class="btnEnviar" type="submit" value="Registrarse">
 			</form>
 		</div>
 

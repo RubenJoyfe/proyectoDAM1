@@ -1,5 +1,10 @@
 <?php 
 	session_start();
+	if (isset($_SESSION['codbaja'])) {
+		session_destroy();
+		header("Location: index.php");
+		exit;
+	}
 	if (isset($_SESSION['usrNick'])) {
 		$usrNick = $_SESSION['usrNick'];
 
@@ -236,7 +241,7 @@
 	</div>
 	<div id="bgalerta">
 		<div class="alerta">
-			<form id="eliminar" method="POST" action="cuenta.php">
+			<form id="eliminar" method="POST" action="..\login\baja.php">
 				<div class="advertencia">
 					<i class="fas fa-exclamation-triangle"></i>
 					<span>Ten cuidado, piensalo bien . . .</span>
@@ -255,7 +260,7 @@
 					</span>
 				</div>
 				<input id="cancelar" type="button" name="cancelar" value="Cancelar">
-				<input id="confirmar" type="button" name="Confirmar" value="Confirmar">
+				<input id="confirmar" type="submit" name="confirmar" value="Confirmar">
 			</form>
 		</div>
 	</div>
