@@ -27,6 +27,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
@@ -67,6 +68,8 @@ public class Main extends JFrame {
 	private JPanel panel_editables;
 
 	private JLabel lblLogOut;
+
+	private JLabel instruc;
 	
 	/**
 	 * Launch the application.
@@ -230,9 +233,9 @@ public class Main extends JFrame {
 		panel_opciones.add(btnLimpiar);
 		
 		do {
-			login();
-//			nombre = "root";
-//			pass = "";
+//			login();
+			nombre = "root";
+			pass = "";
 		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
 		startMenu();
 		crearTabla("vacía");
@@ -242,7 +245,7 @@ public class Main extends JFrame {
 	}
 	
 	//********************************* Operaciones MYSQL *****************************************
-	public void inserts() {
+	public void inserts(){
 		int resultado=1;
 		String acTab=lblNombreTabla.getText().toLowerCase();
 		
@@ -605,7 +608,14 @@ public class Main extends JFrame {
 			scroll.setBounds(0, 0, 618, 502);
 			panel_editables.setBounds(10, 523, 619, 0);
 		    panel_tabla.add(scroll);
+		    
+		    ImageIcon instrucciones = new ImageIcon(getClass().getResource("/img/instrucciones.png"));
+			instruc = new JLabel();
+			instruc.setBounds(1, -1, 617, 502);
+			instruc.setIcon(instrucciones);
+			panel_tabla.add(instruc);
 		} else {
+			instruc.setVisible(false);
 			int nCol=0, nRow=0;
 			ResultSet rs;
 			String sql = "SELECT * FROM " + tb +";";
