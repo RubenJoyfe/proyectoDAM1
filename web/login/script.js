@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function(event){
       console.log(correo);
       this.style.borderColor = 'green';
       this.style.color = 'green';
-      document.forms[1].children[4].style.background = '#1BA453';
-      document.forms[1].children[1].children[0].classList.remove("bad-email");
-      document.forms[1].children[4].disabled=false;
+      btnSend.style.background = '#1BA453';
+      emailAddress.classList.remove("bad-email");
+      btnSend.disabled=false;
     }
     else { //si no es un correo...
       this.style.borderColor = 'red';

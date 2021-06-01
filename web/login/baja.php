@@ -19,7 +19,7 @@ session_start();
 			$res = mysqli_query($db,"SELECT @res as resultado");
 			$res = mysqli_fetch_array($res);
 			$rs = $res["resultado"];
-			$_SESSION['codbaja']=$rs;			
+			$_SESSION['codbaja']=$rs;
 		}
 		else {
 			header("Location: ..\index.php");
@@ -50,7 +50,7 @@ session_start();
 				  <div class="status draw"></div>
 				</div>
 			</div>
-			<div class="msg hd">
+			<div class="msg showmsg">
 				<p id="c_msg"></p>
 			</div>
 		</div>

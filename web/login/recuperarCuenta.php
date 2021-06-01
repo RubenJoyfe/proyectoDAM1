@@ -24,7 +24,7 @@ session_start();
 <body>
 	<div class="content" >
 		<div class="recuCuenta">
-			<form action="recuperarCuenta.php" method="post">
+			<form action="sendMail.php" method="post">
 				<h2><span>Recuperar contraseña</span></h2>
 				<div class="user-box">
 					<input type="text" name="correo" id="emailAddress" required autocomplete="off">
