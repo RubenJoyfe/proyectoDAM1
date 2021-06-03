@@ -1,4 +1,6 @@
 <?php 
+require '../vendor/autoload.php';
+use Firebase\JWT\JWT;
 
 if (isset($_POST['correo'])) {
 	$correo = $_POST['correo'];
@@ -11,7 +13,7 @@ else {
 	if ($db->connect_errno) {
 		echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 	}
-	$correosql = "SELECT nick, count(correo) AS mail FROM usuario WHERE correo LIKE ?;";
+	$correosql = "SELECT id_usuario, nick, count(correo) AS mail FROM usuario WHERE correo LIKE ?;";
 	$stmt = $db->prepare($correosql);
 	$stmt->bind_param("s", $correo);
 	$stmt->execute();
@@ -21,12 +23,24 @@ else {
 	if ($rs==1) {
 
 		$nombre = $resultado['nick'];
-		$enlace = "http://localhost/1damA/web/zz_p/login/recuperarCuenta.php";
-
+		$id = $resultado['id_usuario'];
+		/*..................JasonWebToken..................*/
+		$key = ")·!?123TremendaContraseña321¿¡.(";
+		$payload = array(
+		    "id" => $id,
+		    "exp" => time()+60*15
+		);
+		$jwt = JWT::encode($payload, $key);
+		/*..................FIN-JasonWebToken..................*/
+		$enlace = "http://localhost/1damA/web/zz_p/login/cambioContrasena.php?value=".$jwt;
 		$from = "puzzlegamesemp@hotmail.com";
 		$to = $correo;
 		$subject = "Recuperacion de cuenta";
-		$message = "Hola " . $nombre . ", si usted no ha solicitado un reinicio de contraseña simplemente ignore este correo o elimínelo.\n En caso de haberlo solicitado haga click en el siguiente enlace: " . $enlace;
+		/*........................CONTENIDO-CORREO........................*/
+		$message = "Hola " . $nombre . ", si usted no ha solicitado un reinicio de contraseña simplemente ignore este correo o elimínelo.\n En caso de haberlo solicitado haga click en el siguiente enlace: " . $enlace
+
+		;
+		/*......................FIN-CONTENIDO-CORREO......................*/
 		$headers = "From: " . $from;
 		if (mail($to,$subject,$message, $headers)){
 			$res=1;
@@ -50,6 +64,7 @@ else {
 	<script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
 
+	<link rel="shortcut icon" href="../iconwb.png">
 	<link rel="stylesheet" type="text/css" href="login.css">
 	<link rel="stylesheet" type="text/css" href="left.css">
 	<link rel="stylesheet" type="text/css" href="styles.css">

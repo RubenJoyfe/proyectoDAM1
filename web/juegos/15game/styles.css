@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+body {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	user-select: none;
+	font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #fff 0%, #32F665 100%) no-repeat;
+}
+
+.daddy {
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#content {
+	display: inline-flex;
+}
+
+#desbloqueable {
+	display: inline;
+	float: right;
+}
+
+.menu {
+	width: 75vh;
+	height: 10vh;
+	background-color: rgb(150, 81, 56); /*150, 81, 56*/
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.selectSize {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#timer div{
+	width: 65%;
+	float: right;
+}
+
+.selectImg {
+	/*height: 20vh;*/
+	background-color: rgb(150, 81, 56); /*150, 81, 56*/
+	display: block;
+	float: right;
+	justify-content: center;
+	padding: 1vh;
+	/*align-items: center;*/
+}
+
+.top div {
+	width: 33%;
+}
+
+.top img {
+	width: 8vh;
+	margin: 1vh;
+	margin-right: 3vh;
+}
+
+.top span {
+	font-size: 3vh;
+	color: white;
+	margin: 1vh;
+}
+
+.top button {
+	padding: 0;
+	margin: 0 0 0 1vh;
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+
+.top button i {
+	font-size: 6vh;
+	color: rgba(186, 97, 65);
+}
+
+.bottom button {
+	margin: 0 3vh 0 3vh;
+}
+
+#option {
+	width: 25%;
+	min-width: 5vh;
+	background-color: white;
+	border: 0.5vh solid rgba(0,0,0, 0.5);
+	display: flex;
+	text-align: center;
+	font-size: 5vh;
+	padding: 1vh;
+}
+
+#rand,
+#solucion {
+	background-color: #B0733C;
+	border: 0.1vh solid #CE8D40;
+	color: white;
+	height: 5vh;
+	width: 10vh;
+	font-size: 1.5vh;
+}
+
+#rand:hover,
+#solucion:hover {
+	background-color: #CE8D40;
+	cursor: pointer;
+}
+
+#game {
+	/*margin: 0.3vh;*/
+	width: 75vh;
+	height: 75vh;
+	background-color: rgba(0,255,0,0.5);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 25vh;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	background-image: url('img/background.jpg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+
+.square {
+	position: absolute;
+	display: flex;
+	box-sizing: border-box;
+	margin: 0;
+/*	font-size: 300%;*/
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0,0,0,0.1);
+/*	background-image: url('img/1.jpg');*/
+	background-position: center;
+	background-repeat: no-repeat;
+	/*border: 0.1vh solid rgba(0,0,0, 0.1);*/
+	z-index: 10;
+	transition: top 0.5s, left 0.5s;
+}
+
+.last.square {
+	visibility: hidden;
+	z-index: 1;
+}
+
+.foto {
+	display: block;
+	border-radius: 1vh;
+	border: 0.4vh solid rgba(0,0,0,0.1);
+	width: 12vh;
+	height: 10vh;
+	/*background-image: url("img/doge.jpg");*/
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+/*************************************Slider*****************************************/
+.slider {
+  width: 50%;
+  -webkit-appearance: none;
+  background: #111;
+  outline: none;
+  border-radius: 2vh;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 2vh;
+  height: 2vh;
+  border-radius: 50%;
+  background: #108a0a;
+  cursor: pointer;
+  border: 0.7vh solid #333;
+  box-shadow: -407px 0 0 400px #108a0a;
+}

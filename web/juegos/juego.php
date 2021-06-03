@@ -29,9 +29,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PuzzleGames</title>
   
+  <script type="text/javascript" src="shop.js"></script>
   <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
 
+  <link rel="shortcut icon" href="../iconwb.png">
   <link rel="stylesheet" type="text/css" href="rubiclogo.css">
   <link rel="stylesheet" type="text/css" href="left.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
@@ -148,18 +150,22 @@
 		 </ul>
 		<div class="content-menu"></div>
 	</div>
-	<div class="content" >
+		<div class="head">
+			<button id="desplegable"><i class="fas fa-store"></i></button>
+			<div id="desbloqueables" class="oculto">
+				<p>SHOP BITCH</p>
+			</div>
+		</div>
+	<div class="content">
 		<iframe id="iframe"
 			<?php  
 		    	echo "title=".$src."";
 			?>
-		    width="80%"
-		    height="70%"
 		    <?php 
 
-		    echo "src='" . $columna["src"] . "'>";
+		    echo "src='" . $columna["src"] . "'";
 		    ?>
-		</iframe>
+		></iframe>
 		<!-- <div style="width: 20%; height: 85%; background-color: lightgreen;"> </div> -->
 	</div>
 	<div class="imagen"></div>
