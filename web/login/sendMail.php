@@ -32,7 +32,15 @@ else {
 		);
 		$jwt = JWT::encode($payload, $key);
 		/*..................FIN-JasonWebToken..................*/
-		$enlace = "http://localhost/1damA/web/zz_p/login/cambioContrasena.php?value=".$jwt;
+			/*Coger url directory*/
+				$url = $_SERVER['REQUEST_URI']; //returns the current URL
+				$parts = explode('/',$url);
+				$dir = $_SERVER['SERVER_NAME'];
+				for ($i = 0; $i < count($parts) - 1; $i++) {
+				 $dir .= $parts[$i] . "/";
+				}
+			/*FIN Coger url directory*/
+		$enlace = "http://".$dir."cambioContrasena.php?value=".$jwt;
 		$from = "puzzlegamesemp@hotmail.com";
 		$to = $correo;
 		$subject = "Recuperacion de cuenta";
