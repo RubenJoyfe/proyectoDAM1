@@ -31,6 +31,8 @@ function toogleDark(){
 		divbq.classList.add("darkSearch");
 		toggle[0].classList.add("toogleDark");
 		sect[0].classList.add("leftDark");
+		eliminar.classList.add("darkAlert");
+		revert.classList.remove("darkhr");
 
 		for (var i = 0 ; i < conf.length; i++) {
 			conf[i].classList.add("darkbg1");
@@ -50,6 +52,8 @@ function toogleDark(){
 		divbq.classList.remove("darkSearch");
 		toggle[0].classList.remove("toogleDark");
 		sect[0].classList.remove("leftDark");
+		eliminar.classList.remove("darkAlert");
+		revert.classList.add("darkhr");
 
 		for (var i = 0 ; i < conf.length; i++) {
 			conf[i].classList.remove("darkbg1");

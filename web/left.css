@@ -1,7 +1,22 @@
-/*::-webkit-scrollbar {
-  width: 10px;
-  border-left: 1px solid rgba(0,0,0,0.3);
-}*/
+::-webkit-scrollbar {
+  width: 1.5vh;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 11px #D4D4D4; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1FF766;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #0ED650; 
+}
 
 .left {
   display: inline-flex;
@@ -22,7 +37,8 @@ section {
   background: rgba(27,164,83,1);
   background: linear-gradient(to right, rgba(27,164,83,1) 0%, rgba(12,215,103,1) 56%, rgba(83,230,95,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ba453', endColorstr='#53e65f', GradientType=1 );
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   border-right: solid 2px #53e65f;
 }
 
@@ -47,7 +63,7 @@ ul.Tactive {
 }
 
 .navegacion {
-  overflow: hidden;
+  /*overflow: hidden;*/
   width: 100%;
 }
 
@@ -68,6 +84,11 @@ ul.Tactive {
 .navegacion ul li:hover {
   background: rgb(0, 0, 0, 0.2);
 }
+
+.leftDark .navegacion ul li:hover{
+  background: rgb(255, 255, 255, 0.1);
+}
+
 .navegacion ul li a {
   position: relative;
   width: 100%;
@@ -492,7 +513,7 @@ form {
   .search > div > input:focus,
   .search > div > input:not(:placeholder-shown) {
     width: 150px;
-    background-color: rgb(200,200,200);
+    /*background-color: rgb(200,200,200);*/
   }
 }
 
@@ -506,7 +527,7 @@ form {
   .search > div > input:focus,
   .search > div > input:not(:placeholder-shown) {
   width: 100px;
-  background-color: rgb(200,200,200);
+  /*background-color: rgb(200,200,200);*/
   }
 
 }

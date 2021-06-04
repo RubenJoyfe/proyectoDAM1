@@ -194,6 +194,6 @@
 			 ?>
 			<div class="lastjuego<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";} ?>"> <h2>Proximamente...</h2></div>
 	</div>
-	<div class="imagen"></div>
+	<div class="imagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " dark";} ?>"></div>
 </body>
 </html>

@@ -1,5 +1,9 @@
 /*................................DARK THEME..................................*/
 
+.darkAlert {
+  background-color: #2B3032;
+}
+
 .darkbg {
   background-color: rgba(16, 18, 20, 1);
   color: #f1f1f1;

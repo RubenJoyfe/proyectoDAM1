@@ -13,7 +13,6 @@ let millisecond = 0;
 let cron;
 
 window.onresize = function(event){
-	console.log(event);
 	squares(option.value);
 };
 

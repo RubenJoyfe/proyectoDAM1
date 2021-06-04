@@ -30,6 +30,7 @@
   <title>PuzzleGames</title>
   
   <script type="text/javascript" src="shop.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
 
@@ -154,6 +155,12 @@
 			<button id="desplegable"><i class="fas fa-store"></i></button>
 			<div id="desbloqueables" class="oculto">
 				<p>SHOP BITCH</p>
+				<div class="foto"></div>
+				<div class="foto"></div>
+				<div class="foto"></div>
+				<div class="foto"></div>
+				<div class="foto"></div>
+				<div class="foto"></div>
 			</div>
 		</div>
 	<div class="content">
@@ -168,7 +175,7 @@
 		></iframe>
 		<!-- <div style="width: 20%; height: 85%; background-color: lightgreen;"> </div> -->
 	</div>
-	<div class="imagen"></div>
+	<div class="imagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " dark";} ?>"></div>
 </body>
 
 <script type="text/javascript">

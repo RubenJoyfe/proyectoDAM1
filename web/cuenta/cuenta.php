@@ -251,7 +251,7 @@
 					<span>
 						¿Está seguro de que desea dar de baja su cuenta?
 						<br>
-						<span>
+						<span id="revert">
 							(Este cambio puede revertirse en el futuro por un módico precio)
 						</span>
 						<div class="img">
@@ -265,7 +265,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="imagen"></div>
+	<div class="imagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " dark";} ?>"></div>
 </body>
 <script type="text/javascript">
 	const left = document.querySelector('.left');

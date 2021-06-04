@@ -25,6 +25,10 @@ body {
   animation: mover 60s linear infinite;
 }
 
+.dark {
+  background-image: url(wpatternDark.png);
+}
+
 @keyframes mover {
   0%{
     transform: translatex(0);
@@ -303,14 +307,18 @@ body {
     align-items: center;
   }
 
-  .alerta,
+   .alerta,
   .alerta > form{
     width: 300px;
     min-height: 400px;
-    background-color: #2B3032;
+    background-color: #E0E0E0;
     margin: 0;
     /*position: relative;*/
   }
+
+.alerta > form.darkAlert {
+  background-color: #2B3032;
+}
 
   .alerta > form > input {
     padding: 10px 20px;
@@ -342,7 +350,7 @@ body {
   .advertencia {
     width: 100%;
     min-height: 50px;
-    background-color: rgba(91,48,48, 1);
+    background-color: rgba(91,48,48, 0.8);
     border: 2px solid #CD4B4B;
     border-left: 0px; border-right: 0px;
     display: flex;
@@ -362,6 +370,9 @@ body {
   .msg > span > span {
     font-size: 12px;
     color: rgba(255,255,255, 0.5);
+  }
+  .msg > span > span.darkhr {
+    color: #31343A;
   }
 
   .msg > span > .img {

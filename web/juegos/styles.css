@@ -21,6 +21,10 @@
   animation: mover 60s linear infinite;
 }
 
+.dark {
+  background-image: url(wpatternDark.png);
+}
+
 @keyframes mover {
   0%{
     transform: translatex(0);
@@ -107,7 +111,7 @@
 #desbloqueables {
   position: absolute;
   padding: 10px 20px;
-  bottom: -44px;
+  bottom: -555px;
   right: 0;
   background: blue;
   display: all;
@@ -115,4 +119,15 @@
 
 .oculto {
   display: none;
+}
+
+.foto {
+  display: block;
+  border-radius: 1vh;
+  border: 0.4vh solid rgba(0,0,0,0.1);
+  width: 12vh;
+  height: 10vh;
+  /*background-image: url("img/doge.jpg");*/
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }

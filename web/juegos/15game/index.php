@@ -35,9 +35,9 @@
 				<div id="game">
 				</div>
 				<div class="bottom menu">
-						<button type="button" id="rand">Desordenar</button>
-						<input type="range" min="0" max="100" value="50" class="slider">
-						<button type="button" id="solucion">Ordenar</button>
+					<button type="button" id="rand">Desordenar</button>
+					<input type="range" min="0" max="100" value="50" class="slider">
+					<button type="button" id="solucion">Ordenar</button>
 				</div>
 			</div>
 			<div id="desbloqueable">
