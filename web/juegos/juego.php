@@ -152,6 +152,7 @@
 		<div class="content-menu"></div>
 	</div>
 		<div class="head">
+			<div></div>
 			<button id="desplegable"><i class="fas fa-store"></i></button>
 			<div id="desbloqueables" class="oculto">
 				<p>SHOP BITCH</p>

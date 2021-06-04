@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	  	tile.square.style.transition = "top "+(100-this.value)/50+"s, left "+(100-this.value)/50+"s";
 	  }
 	}
-
+	desbloqueable.style.display = 'none';
 });
 
 function loadOptions(){

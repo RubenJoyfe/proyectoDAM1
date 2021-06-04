@@ -111,14 +111,12 @@
 #desbloqueables {
   position: absolute;
   padding: 10px 20px;
-  bottom: -555px;
+  top: 100%;
   right: 0;
   background: blue;
-  display: all;
-}
-
-.oculto {
   display: none;
+  flex-direction: column;
+
 }
 
 .foto {
