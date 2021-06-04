@@ -13,7 +13,7 @@ else {
 	if ($db->connect_errno) {
 		echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 	}
-	$correosql = "SELECT id_usuario, nick, count(correo) AS mail FROM usuario WHERE correo LIKE ?;";
+	$correosql = "SELECT id_usuario, nick, count(correo) AS mail FROM usuario WHERE correo LIKE ? AND baja IS NULL;";
 	$stmt = $db->prepare($correosql);
 	$stmt->bind_param("s", $correo);
 	$stmt->execute();
@@ -90,7 +90,7 @@ else {
 				<p id="c_msg" class="ap">
 					<?php 
 						if($res==1){echo "Correo enviado exitosamente";}
-						else if($res==-1){echo "El correo introducido no está registrado.";} 
+						else if($res==-1){echo "El correo introducido no está registrado o está dado de baja.";} 
 						else {echo "No se ha podido enviar el correo de recuperacion, pruebe más tarde.";}
 					?></p>
 			</div>
