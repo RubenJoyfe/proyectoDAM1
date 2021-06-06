@@ -13,6 +13,7 @@ let millisecond = 0;
 let cron;
 
 window.onresize = function(event){
+	fondo = document.getElementsByClassName("square")[0].style.backgroundImage;
 	squares(option.value);
 };
 
@@ -36,12 +37,14 @@ document.addEventListener("DOMContentLoaded", function(event){
 function loadOptions(){
 	mas.addEventListener("click", function() {
 		if (parseInt(option.value)<10) {
+			fondo = document.getElementsByClassName("square")[0].style.backgroundImage;
 			option.value=parseInt(option.value)+1;
 			squares(option.value);
 		}
 	});
 	menos.addEventListener("click", function() {
 		if (parseInt(option.value)>3) {
+			fondo = document.getElementsByClassName("square")[0].style.backgroundImage;
 			option.value=parseInt(option.value)-1;
 			squares(option.value);
 		}

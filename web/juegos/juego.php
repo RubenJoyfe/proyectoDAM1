@@ -156,12 +156,41 @@
 			<button id="desplegable"><i class="fas fa-store"></i></button>
 			<div id="desbloqueables" class="oculto">
 				<p>SHOP BITCH</p>
-				<div class="foto"></div>
-				<div class="foto"></div>
-				<div class="foto"></div>
-				<div class="foto"></div>
-				<div class="foto"></div>
-				<div class="foto"></div>
+				 <!-- <div class='foto'><div class='bloqueado'><span><i class='fas fa-coins'></i>1200</span></div></div> -->
+				<?php 
+					$stmt = $db->prepare("SELECT id_desbloqueo AS id, desbloqueo.nombre AS desbloqueable, desbloqueo.coste FROM juego JOIN desbloqueo ON juego.id_juego = desbloqueo.fk_juego WHERE juego.nombre LIKE ?");
+					$stmt->bind_param("s", $_GET['source']);
+					$stmt->execute();
+					$desbl = $stmt->get_result();
+					$numrws = mysqli_num_rows($desbl);
+					for ($i=0; $i < $numrws; $i++) {
+						$rs = $desbl->fetch_assoc();
+						/*VER SI TIENE DESBLOQUEADO ALGUN DESBLOQUEABLE*/
+							$stmt = $db->prepare("SELECT * FROM usuario_desbloqueo JOIN usuario ON usuario.id_usuario = usuario_desbloqueo.fk_usuario
+								WHERE usuario.nick = ? AND usuario_desbloqueo.fk_desbloqueo = ?;");
+							$stmt->bind_param("si", $usrNick, $rs['id']);
+							$stmt->execute();
+							$lotiene = $stmt->get_result();
+							$lotiene = mysqli_num_rows($lotiene);
+						/*FIN VER SI TIENE DESBLOQUEADO ALGUN DESBLOQUEABLE*/
+						echo "<div class='foto'>";
+						
+						echo "	<div class='bloqueado'>
+									<span>
+										<i class='fas fa-coins'></i><p class='precio'>";
+										if ($lotiene!=0) {
+											echo "0";
+										}
+										else {
+											echo $rs['coste'];
+										}
+										
+										echo "</p></span>
+								</div>";
+
+						echo "</div>";
+					}
+				 ?>
 			</div>
 		</div>
 	<div class="content">
@@ -177,6 +206,15 @@
 		<!-- <div style="width: 20%; height: 85%; background-color: lightgreen;"> </div> -->
 	</div>
 	<div class="imagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " dark";} ?>"></div>
+<!-- 	<div class="blackbg">
+		<div class="buyAlert">
+			<h2>Comprar desbloqueable</h2>
+			<img class="buyImg">
+			<p>Precio: 1200</p>
+			<input id="cancelar" type="button" name="cancelar" value="Cancelar">
+			<input id="confirmar" type="submit" name="confirmar" value="Confirmar">
+		</div>
+	</div> -->
 </body>
 
 <script type="text/javascript">

@@ -128,4 +128,123 @@
   /*background-image: url("img/doge.jpg");*/
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.bloqueado {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5vh;
+  color: white;
+}
+
+
+.bloqueado span {
+  background-color: rgba(0,0,0,0.5);
+  padding: 1vh 2vh;
+  border-radius: 2.5vh;
+}
+
+.bloqueado span i {
+  margin-right: 1vh;
+}
+
+.bloqueado span p {
+  display: inline;
+}
+
+.bloqueado:hover {
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.blackbg {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 2000;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buyAlert {
+  height: 30vh;
+  width: 40vh;
+  background: rgba(255,255,255,0.1);
+  padding: 3vh 5vh 7vh 5vh;
+  z-index: 2200;
+  display: flex;
+  flex-wrap: wrap;    
+  justify-content: center;
+  align-items: center;
+}
+
+.buyAlert h2 {
+  display: flex;
+  justify-content: center;
+  font-size: 3vh;
+  font-weight: 700;
+  margin-bottom: 2vh;
+}
+
+.buyAlert p {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  font-size: 2vh;
+  margin: 1vh;
+}
+
+.buyAlert .buyImg {
+  height: 15vh;
+  width: 15vh;
+  background-size: cover;
+}
+
+#confirmar,
+#cancelar {
+  outline:none;
+  border: 0.1vh solid white;
+  background-color: #FE213B;
+  color: white;
+  margin: 0 1vh;
+  font-size: 2vh;
+  padding: 2vh 3vh;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+#confirmar:hover,
+#cancelar:hover {
+  cursor: pointer;
+  background-color: #CD1C31;
+}
+
+#cancelar {
+  float: left;
+  background-color: #615355;
+}
+#cancelar:hover {
+  background-color: #908080;
+  transform: translateX(0.3vh) translateY(-0.3vh);
+  box-shadow: -0.3vh 0.3vh #908080;
+  transition: 0.25s;
+}
+
+#confirmar {
+  float: right;
+}
+
+#confirmar:hover {
+  transform: translateX(0.3vh) translateY(-0.3vh);
+  box-shadow: -0.3vh 0.3vh #FE213B;
+  transition: 0.25s;
 }
