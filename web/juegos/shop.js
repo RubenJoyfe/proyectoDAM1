@@ -1,4 +1,7 @@
+let dineros;
+
 document.addEventListener("DOMContentLoaded", function(event){
+	dineros = parseInt(document.getElementsByClassName("dineros")[0].childNodes[1].textContent);
 	desplegable.addEventListener("click", mostrarDesbloqueables);
 	fondos();
 });
@@ -34,7 +37,7 @@ function fondos() {
 	for (let i = 0; i < options.length; i++) {
 		const bloq = options[i].childNodes;
 		// const precio = bloq[1].childNodes[1].childNodes[2].innerHTML;
-		const precio = document.getElementsByClassName("precio")[i].innerHTML;
+		const precio = parseInt(document.getElementsByClassName("precio")[i].innerHTML);
 		options[i].style.backgroundImage = "url('15game/img/"+i+".jpg')";
 		options[i].style.backgroundImage;
 		// let pos;
@@ -79,8 +82,28 @@ function fondos() {
 				msg.appendChild(canc);
 				msg.appendChild(conf);
 				document.body.appendChild(divbg);
+
 				cancelar.addEventListener("click", function(){
 					document.getElementsByClassName("blackbg")[0].remove();
+				});
+				confirmar.addEventListener("click", function(){
+					if (dineros<precio) {
+						console.log("Dinero insuficiente, faltan " + (precio-dineros) + " dineros")
+					}
+					else {
+						const desblo = options[i].getAttribute('value');
+						dineros-=precio;
+
+						document.getElementsByClassName("dineros")[0].childNodes[1].textContent = dineros;
+						
+						const desbloquear = {
+								method: 'POST',
+								body: JSON.stringify({id_des: desblo, dinero: dineros})
+							}
+						fetch('buy.php', desbloquear);
+						
+						console.log("Compra realizada! Dinero restante: " + dineros)	
+					}
 				});
 			}
 		});

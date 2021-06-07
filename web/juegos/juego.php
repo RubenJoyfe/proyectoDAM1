@@ -173,7 +173,7 @@
 							$lotiene = $stmt->get_result();
 							$lotiene = mysqli_num_rows($lotiene);
 						/*FIN VER SI TIENE DESBLOQUEADO ALGUN DESBLOQUEABLE*/
-						echo "<div class='foto'>";
+						echo "<div class='foto' value='". $rs['id'] ."'>";
 						
 						echo "	<div class='bloqueado'>
 									<span>

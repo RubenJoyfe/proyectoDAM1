@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -398,12 +399,24 @@ public class Main extends JFrame {
 	//********************************* Fin MYSQL *************************************************
 	
 	public void startMenu() {
+		//menu hover
+		UIManager.put("Menu.selectionBackground", Color.DARK_GRAY);
+		UIManager.put("Menu.selectionForeground", Color.WHITE);
+		//menu item hover
+		UIManager.put("MenuItem.selectionBackground", Color.DARK_GRAY);
+		UIManager.put("MenuItem.selectionForeground", Color.WHITE);
+		//menu item normal
+		UIManager.put("MenuItem.background", Color.DARK_GRAY);
+		UIManager.put("MenuItem.foreground", Color.WHITE);
+		
 		menuBar = new JMenuBar();
+		menuBar.setForeground(Color.WHITE);
+		menuBar.setBackground(Color.BLACK);
 		setJMenuBar(menuBar);
 //		mnMostrar.setPreferredSize(new Dimension(100, mnMostrar.getPreferredSize().height));
 		mnMostrar = new JMenu("   Tablas   ");
-		mnMostrar.setBackground(Color.LIGHT_GRAY);
-		mnMostrar.setForeground(Color.BLACK);
+		mnMostrar.setBackground(Color.DARK_GRAY);
+		mnMostrar.setForeground(Color.WHITE);
 		mnMostrar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		menuBar.add(mnMostrar);
 		mnMostrar.addMouseListener(new MouseAdapter() {
@@ -425,7 +438,8 @@ public class Main extends JFrame {
 		        return new Dimension((int)lblClear.getPreferredSize().getWidth(), 1000);
 		    }
 		};
-		lblClear.setBackground(Color.lightGray);
+		lblClear.setForeground(Color.WHITE);
+		lblClear.setBackground(Color.DARK_GRAY);
 		lblClear.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		lblClear.addMouseListener(new MouseAdapter() {
@@ -455,7 +469,8 @@ public class Main extends JFrame {
 		        return new Dimension((int)lblClear.getPreferredSize().getWidth(), 1000);
 		    }
 		};
-		lblLogOut.setBackground(Color.lightGray);
+		lblLogOut.setForeground(Color.WHITE);
+		lblLogOut.setBackground(Color.DARK_GRAY);
 		lblLogOut.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		lblLogOut.addMouseListener(new MouseAdapter() {
@@ -497,12 +512,29 @@ public class Main extends JFrame {
 				String nombreOp = rs.getString("nombre");
 				String nombreMay = rs.getString("nombre").substring(0, 1).toUpperCase()+ rs.getString("nombre").substring(1);
 				mntmTabla[rows] = new JMenuItem(nombreMay);
+				mntmTabla[rows].setBackground(Color.BLACK);
+				mntmTabla[rows].setForeground(Color.WHITE);
 				mnMostrar.add(mntmTabla[rows]);
 				mntmTabla[rows].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						crearTabla(nombreOp);
 						lblNombreTabla.setText(nombreMay);
 						enableButtons(true);
+					}
+				});
+				mntmTabla[rows].addMouseListener(new MouseAdapter() {
+					JMenuItem cell = new JMenuItem();
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						cell = (JMenuItem) e.getSource();
+						cell.setBackground(Color.DARK_GRAY);
+						System.out.println(cell);
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						cell = (JMenuItem) e.getSource();
+						cell.setBackground(Color.BLACK);
+						System.out.println(cell);
 					}
 				});
 				rows++;
