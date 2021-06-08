@@ -65,8 +65,8 @@
 	<div class="left shide2">
 		<div class="toggle Tactive <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "toogleDark";} ?>"></div>
 	  <section class="sect shide <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "leftDark";} ?>">
-	  	<div class="navegacion">
-	  		<ul class="menu Tactive">
+	  	<div class="gmnavegacion">
+	  		<ul class="gmmenu Tactive">
 	  			<li>
 					<a href="../">
 						<span class="icon">
@@ -157,14 +157,14 @@
 			</div>
 		</form>
 		 </ul>
-		<div class="content-menu"></div>
+		<div class="gmcontent-menu"></div>
 	</div>
-		<div class="head">
+		<div class="gmhead">
 			<div></div>
-			<button id="desplegable"><i class="fas fa-store"></i></button>
-			<div id="desbloqueables" class="oculto">
+			<button id="gmdesplegable"><i class="fas fa-store"></i></button>
+			<div id="gmdesbloqueables" class="gmoculto">
 				<p>SHOP</p>
-				 <!-- <div class='foto'><div class='bloqueado'><span><i class='fas fa-coins'></i>1200</span></div></div> -->
+				 <!-- <div class='gmfoto'><div class='gmbloqueado'><span><i class='fas fa-coins'></i>1200</span></div></div> -->
 				<?php 
 					$stmt = $db->prepare("SELECT id_desbloqueo AS id, desbloqueo.nombre AS desbloqueable, desbloqueo.coste FROM juego JOIN desbloqueo ON juego.id_juego = desbloqueo.fk_juego WHERE juego.nombre LIKE ?");
 					$stmt->bind_param("s", $_GET['source']);
@@ -183,7 +183,7 @@
 						/*FIN VER SI TIENE DESBLOQUEADO ALGUN DESBLOQUEABLE*/
 						echo "<div class='foto' value='". $rs['id'] ."'>";
 						
-						echo "	<div class='bloqueado'>
+						echo "	<div class='gmbloqueado'>
 									<span>
 										<i class='fas fa-coins'></i><p class='precio'>";
 										if ($lotiene!=0) {
@@ -201,26 +201,32 @@
 				 ?>
 			</div>
 		</div>
-	<div class="content">
-		<iframe id="iframe"
+	<div class="gmcontent">
+		<?php 
+
+			require $src.'/index.php';
+
+
+		?>
+		<!-- <iframe id="gmiframe"
 			<?php  
-		    	echo "title=".$src."";
+		    	//echo "title=".$src."";
 			?>
 		    <?php 
 
-		    echo "src='" . $columna["src"] . "'";
+		    	//echo "src='" . $columna["src"] . "'";
 		    ?>
-		></iframe>
+		></iframe> -->
 		<!-- <div style="width: 20%; height: 85%; background-color: lightgreen;"> </div> -->
 	</div>
-	<div class="imagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " dark";} ?>"></div>
-<!-- 	<div class="blackbg">
-		<div class="buyAlert">
+	<div class="gmimagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " gmdark";} ?>"></div>
+<!-- 	<div class="gmblackbg">
+		<div class="gmbuyAlert">
 			<h2>Comprar desbloqueable</h2>
-			<img class="buyImg">
+			<img class="gmbuyImg">
 			<p>Precio: 1200</p>
-			<input id="cancelar" type="button" name="cancelar" value="Cancelar">
-			<input id="confirmar" type="submit" name="confirmar" value="Confirmar">
+			<input id="gmcancelar" type="button" name="cancelar" value="Cancelar">
+			<input id="gmconfirmar" type="submit" name="confirmar" value="Confirmar">
 		</div>
 	</div> -->
 </body>
@@ -228,8 +234,8 @@
 <script type="text/javascript">
 	const left = document.querySelector('.left');
 	const section = document.querySelector('.sect');
-	const ul = document.querySelector('.menu');
-	const content = document.querySelector('.content');
+	const ul = document.querySelector('.gmmenu');
+	const content = document.querySelector('.gmcontent');
 	document.querySelector('.toggle').onclick = function(){
 		this.classList.toggle('Tactive');
 		ul.classList.toggle('Tactive');

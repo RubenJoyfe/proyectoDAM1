@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	option.disabled = true;
 	loadOptions();
 	squares(option.value);
-	fondos();
+	//fondos();
 	solucion.addEventListener("click", solve);
 
 	var slider = document.getElementsByClassName("slider")[0];
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	  	tile.square.style.transition = "top "+(100-this.value)/50+"s, left "+(100-this.value)/50+"s";
 	  }
 	}
-	desbloqueable.style.display = 'none';
+	// desbloqueable.style.display = 'none';
 });
 
 function loadOptions(){
@@ -260,17 +260,17 @@ function victory() {
 	playing = false;
 }
 
-function fondos() {
-	const options = document.getElementsByClassName("foto");
-	for (var i = 0; i < options.length; i++) {
-		options[i].style.backgroundImage = "url('img/"+i+".jpg')";
-		options[i].addEventListener("click", changeFondo);
-	}
-}
+// function fondos() {
+// 	const options = document.getElementsByClassName("foto");
+// 	for (var i = 0; i < options.length; i++) {
+// 		options[i].style.backgroundImage = "url('15game/img/"+i+".jpg')";
+// 		options[i].addEventListener("click", changeFondo);
+// 	}
+// }
 
 function changeFondo() {
 	fondo = this.style.backgroundImage;
-	if (fondo==='url("img/0.jpg")') {
+	if (fondo==='url("15game/img/0.jpg")') {
 		fondo = '';
 	}
 	let i=0;

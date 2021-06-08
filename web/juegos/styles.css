@@ -7,7 +7,7 @@
   outline:none;
 }
 
-.imagen {
+.gmimagen {
   position: fixed;
   top: -350px;
   left: -700px;
@@ -21,7 +21,7 @@
   animation: mover 60s linear infinite;
 }
 
-.dark {
+.gmdark {
   background-image: url(wpatternDark.png);
 }
 
@@ -49,7 +49,7 @@
   }
 }
 
-.content{
+.gmcontent{
   height: 100vh;
   margin: 0px 120px 60px 120px;
   z-index: 100;
@@ -61,12 +61,12 @@
 }
 
 
-.content.Tactive {
+.gmcontent.Tactive {
   transition-duration: 0.5s;
   transition-timing-function: ease-in-out;
 }
 
-.content h1 {
+.gmcontent h1 {
   padding: 20px 0 0;
 }
 
@@ -80,7 +80,7 @@
 
 /*--------------------------DESBLOQUEABLES------------------------*/
 
-.head {
+.gmhead {
   position: relative;
   width: 100%;
   /*height: 50px;*/
@@ -89,7 +89,7 @@
   justify-content: flex-end;
 }
 
-#desplegable {
+#gmdesplegable {
   margin: 1% 3%;
   padding: 10px 12px;
   text-align: center;
@@ -98,17 +98,17 @@
   cursor: pointer;
 }
 
-#desplegable:hover {
+#gmdesplegable:hover {
   background-color: rgba(0,0,0,0.05);
 }
 
-#iframe {
+#gmiframe {
   border: 0px;
   width: 100%;
   height: 100%;
 }
 
-#desbloqueables {
+#gmdesbloqueables {
   position: absolute;
   padding: 10px 20px;
   top: 100%;
@@ -119,7 +119,7 @@
 
 }
 
-.foto {
+.gmfoto {
   display: block;
   border-radius: 1vh;
   border: 0.4vh solid rgba(0,0,0,0.1);
@@ -131,7 +131,7 @@
   cursor: pointer;
 }
 
-.bloqueado {
+.gmbloqueado {
   margin: 0;
   width: 100%;
   height: 100%;
@@ -145,26 +145,26 @@
 }
 
 
-.bloqueado span {
+.gmbloqueado span {
   background-color: rgba(0,0,0,0.5);
   padding: 1vh 2vh;
   border-radius: 2.5vh;
 }
 
-.bloqueado span i {
+.gmbloqueado span i {
   margin-right: 1vh;
 }
 
-.bloqueado span p {
+.gmbloqueado span p {
   display: inline;
 }
 
-.bloqueado:hover {
+.gmbloqueado:hover {
   cursor: pointer;
   background-color: rgba(0,0,0,0.1);
 }
 
-.blackbg {
+.gmblackbg {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0,0,0,0.7);
@@ -176,7 +176,7 @@
   justify-content: center;
 }
 
-.buyAlert {
+.gmbuyAlert {
   height: 30vh;
   width: 40vh;
   background: rgba(255,255,255,0.1);
@@ -188,7 +188,7 @@
   align-items: center;
 }
 
-.buyAlert h2 {
+.gmbuyAlert h2 {
   display: flex;
   justify-content: center;
   font-size: 3vh;
@@ -196,7 +196,7 @@
   margin-bottom: 2vh;
 }
 
-.buyAlert p {
+.gmbuyAlert p {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -204,14 +204,14 @@
   margin: 1vh;
 }
 
-.buyAlert .buyImg {
+.gmbuyAlert .gmbuyImg {
   height: 15vh;
   width: 15vh;
   background-size: cover;
 }
 
-#confirmar,
-#cancelar {
+#gmconfirmar,
+#gmcancelar {
   outline:none;
   border: 0.1vh solid white;
   background-color: #FE213B;
@@ -222,28 +222,28 @@
   transition: box-shadow 0.25s, transform 0.25s;
 }
 
-#confirmar:hover,
-#cancelar:hover {
+#gmconfirmar:hover,
+#gmcancelar:hover {
   cursor: pointer;
   background-color: #CD1C31;
 }
 
-#cancelar {
+#gmcancelar {
   float: left;
   background-color: #615355;
 }
-#cancelar:hover {
+#gmcancelar:hover {
   background-color: #908080;
   transform: translateX(0.3vh) translateY(-0.3vh);
   box-shadow: -0.3vh 0.3vh #908080;
   transition: 0.25s;
 }
 
-#confirmar {
+#gmconfirmar {
   float: right;
 }
 
-#confirmar:hover {
+#gmconfirmar:hover {
   transform: translateX(0.3vh) translateY(-0.3vh);
   box-shadow: -0.3vh 0.3vh #FE213B;
   transition: 0.25s;

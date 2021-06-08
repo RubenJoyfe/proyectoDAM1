@@ -1,11 +1,11 @@
 <?php
 
-	// if(isset($_GET['full'])){
-	// 	$path = '';
-	// }
-	// else{
-	// 	$path = '15game/';
-	// }
+	if(isset($_GET['full'])){
+		$path = '';
+	}
+	else{
+		$path = '15game/';
+	}
 
 ?>
 <!DOCTYPE html>
@@ -17,8 +17,8 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
 	<script src="https://kit.fontawesome.com/3d5343bfd9.js" crossorigin="anonymous"></script>
 	<!-- ELSE -->
-	<link rel="stylesheet" type="text/css" href="<?php //echo $path; ?>styles.css">
-	<script type="text/javascript" src="<?php //echo $path; ?>js.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $path; ?>styles.css">
+	<script type="text/javascript" src="<?php echo $path; ?>js.js"></script>
 </head>
 <body>
 	<div class="daddy">
@@ -26,7 +26,7 @@
 			<div id="cont-game">
 				<div class="top menu">
 					<div>
-						<img src="img/15game-logo.png">
+						<img src="15game/img/15game-logo.png">
 					</div>
 					<div class="selectSize">
 						<button type="button" id="menos"><i class="fas fa-chevron-left"></i></button>
@@ -50,7 +50,7 @@
 					<button type="button" id="solucion">Ordenar</button>
 				</div>
 			</div>
-			<div id="desbloqueable">
+<!-- 			<div id="desbloqueable">
 				<div class="selectImg">
 					<div class="foto"></div>
 					<div class="foto"></div>
@@ -59,7 +59,7 @@
 					<div class="foto"></div>
 					<div class="foto"></div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </body>

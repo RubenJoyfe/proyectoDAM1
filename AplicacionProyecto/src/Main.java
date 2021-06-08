@@ -33,6 +33,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollBar;
 
 public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
@@ -65,12 +66,15 @@ public class Main extends JFrame {
 	private JLabel lblClear;
 
 	private JButton btnCustom;
-
 	private JPanel panel_editables;
-
 	private JLabel lblLogOut;
-
 	private JLabel instruc;
+	
+	private Color colorMenu = new Color(47, 62, 70);
+	private Color colorBg = new Color(53, 79, 82);
+	private Color colorPane = new Color(60, 98, 102);
+	private Color color4 = new Color(115, 162, 146);
+	private Color color5 = new Color(202, 210, 197);
 	
 	/**
 	 * Launch the application.
@@ -99,20 +103,24 @@ public class Main extends JFrame {
 		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
+		contentPane.setBackground(colorBg);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		panel_editables = new JPanel();
+		panel_editables.setBackground(colorBg);
 		panel_editables.setBounds(10, 523, 619, 0);
 		contentPane.add(panel_editables);
 		panel_editables.setLayout(null);
 		
 		panel_tabla = new JPanel();
+		panel_tabla.setBackground(colorPane);
 		panel_tabla.setBounds(10, 11, 619, 432);
 		contentPane.add(panel_tabla);
 		
 		panel_opciones = new JPanel();
+		panel_opciones.setBackground(colorPane);
 		panel_opciones.setBorder(new LineBorder(Color.GRAY));
 		panel_opciones.setBounds(638, 11, 184, 502);
 		contentPane.add(panel_opciones);
@@ -125,6 +133,8 @@ public class Main extends JFrame {
 		panel_opciones.add(lblNombreTabla);
 		
 		btnInsertar = new JButton("Insertar");
+		btnInsertar.setForeground(Color.WHITE);
+		btnInsertar.setBackground(new Color(50, 205, 50));
 		btnInsertar.setFocusPainted(false);
 		btnInsertar.addActionListener(new ActionListener() { // -------------------------> Listener Inserts
 			public void actionPerformed(ActionEvent e) {
@@ -136,6 +146,8 @@ public class Main extends JFrame {
 		panel_opciones.add(btnInsertar);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.setForeground(Color.WHITE);
+		btnModificar.setBackground(new Color(255, 215, 0));
 		btnModificar.setFocusPainted(false);
 		btnModificar.addActionListener(new ActionListener() { // ----------------------> Listener Modificar
 			public void actionPerformed(ActionEvent e) {
@@ -154,6 +166,8 @@ public class Main extends JFrame {
 		panel_opciones.add(btnModificar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setForeground(Color.WHITE);
+		btnEliminar.setBackground(new Color(128, 0, 0));
 		btnEliminar.setFocusPainted(false);
 		btnEliminar.addActionListener(new ActionListener() { // ----------------------> Listener Eliminar
 			public void actionPerformed(ActionEvent e) {
@@ -172,6 +186,7 @@ public class Main extends JFrame {
 		panel_opciones.add(btnEliminar);
 		
 		txtCustom = new JTextArea();
+		txtCustom.setBackground(UIManager.getColor("Button.light"));
 		txtCustom.setLineWrap(true);
 		
 		JScrollPane sp = new JScrollPane(txtCustom);
@@ -179,6 +194,8 @@ public class Main extends JFrame {
 		panel_opciones.add(sp);
 		
 		btnCustom = new JButton("Ejecutar");
+		btnCustom.setForeground(Color.WHITE);
+		btnCustom.setBackground(new Color(139, 69, 19));
 		btnCustom.setFocusPainted(false);
 		btnCustom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -222,6 +239,8 @@ public class Main extends JFrame {
 		panel_opciones.add(btnCustom);
 		
 		JButton btnLimpiar = new JButton("Borrar");
+		btnLimpiar.setForeground(Color.WHITE);
+		btnLimpiar.setBackground(new Color(139, 69, 19));
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(btnLimpiar,"¿Seguro que desea borrar el texto?","Borrar texto" ,0)==0) {
@@ -410,8 +429,9 @@ public class Main extends JFrame {
 		UIManager.put("MenuItem.foreground", Color.WHITE);
 		
 		menuBar = new JMenuBar();
-		menuBar.setForeground(Color.WHITE);
-		menuBar.setBackground(Color.BLACK);
+		menuBar.setBorderPainted(false);
+		menuBar.setForeground(color5);
+		menuBar.setBackground(colorMenu);
 		setJMenuBar(menuBar);
 //		mnMostrar.setPreferredSize(new Dimension(100, mnMostrar.getPreferredSize().height));
 		mnMostrar = new JMenu("   Tablas   ");
@@ -528,13 +548,11 @@ public class Main extends JFrame {
 					public void mouseEntered(MouseEvent e) {
 						cell = (JMenuItem) e.getSource();
 						cell.setBackground(Color.DARK_GRAY);
-						System.out.println(cell);
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
 						cell = (JMenuItem) e.getSource();
 						cell.setBackground(Color.BLACK);
-						System.out.println(cell);
 					}
 				});
 				rows++;
@@ -640,12 +658,11 @@ public class Main extends JFrame {
 			scroll.setBounds(0, 0, 618, 502);
 			panel_editables.setBounds(10, 523, 619, 0);
 		    panel_tabla.add(scroll);
-		    
 		    ImageIcon instrucciones = new ImageIcon(getClass().getResource("/img/instrucciones.png"));
 			instruc = new JLabel();
 			instruc.setBounds(1, -1, 617, 502);
 			instruc.setIcon(instrucciones);
-			panel_tabla.add(instruc);
+//			panel_tabla.add(instruc);
 		} else {
 			instruc.setVisible(false);
 			int nCol=0, nRow=0;
@@ -726,8 +743,19 @@ public class Main extends JFrame {
 			panel_editables.setBounds(10, 523-move, 620, move);
 		}
 		tabla.setName(tb);
+		tabla.setBackground(color4);
 		panel_tabla.setLayout(null);
+		panel_tabla.setBackground(colorBg);
 		scroll.setViewportView(tabla);
+		scroll.setBackground(colorBg);
+		scroll.getViewport().setBackground(colorBg);
+		scroll.setBorder(new LineBorder(colorMenu, 2));
+		
+		scroll.getVerticalScrollBar().setBackground(colorBg);
+		scroll.getHorizontalScrollBar().setBackground(colorBg);
+		scroll.getVerticalScrollBar().setBorder(new LineBorder(colorBg, 2));
+		scroll.getHorizontalScrollBar().setBorder(new LineBorder(colorBg, 2));
+		
 	    panel_tabla.add(scroll);
 	    tabla.setCellSelectionEnabled(true);
 	    tabla.setAutoCreateRowSorter(true);

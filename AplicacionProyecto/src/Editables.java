@@ -1,5 +1,6 @@
 //button.setFocusPainted(false);
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -13,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.text.NumberFormatter;
 
 //import java.util.Calendar;
@@ -25,6 +27,11 @@ public class Editables {
 	private TextPrompt placeHolder;
 	private JPanel contentPane;
 	private String type;	//bool - int - enum - varchar - date
+	
+	private Color bkColor = new Color(143, 100, 62);
+//	private Color borderColor = new Color(0, 100, 0);
+	private LineBorder line = new LineBorder(new Color(200, 100, 0), 2);
+	
 
 	// Tipos posibles: DATETIME  -  INT  -  BOOLEAN  -  VARCHAR  -  ENUM
 	// int(11) - tinyint(1) - enum('ESP','ENG') - int(11)
@@ -32,6 +39,9 @@ public class Editables {
 		contentPane = cp;
 		if (type.equals("tinyint(1)")) {
 			cmb = new JComboBox<String>();
+			cmb.setBackground(bkColor);
+			cmb.setForeground(Color.WHITE);
+			cmb.setBorder(line);
 			cmb.setBounds(104*(i%6), (i/6)*30, 100, 20);
 			cp.add(cmb);
 			cmb.addItem(name);
@@ -41,6 +51,9 @@ public class Editables {
 		} else if (type.contains("int")) {
 			NumberFormatter nf = new NumberFormatter();
 			nmb = new JFormattedTextField(nf);
+			nmb.setBackground(bkColor);
+			nmb.setForeground(Color.WHITE);
+			nmb.setBorder(line);
 			if (name.contains("id_")) {
 				nmb.setEditable(false);
 			}
@@ -73,6 +86,9 @@ public class Editables {
 		} else if (type.contains("enum")) {
 			cmb = new JComboBox<String>();
 			cmb.setBounds(104*(i%6), (i/6)*30, 100, 20);
+			cmb.setBackground(bkColor);
+			cmb.setForeground(Color.WHITE);
+			cmb.setBorder(line);
 			cp.add(cmb);
 			cmb.setToolTipText(name);
 			String[] str = type.split("'");
@@ -82,6 +98,9 @@ public class Editables {
 			this.type = "enum";
 		} else if (type.contains("varchar")) {
 			txt = new JTextField();
+			txt.setBackground(bkColor);
+			txt.setForeground(Color.WHITE);
+			txt.setBorder(line);
 			if (name.contains("id_")) {
 				txt.setEditable(false);
 			}
@@ -95,6 +114,9 @@ public class Editables {
 			this.type = "varchar";
 		} else if (type.contains("date")) {
 			txt = new JTextField();
+			txt.setBackground(bkColor);
+			txt.setForeground(Color.WHITE);
+			txt.setBorder(line);
 			txt.setEditable(false);
 			txt.setText("");
 			txt.setToolTipText(name);

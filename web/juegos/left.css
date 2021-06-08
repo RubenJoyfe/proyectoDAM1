@@ -62,34 +62,34 @@ ul.Tactive {
   transition-timing-function: ease-in-out; 
 }
 
-.navegacion {
+.gmnavegacion {
   /*overflow: hidden;*/
   width: 100%;
 }
 
-.navegacion ul {
+.gmnavegacion ul {
   position: relative;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-.navegacion ul li {
+.gmnavegacion ul li {
   position: relative;
   list-style: none;
   width: 100%;
   font-weight: 500;
 }
 
-.navegacion ul li:hover {
+.gmnavegacion ul li:hover {
   background: rgb(0, 0, 0, 0.2);
 }
 
-.leftDark .navegacion ul li:hover{
+.leftDark .gmnavegacion ul li:hover{
   background: rgb(255, 255, 255, 0.1);
 }
 
-.navegacion ul li a {
+.gmnavegacion ul li a {
   position: relative;
   width: 100%;
   display: flex;
@@ -97,7 +97,7 @@ ul.Tactive {
   color: white;
 }
 
-.navegacion ul li a .icon {
+.gmnavegacion ul li a .icon {
   position: relative;
   display: block;
   min-width: 60px; /*80px*/
@@ -106,11 +106,11 @@ ul.Tactive {
   text-align: center;
 }
 
-.navegacion ul li a .icon .fas{
+.gmnavegacion ul li a .icon .fas{
   font-size: 24px;
 }
 
-.navegacion ul li a .titulo{
+.gmnavegacion ul li a .titulo{
   position: relative;
   display: block;
   height: 60px;
@@ -118,7 +118,7 @@ ul.Tactive {
   white-space: nowrap;
 }
 
-.navegacion ul li a .iconC {
+.gmnavegacion ul li a .iconC {
   position: relative;
   display: block;
   min-width: 60px; /*80px*/
@@ -128,7 +128,7 @@ ul.Tactive {
   text-align: center;
 }
 
-.navegacion ul li a .nombreUsr{
+.gmgmnavegacion ul li a .nombreUsr{
   position: absolute;
   font-size: 16px;
   top: 5px;
@@ -136,7 +136,7 @@ ul.Tactive {
   white-space: nowrap;
 }
 
-.navegacion ul li a .dineros{
+.gmnavegacion ul li a .dineros{
   position: absolute;
   border: 1px solid rgba(255,255,255,0.4);
   background-color: rgba(255,255,255,0.1);
@@ -147,7 +147,7 @@ ul.Tactive {
   left: 60px;
   white-space: nowrap;
 }
-.navegacion ul li a .dineros i{
+.gmnavegacion ul li a .dineros i{
   padding: 0 3px;
 }
 
@@ -299,12 +299,12 @@ section .ola4 {
     transition-timing-function: ease-in-out; 
   }
 
-  .menu {
+  .gmmenu {
     padding-top: 80px;
 
   }
 
-  .menu.Tactive {
+  .gmmenu.Tactive {
     padding-top: 0;
   }
 
