@@ -29,6 +29,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PuzzleGames</title>
   
+
+<script src="alertify/alertify.min.js"></script>
+<!-- include the style -->
+<link rel="stylesheet" href="alertify/css/alertify.min.css" />
+<!-- include a theme -->
+<link rel="stylesheet" href="alertify/css/themes/default.min.css" />
+
+
   <script type="text/javascript" src="shop.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
@@ -155,7 +163,7 @@
 			<div></div>
 			<button id="desplegable"><i class="fas fa-store"></i></button>
 			<div id="desbloqueables" class="oculto">
-				<p>SHOP BITCH</p>
+				<p>SHOP</p>
 				 <!-- <div class='foto'><div class='bloqueado'><span><i class='fas fa-coins'></i>1200</span></div></div> -->
 				<?php 
 					$stmt = $db->prepare("SELECT id_desbloqueo AS id, desbloqueo.nombre AS desbloqueable, desbloqueo.coste FROM juego JOIN desbloqueo ON juego.id_juego = desbloqueo.fk_juego WHERE juego.nombre LIKE ?");

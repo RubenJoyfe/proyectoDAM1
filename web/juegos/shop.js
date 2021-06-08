@@ -1,7 +1,11 @@
 let dineros;
 
 document.addEventListener("DOMContentLoaded", function(event){
-	dineros = parseInt(document.getElementsByClassName("dineros")[0].childNodes[1].textContent);
+	try {
+		dineros = parseInt(document.getElementsByClassName("dineros")[0].childNodes[1].textContent);
+	} catch(e) {
+
+	}
 	desplegable.addEventListener("click", mostrarDesbloqueables);
 	fondos();
 });
@@ -92,21 +96,45 @@ function fondos() {
 					}
 					else {
 						const desblo = options[i].getAttribute('value');
-						dineros-=precio;
-
-						document.getElementsByClassName("dineros")[0].childNodes[1].textContent = dineros;
 						
 						const desbloquear = {
 								method: 'POST',
 								body: JSON.stringify({id_des: desblo, dinero: dineros})
 							}
-						fetch('buy.php', desbloquear);
-						
-						console.log("Compra realizada! Dinero restante: " + dineros)	
+						fetch('buy.php', desbloquear).then(response => {
+							if(response.ok) {
+								return response.json()
+							}
+							throw new Exception("Error");
+						})
+  						.then(data => errorsw(data.cod_error, precio, options[i]))
+  						.catch(function(error) {
+  							alert("La cagaste");
+							console.log('There has been a problem with your fetch operation: ' + error.message);
+						});
 					}
 				});
 			}
 		});
+	}
+
+	function errorsw(code, precio, myBlock) {
+		switch (code) {
+			case "0":
+				dineros-=precio;
+				document.getElementsByClassName("dineros")[0].childNodes[1].textContent = dineros;
+				console.log();
+				alertify.set('notifier','position', 'bottom-right');
+				alertify.notify("Compra realizada! Dinero restante: " + dineros, 'success', 5);
+				//Borrar opciones de compra
+				document.getElementsByClassName("blackbg")[0].remove();
+				myBlock.childNodes[1].classList.remove("bloqueado");
+				myBlock.childNodes[1].textContent="";
+				break;
+			default:
+				alertify.error("No se ha podido tramitar la compra. ("+code+")"); 
+				break;
+		}
 	}
 
 	//necesario para que funcione, 0 == desbloqueado

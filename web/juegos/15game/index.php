@@ -1,3 +1,13 @@
+<?php
+
+	// if(isset($_GET['full'])){
+	// 	$path = '';
+	// }
+	// else{
+	// 	$path = '15game/';
+	// }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +17,8 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
 	<script src="https://kit.fontawesome.com/3d5343bfd9.js" crossorigin="anonymous"></script>
 	<!-- ELSE -->
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<script type="text/javascript" src="js.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php //echo $path; ?>styles.css">
+	<script type="text/javascript" src="<?php //echo $path; ?>js.js"></script>
 </head>
 <body>
 	<div class="daddy">

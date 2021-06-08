@@ -27,6 +27,13 @@ session_start();
 	$stmt->bind_param("isi", $data['id_des'], $usrNick, $data['dinero']);
 	$stmt->execute();
 	$db->query($dtsql);
+	$res = mysqli_query($db, "SELECT @res as resultado");
+	$res = mysqli_fetch_array($res);
+	$rs = $res["resultado"];
+	$rsCompra=array(
+		'cod_error' => $rs
+	);
+	echo json_encode($rsCompra);
 
 
 	$_SESSION['usrDinero'] = $data['dinero'];
