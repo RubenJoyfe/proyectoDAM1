@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	const juegos = document.getElementsByClassName("juego");
 	for(let juego of juegos){
 		const name = juego.dataset.juego;
-		console.log("background-image:url('./juegos/" + name + "/img/portada.png')");
+		// console.log("background-image:url('./juegos/" + name + "/img/portada.png')");
 		juego.style.cssText = "background-image:url('./juegos/" + name + "/img/portada.png')";
 		juego.addEventListener("mouseenter", function( event ) {
 			juego.style.cssText = "background-image:url('./juegos/" + name + "/img/portada.gif')";

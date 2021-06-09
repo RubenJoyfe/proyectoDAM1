@@ -89,15 +89,18 @@
 								</a>
 							</li>
 							";
+				 	}
+					if (isset($_SESSION['usrNick'])) {
+				 		echo "
+							<li>
+								<a href='.\login\logout.php'>
+									<span class='icon'><i class='fas fa-sign-out-alt'></i></span>
+									<span class='titulo'>Cerrar sesión</span>
+								</a>
+							</li>
+							";
 				 	} 
 				 ?>
-				
-				<li>
-					<a href=".\login\logout.php">
-						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
-						<span class="titulo">Cerrar sesión</span>
-					</a>
-				</li>
 				<?php
 					// if (isset($_SESSION['usrNick'])) {
 				 	//	echo "
@@ -185,9 +188,18 @@
 					$redireccion = "./juegos/juego.php?source=".$source."";
 					echo " <a href='" . $redireccion . "'>
 								<div data-juego='$source' class='juego";if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";}echo "'>
-									<p>" 
-									. $columna["nombre"] . 
-									"</p>
+									<div class='nade'>
+										<div "; 
+										if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkDesc'";}
+										echo">
+											<h3>" 
+											. $columna["nombre"] . 
+											"</h3>
+											<p>".
+												$columna["descripcion"]
+											."</p>
+										</div>
+									</div>
 								</div>
 							</a>";
 				}

@@ -112,15 +112,18 @@
 								</a>
 							</li>
 							";
+				 	}
+					if (isset($_SESSION['usrNick'])) {
+				 		echo "
+							<li>
+								<a href='..\login\logout.php'>
+									<span class='icon'><i class='fas fa-sign-out-alt'></i></span>
+									<span class='titulo'>Cerrar sesión</span>
+								</a>
+							</li>
+							";
 				 	} 
 				 ?>
-				
-				<li>
-					<a href="..\login\logout.php">
-						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
-						<span class="titulo">Cerrar sesión</span>
-					</a>
-				</li>
 			</ul>
 	  	</div>
 	  	
@@ -164,7 +167,6 @@
 			<button id="gmdesplegable"><i class="fas fa-store"></i></button>
 			<div id="gmdesbloqueables" class="gmoculto">
 				<p>SHOP</p>
-				 <!-- <div class='gmfoto'><div class='gmbloqueado'><span><i class='fas fa-coins'></i>1200</span></div></div> -->
 				<?php 
 					$stmt = $db->prepare("SELECT id_desbloqueo AS id, desbloqueo.nombre AS desbloqueable, desbloqueo.coste FROM juego JOIN desbloqueo ON juego.id_juego = desbloqueo.fk_juego WHERE juego.nombre LIKE ?");
 					$stmt->bind_param("s", $_GET['source']);
@@ -203,21 +205,8 @@
 		</div>
 	<div class="gmcontent">
 		<?php 
-
 			require $src.'/index.php';
-
-
 		?>
-		<!-- <iframe id="gmiframe"
-			<?php  
-		    	//echo "title=".$src."";
-			?>
-		    <?php 
-
-		    	//echo "src='" . $columna["src"] . "'";
-		    ?>
-		></iframe> -->
-		<!-- <div style="width: 20%; height: 85%; background-color: lightgreen;"> </div> -->
 	</div>
 	<div class="gmimagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " gmdark";} ?>"></div>
 <!-- 	<div class="gmblackbg">

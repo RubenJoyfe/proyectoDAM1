@@ -93,7 +93,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150px;
+  height: 175px;
   background-color: #DCFADF;
   border-radius: 25px;
   margin: 5px;*/
@@ -101,6 +101,8 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  transition: background-image 0.25s;
+  border: 0.1vh solid rgba(100,100,100,1);
 }
 
 .lastjuego {
@@ -108,15 +110,57 @@ body {
   margin-bottom: 60px; 
 }
 
+.juego .nade {
+  display: flex;
+  align-self: flex-end;
+  height: 25%;
+  width: 100%;
+  justify-content: center;
+  transition: height 0.25s ease-in-out;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.juego .nade div {
+  display: flex;
+  align-self: center;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  justify-content: center;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.juego .nade div.darkDesc {
+  background-color: #2B3032;
+}
+
+.juego .nade:hover {
+  height: 75%;
+}
+.juego .nade div:hover {
+  overflow-y: scroll;
+}
+
+.juego .nade div h3 {
+  padding: 10px 15px;
+  text-align: center;
+  width: 100%;
+}
+
+.juego .nade div p {
+  padding: 5px 15px;
+  margin-bottom: 20px;
+}
+
 .content a {
   width: 25%;
   text-decoration:none;
-  color: white;
-  text-shadow: 1px 1px black;
-}
-
-.content a:hover {
-  font-size: 20px;
+  color: black;
 }
 
 @media (max-width:1920px) {

@@ -11,10 +11,7 @@ session_start();
 			$tema = $_SESSION['usrTema']; 
 		}
 	}
-	else {
-		header('Location: ../index.php?redireccion=1');
-		exit;
-	}
+
 	$data = json_decode(file_get_contents('php://input'), true);
 
 	$db = new mysqli("localhost:3306", "root", "", "h15af00");

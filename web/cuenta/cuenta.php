@@ -95,14 +95,17 @@
 							</li>
 							";
 				 	} 
+					if (isset($_SESSION['usrNick'])) {
+				 		echo "
+							<li>
+								<a href='..\login\logout.php'>
+									<span class='icon'><i class='fas fa-sign-out-alt'></i></span>
+									<span class='titulo'>Cerrar sesión</span>
+								</a>
+							</li>
+							";
+				 	} 
 				 ?>
-				
-				<li>
-					<a href="..\login\logout.php">
-						<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
-						<span class="titulo">Cerrar sesión</span>
-					</a>
-				</li>
 				<?php
 					// if (isset($_SESSION['usrNick'])) {
 				 // 		echo "

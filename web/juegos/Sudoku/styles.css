@@ -1,21 +1,8 @@
-body {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-flow: column;
-  margin: 0;
-  overflow: hidden;
-  font-family: "Lato", sans-serif;
-  background-color: #4d394b;
-}
-
 .sudoku-container {
   border: 4px solid #1f171f;
   margin: 0 auto;
   position: relative;
-  padding: 0 2px;
+  padding: 10px 20px;
 }
 .sudoku-container::before, .sudoku-container::after {
   position: absolute;
@@ -89,6 +76,8 @@ tr:nth-child(6) input {
 }
 
 #controls {
+  display: flex;
+  align-self: center;justify-content: center;
   margin: 20px 0;
 }
 

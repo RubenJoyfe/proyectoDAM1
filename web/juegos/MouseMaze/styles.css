@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
-* {
+/** {
   background-repeat: no-repeat;
   box-sizing: border-box;
   outline: 0;
@@ -25,7 +25,7 @@ html, body, .wrapper {
   overflow: hidden;
   padding: 0;
   width: 100vw;
-}
+}*/
 
 .wrapper:hover .gameover {
   display: none;

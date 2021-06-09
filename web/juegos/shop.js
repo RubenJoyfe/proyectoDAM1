@@ -94,7 +94,7 @@ function fondos() {
 				});
 				gmconfirmar.addEventListener("click", function(){
 					if (dineros<precio) {
-						console.log("Dinero insuficiente, faltan " + (precio-dineros) + " dineros")
+						alertify.error("Dinero insuficiente, faltan " + (precio-dineros) + " dineros"); 
 					}
 					else {
 						const desblo = options[i].getAttribute('value');
@@ -111,8 +111,8 @@ function fondos() {
 						})
   						.then(data => errorsw(data.cod_error, precio, options[i]))
   						.catch(function(error) {
-  							alert("FAILURE ERROR");
-							console.log('There has been a problem with your fetch operation: ' + error.message);
+  							console.log('There has been a problem with your fetch operation: ' + error.message);
+							alertify.error('There has been a problem with your fetch operation: ' + error.message); 
 						});
 					}
 				});
@@ -132,8 +132,12 @@ function fondos() {
 				myBlock.childNodes[1].classList.remove("gmbloqueado");
 				myBlock.childNodes[1].textContent="";
 				break;
+			case "-1": {
+				alertify.error("No se ha podido tramitar la compra. ("+code+")");
+				// window.location="../login/login.php";
+			}
 			default:
-				alertify.error("No se ha podido tramitar la compra. ("+code+")"); 
+				alertify.error("No se ha podido tramitar la compra. ("+code+")");
 				break;
 		}
 	}
