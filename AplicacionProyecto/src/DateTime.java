@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.WindowEvent;
@@ -32,24 +33,23 @@ public class DateTime extends JDialog {
 
 	private final JPanel panel = new JPanel();
 	private JPanel buttonPane;
+	
 	private JButton btnAceptar;
+	private JButton btnLimpiar;
 	private JButton btnCancelar;
 
 	private JCalendar calendar;
-
+	private LocalDateTime now;
 	private JSlider slider;
+	
 	private JFormattedTextField txtHours;
 	private JFormattedTextField txtMinutes;
 	private JFormattedTextField txtSeconds;
-
-	private LocalDateTime now;
+	private JTextField txtf;
 
 	private JLabel lblFecha;
 	private JLabel lblHora;
-
-	private JTextField txtf;
-
-	private JButton btnLimpiar;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +58,6 @@ public class DateTime extends JDialog {
 			DateTime dialog = new DateTime();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-			System.out.println(dialog.isResizable()+"asdasd");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,8 +123,15 @@ public class DateTime extends JDialog {
 		calendar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		calendar.getMonthChooser().getComboBox().setFont(new Font("Tahoma", Font.PLAIN, 12));
 		calendar.setWeekOfYearVisible(false);
+//		calendar.setDecorationBackgroundColor(Color.red);
+//		calendar.setForeground(Color.pink);
+//		calendar.setDecorationBackgroundVisible(true);
+//		calendar.setDecorationBordersVisible(true);
+//		calendar.setDecorationBordersVisible(true);
+		calendar.setSundayForeground(Color.blue);
 		calendar.setBounds(0, 0, 385, 220);
 		panel.add(calendar);
+//		panel.setBackground(Color.green);
 		calendar.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
