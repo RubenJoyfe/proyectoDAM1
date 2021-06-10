@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -33,7 +34,6 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JScrollBar;
 
 public class Main extends JFrame {
 	private static final long serialVersionUID = 4219163702005532108L;
@@ -101,6 +101,8 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 848, 585);
 		setLocationRelativeTo(null);
+		ImageIcon icon = new ImageIcon(getClass().getResource("/img/icon.png"));
+		setIconImage(icon.getImage());
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(colorBg);
@@ -251,6 +253,36 @@ public class Main extends JFrame {
 		btnLimpiar.setFocusPainted(false);
 		btnLimpiar.setBounds(91, 248, 82, 23);
 		panel_opciones.add(btnLimpiar);
+		
+		scroll.setBorder(new LineBorder(colorMenu, 2));
+		
+		scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+			
+			@Override
+		    protected JButton createDecreaseButton(int orientation) {
+		        JButton button = super.createDecreaseButton(orientation);
+		        button.setBackground(color4);
+		        return button;
+		    }
+
+		    @Override
+		    protected JButton createIncreaseButton(int orientation) {
+		        JButton button = super.createIncreaseButton(orientation);
+		        button.setBackground(color4);
+		        return button;
+		    }
+			
+		    @Override
+		    protected void configureScrollBarColors() {
+		        this.thumbColor = Color.black;
+		        this.trackColor = Color.red;
+		        this.thumbHighlightColor = Color.green;
+		        this.thumbDarkShadowColor = Color.blue;
+		        this.thumbLightShadowColor = Color.gray;
+		        this.trackHighlightColor = Color.yellow;
+		    }
+		});
+		scroll.getVerticalScrollBar().setBorder(new LineBorder(colorBg, 2));
 		
 		do {
 //			login();
@@ -744,17 +776,16 @@ public class Main extends JFrame {
 		}
 		tabla.setName(tb);
 		tabla.setBackground(color4);
+		tabla.getTableHeader().setOpaque(false);
+		tabla.getTableHeader().setBackground(colorMenu);
+		tabla.getTableHeader().setForeground(color5);
+		tabla.getTableHeader().setBorder(new LineBorder(colorMenu, 1));
+		 
 		panel_tabla.setLayout(null);
 		panel_tabla.setBackground(colorBg);
 		scroll.setViewportView(tabla);
 		scroll.setBackground(colorBg);
 		scroll.getViewport().setBackground(colorBg);
-		scroll.setBorder(new LineBorder(colorMenu, 2));
-		
-		scroll.getVerticalScrollBar().setBackground(colorBg);
-		scroll.getHorizontalScrollBar().setBackground(colorBg);
-		scroll.getVerticalScrollBar().setBorder(new LineBorder(colorBg, 2));
-		scroll.getHorizontalScrollBar().setBorder(new LineBorder(colorBg, 2));
 		
 	    panel_tabla.add(scroll);
 	    tabla.setCellSelectionEnabled(true);
