@@ -1,4 +1,5 @@
 <?php 
+	require_once "config.php";
 	session_start();
 	if (isset($_SESSION['codbaja'])) {
 		session_destroy();
@@ -156,13 +157,13 @@
 	<div class="content" >
 			<?php 
 				// creación de la conexión a la base de datos con mysql_connect()
-				$conexion = mysqli_connect( "localhost", "Ruben", 1234 ) or die ("No se ha podido conectar al servidor de Base de datos");
+				$conexion = mysqli_connect(DB_HOST, DB_USER, DB_PASS) or die ("No se ha podido conectar al servidor de Base de datos");
 				// Selección del a base de datos a utilizar
-				$db = mysqli_select_db( $conexion, "h15af00" ) or die ( "Upps! No se ha podido conectar a la base de datos" );
+				$db = mysqli_select_db( $conexion, DB_NAME ) or die ( "Upps! No se ha podido conectar a la base de datos" );
 				// establecer y realizar consulta. guardamos en variable.
 				if (isset($_GET['search'])) {
 					$cad = $_GET['search']."%";
-					$db = new mysqli("localhost:3306", "root", "", "h15af00");
+					$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 					$consulta = "SELECT * FROM juego WHERE nombre LIKE ? ;";
 					$stmt = $db->prepare($consulta);
 					$stmt->bind_param("s", $cad);

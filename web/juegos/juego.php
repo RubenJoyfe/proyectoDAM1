@@ -1,4 +1,5 @@
 <?php 
+	require_once "../config.php";
 	session_start();
 	if (isset($_SESSION['usrNick'])) {
 		$usrNick = $_SESSION['usrNick'];
@@ -10,7 +11,7 @@
 			$usrTema=$_SESSION['usrTema'];
 		}
 		else {
-			$db = new mysqli("localhost:3306", "root", "", "h15af00");
+			$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 			if ($db->connect_errno) {
 			    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 			}
@@ -38,6 +39,7 @@
 
 
   <script type="text/javascript" src="shop.js"></script>
+  <?php echo "<script type='text/javascript' src='".$_GET['source']."/unlock.js'></script>"; ?>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
@@ -50,7 +52,7 @@
 
   <?php 
 
-		$db = new mysqli("localhost:3306", "Ruben", "1234", "h15af00");
+		$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 		
 		$stmt = $db->prepare("SELECT src FROM juego WHERE nombre = ?");
 		$stmt->bind_param("s", $_GET['source']);
@@ -166,7 +168,7 @@
 			<div></div>
 			<button id="gmdesplegable"><i class="fas fa-store"></i></button>
 			<div id="gmdesbloqueables" class="gmoculto">
-				<p>SHOP</p>
+				<p class="gmshop">Tienda</p>
 				<?php 
 					$stmt = $db->prepare("SELECT id_desbloqueo AS id, desbloqueo.nombre AS desbloqueable, desbloqueo.coste FROM juego JOIN desbloqueo ON juego.id_juego = desbloqueo.fk_juego WHERE juego.nombre LIKE ?");
 					$stmt->bind_param("s", $_GET['source']);
@@ -183,7 +185,7 @@
 							$lotiene = $stmt->get_result();
 							$lotiene = mysqli_num_rows($lotiene);
 						/*FIN VER SI TIENE DESBLOQUEADO ALGUN DESBLOQUEABLE*/
-						echo "<div class='foto' value='". $rs['id'] ."'>";
+						echo "<div class='foto' id='".$_GET['source']."' value='". $rs['id'] ."'>";
 						
 						echo "	<div class='gmbloqueado'>
 									<span>

@@ -1,5 +1,5 @@
 <?php 
-
+require_once "../config.php";
 session_start();
 	if (isset($_SESSION['usrNick'])) {
 		$usrNick = $_SESSION['usrNick'];
@@ -14,7 +14,7 @@ session_start();
 
 	$data = json_decode(file_get_contents('php://input'), true);
 
-	$db = new mysqli("localhost:3306", "root", "", "h15af00");
+	$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	if ($db->connect_errno) {
 	    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 	}

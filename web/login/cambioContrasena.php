@@ -1,5 +1,5 @@
 <?php 
-	
+	require_once "../config.php";
 	require '../vendor/autoload.php';
 	use Firebase\JWT\JWT;
 
@@ -29,7 +29,7 @@
 			$noigual=1;
 		}
 		else {
-			$db = new mysqli("localhost:3306", "root", "", "h15af00");
+			$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 			if ($db->connect_errno) {
 			    echo "Falló la conexión con MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 			}

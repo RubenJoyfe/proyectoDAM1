@@ -110,13 +110,19 @@
 
 #gmdesbloqueables {
   position: absolute;
-  padding: 10px 20px;
+  padding: 1vh 2vw 1vw 2vw;
   top: 100%;
   right: 0;
-  background: blue;
+  background: #202A3D;
   display: none;
   flex-direction: column;
+  border-radius: 1vw 0 0 1vw;
+}
 
+.gmshop {
+  color: white;
+  text-align: center;
+  font-size: 3.5vh;
 }
 
 .gmfoto {

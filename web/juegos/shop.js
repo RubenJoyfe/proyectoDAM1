@@ -1,4 +1,5 @@
 let dineros;
+let src;
 
 document.addEventListener("DOMContentLoaded", function(event){
 	try {
@@ -7,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 	}
 	gmdesplegable.addEventListener("click", mostrarDesbloqueables);
-	fondos();
+	cargarTienda();
 });
 
 
@@ -20,30 +21,16 @@ function mostrarDesbloqueables() {
 	}
 }
 
-function fifgame(img) {
-	const squares =  document.getElementsByName(".square");
-	for (var i=0; i<squares.length; i++) {
-		if (img==0) {
-			squares[i].innerHTML = i+1;
-			squares[i].style.border = "0.1vh solid rgba(0,0,0, 0.1)";
-			squares[i].style["background-image"] = "";
-		}
-		else {
-			squares[i].style["background-image"] = "url(15game/img/"+img+".jpg)";
-			squares[i].innerHTML = '';
-			squares[i].style.border = '';
-		}
-	}
-}
-
-function fondos() {
+function cargarTienda() {
 	const options = document.getElementsByClassName("foto");
 	for (let i = 0; i < options.length; i++) {
 		const bloq = options[i].childNodes;
 		// const precio = bloq[1].childNodes[1].childNodes[2].innerHTML;
 		const precio = parseInt(document.getElementsByClassName("precio")[i].innerHTML);
-		console.log(precio)
-		options[i].style.backgroundImage = "url('15game/img/"+i+".jpg')";
+		const gm = options[i].id;
+		src = gm;
+		
+		options[i].style.backgroundImage = "url('"+gm+"/img/"+i+".jpg')";
 		options[i].style.backgroundImage;
 		// let pos;
 		// for (var f = 0; f < bloq.length; f++) {
@@ -53,7 +40,7 @@ function fondos() {
 		// }
 		options[i].addEventListener("click", function(){
 			if (!bloq[1].classList.contains("gmbloqueado")) {
-				fifgame(i);
+				unlockThis(i);
 			}
 			else {
 				const imgsrc = this.style.backgroundImage;
