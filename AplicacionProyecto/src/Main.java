@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -26,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.Box;
@@ -70,11 +72,12 @@ public class Main extends JFrame {
 	private JLabel lblLogOut;
 	private JLabel instruc;
 	
-	private Color colorMenu = new Color(47, 62, 70);
-	private Color colorBg = new Color(53, 79, 82);
-	private Color colorPane = new Color(60, 98, 102);
-	private Color color4 = new Color(115, 162, 146);
-	private Color color5 = new Color(202, 210, 197);
+	private Color colors[] = {	new Color(47, 62, 70),
+								new Color(53, 79, 82),
+								new Color(60, 98, 102),
+								new Color(79, 123, 120),
+								new Color(115, 162, 146),
+								new Color(202, 210, 197)};
 	
 	/**
 	 * Launch the application.
@@ -105,25 +108,25 @@ public class Main extends JFrame {
 		setIconImage(icon.getImage());
 		
 		contentPane = new JPanel();
-		contentPane.setBackground(colorBg);
+		contentPane.setBackground(colors[1]);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		panel_editables = new JPanel();
-		panel_editables.setBackground(colorBg);
+		panel_editables.setBackground(colors[1]);
 		panel_editables.setBounds(10, 523, 619, 0);
 		contentPane.add(panel_editables);
 		panel_editables.setLayout(null);
 		
 		panel_tabla = new JPanel();
-		panel_tabla.setBackground(colorPane);
+		panel_tabla.setBackground(colors[1]);
 		panel_tabla.setBounds(10, 11, 619, 432);
 		contentPane.add(panel_tabla);
 		
 		panel_opciones = new JPanel();
-		panel_opciones.setBackground(colorPane);
-		panel_opciones.setBorder(new LineBorder(Color.GRAY));
+		panel_opciones.setBackground(colors[2]);
+		panel_opciones.setBorder(new LineBorder(colors[0], 2));
 		panel_opciones.setBounds(638, 11, 184, 502);
 		contentPane.add(panel_opciones);
 		panel_opciones.setLayout(null);
@@ -132,12 +135,14 @@ public class Main extends JFrame {
 		lblNombreTabla.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNombreTabla.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreTabla.setBounds(10, 11, 164, 51);
+		lblNombreTabla.setForeground(Color.white);
 		panel_opciones.add(lblNombreTabla);
 		
 		btnInsertar = new JButton("Insertar");
 		btnInsertar.setForeground(Color.WHITE);
-		btnInsertar.setBackground(new Color(50, 205, 50));
+		btnInsertar.setBackground(new Color(105, 48, 175));
 		btnInsertar.setFocusPainted(false);
+		btnInsertar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnInsertar.addActionListener(new ActionListener() { // -------------------------> Listener Inserts
 			public void actionPerformed(ActionEvent e) {
 				getEditableString();
@@ -149,8 +154,9 @@ public class Main extends JFrame {
 		
 		btnModificar = new JButton("Modificar");
 		btnModificar.setForeground(Color.WHITE);
-		btnModificar.setBackground(new Color(255, 215, 0));
+		btnModificar.setBackground(new Color(68, 0, 126));
 		btnModificar.setFocusPainted(false);
+		btnModificar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnModificar.addActionListener(new ActionListener() { // ----------------------> Listener Modificar
 			public void actionPerformed(ActionEvent e) {
 				String msg = "¿Está seguro que quiere modificar este"
@@ -169,8 +175,9 @@ public class Main extends JFrame {
 		
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setForeground(Color.WHITE);
-		btnEliminar.setBackground(new Color(128, 0, 0));
+		btnEliminar.setBackground(new Color(47, 0, 74));
 		btnEliminar.setFocusPainted(false);
+		btnEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnEliminar.addActionListener(new ActionListener() { // ----------------------> Listener Eliminar
 			public void actionPerformed(ActionEvent e) {
 				String msg = "¿Está seguro que quiere eliminar este"
@@ -188,16 +195,48 @@ public class Main extends JFrame {
 		panel_opciones.add(btnEliminar);
 		
 		txtCustom = new JTextArea();
-		txtCustom.setBackground(UIManager.getColor("Button.light"));
+		txtCustom.setBackground(colors[5]);
+		txtCustom.setBorder(new LineBorder(colors[0], 1));
 		txtCustom.setLineWrap(true);
 		
 		JScrollPane sp = new JScrollPane(txtCustom);
+		sp.setBorder(new LineBorder(colors[0], 2));
+		
+		sp.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+			
+			@Override
+		    protected JButton createDecreaseButton(int orientation) {
+		        JButton button = super.createDecreaseButton(orientation);
+		        button.setBackground(colors[4]);
+		        return button;
+		    }
+
+		    @Override
+		    protected JButton createIncreaseButton(int orientation) {
+		        JButton button = super.createIncreaseButton(orientation);
+		        button.setBackground(colors[4]);
+		        return button;
+		    }
+			
+		    @Override
+		    protected void configureScrollBarColors() {
+		        this.thumbColor = colors[0];
+		        this.thumbDarkShadowColor = colors[2];
+		        this.thumbHighlightColor = colors[3];
+		        this.thumbLightShadowColor = colors[3];
+		        this.trackColor = colors[3];
+		        this.trackHighlightColor = colors[3];
+		        
+		    }
+		});
+		sp.getVerticalScrollBar().setBorder(new LineBorder(colors[1], 2));
+		sp.setBorder(null);
 		sp.setBounds(10, 73, 164, 177);
 		panel_opciones.add(sp);
 		
 		btnCustom = new JButton("Ejecutar");
 		btnCustom.setForeground(Color.WHITE);
-		btnCustom.setBackground(new Color(139, 69, 19));
+		btnCustom.setBackground(colors[2]);
 		btnCustom.setFocusPainted(false);
 		btnCustom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -237,12 +276,14 @@ public class Main extends JFrame {
 				}
 			}
 		});
-		btnCustom.setBounds(10, 248, 82, 23);
+		btnCustom.setBounds(11, 250, 82, 23);
 		panel_opciones.add(btnCustom);
 		
 		JButton btnLimpiar = new JButton("Borrar");
 		btnLimpiar.setForeground(Color.WHITE);
-		btnLimpiar.setBackground(new Color(139, 69, 19));
+		btnLimpiar.setBackground(colors[2]);
+		btnLimpiar.setFocusPainted(false);
+		btnLimpiar.setBounds(91, 250, 82, 23);
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(btnLimpiar,"¿Seguro que desea borrar el texto?","Borrar texto" ,0)==0) {
@@ -250,44 +291,43 @@ public class Main extends JFrame {
 				}
 			}
 		});
-		btnLimpiar.setFocusPainted(false);
-		btnLimpiar.setBounds(91, 248, 82, 23);
 		panel_opciones.add(btnLimpiar);
 		
-		scroll.setBorder(new LineBorder(colorMenu, 2));
+		scroll.setBorder(new LineBorder(colors[0], 2));
 		
 		scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 			
 			@Override
 		    protected JButton createDecreaseButton(int orientation) {
 		        JButton button = super.createDecreaseButton(orientation);
-		        button.setBackground(color4);
+		        button.setBackground(colors[4]);
 		        return button;
 		    }
 
 		    @Override
 		    protected JButton createIncreaseButton(int orientation) {
 		        JButton button = super.createIncreaseButton(orientation);
-		        button.setBackground(color4);
+		        button.setBackground(colors[4]);
 		        return button;
 		    }
 			
 		    @Override
 		    protected void configureScrollBarColors() {
-		        this.thumbColor = Color.black;
-		        this.trackColor = Color.red;
-		        this.thumbHighlightColor = Color.green;
-		        this.thumbDarkShadowColor = Color.blue;
-		        this.thumbLightShadowColor = Color.gray;
-		        this.trackHighlightColor = Color.yellow;
+		        this.thumbColor = colors[0];
+		        this.thumbDarkShadowColor = colors[2];
+		        this.thumbHighlightColor = colors[3];
+		        this.thumbLightShadowColor = colors[3];
+		        this.trackColor = colors[3];
+		        this.trackHighlightColor = colors[3];
+		        
 		    }
 		});
-		scroll.getVerticalScrollBar().setBorder(new LineBorder(colorBg, 2));
+		scroll.getVerticalScrollBar().setBorder(new LineBorder(colors[1], 2));
 		
 		do {
-//			login();
-			nombre = "root";
-			pass = "";
+			login();
+//			nombre = "root";
+//			pass = "";
 		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
 		startMenu();
 		crearTabla("vacía");
@@ -451,23 +491,22 @@ public class Main extends JFrame {
 	
 	public void startMenu() {
 		//menu hover
-		UIManager.put("Menu.selectionBackground", Color.DARK_GRAY);
+		UIManager.put("Menu.selectionBackground", colors[3]);
 		UIManager.put("Menu.selectionForeground", Color.WHITE);
 		//menu item hover
-		UIManager.put("MenuItem.selectionBackground", Color.DARK_GRAY);
+		UIManager.put("MenuItem.selectionBackground", colors[3]);
 		UIManager.put("MenuItem.selectionForeground", Color.WHITE);
 		//menu item normal
-		UIManager.put("MenuItem.background", Color.DARK_GRAY);
+		UIManager.put("MenuItem.background", colors[3]);
 		UIManager.put("MenuItem.foreground", Color.WHITE);
 		
 		menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
-		menuBar.setForeground(color5);
-		menuBar.setBackground(colorMenu);
+		menuBar.setForeground(colors[5]);
+		menuBar.setBackground(colors[0]);
 		setJMenuBar(menuBar);
-//		mnMostrar.setPreferredSize(new Dimension(100, mnMostrar.getPreferredSize().height));
 		mnMostrar = new JMenu("   Tablas   ");
-		mnMostrar.setBackground(Color.DARK_GRAY);
+		mnMostrar.setBackground(colors[3]);
 		mnMostrar.setForeground(Color.WHITE);
 		mnMostrar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		menuBar.add(mnMostrar);
@@ -491,7 +530,7 @@ public class Main extends JFrame {
 		    }
 		};
 		lblClear.setForeground(Color.WHITE);
-		lblClear.setBackground(Color.DARK_GRAY);
+		lblClear.setBackground(colors[3]);
 		lblClear.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		lblClear.addMouseListener(new MouseAdapter() {
@@ -522,7 +561,7 @@ public class Main extends JFrame {
 		    }
 		};
 		lblLogOut.setForeground(Color.WHITE);
-		lblLogOut.setBackground(Color.DARK_GRAY);
+		lblLogOut.setBackground(colors[3]);
 		lblLogOut.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		lblLogOut.addMouseListener(new MouseAdapter() {
@@ -564,8 +603,9 @@ public class Main extends JFrame {
 				String nombreOp = rs.getString("nombre");
 				String nombreMay = rs.getString("nombre").substring(0, 1).toUpperCase()+ rs.getString("nombre").substring(1);
 				mntmTabla[rows] = new JMenuItem(nombreMay);
-				mntmTabla[rows].setBackground(Color.BLACK);
+				mntmTabla[rows].setBackground(colors[0]);
 				mntmTabla[rows].setForeground(Color.WHITE);
+				mntmTabla[rows].setBorder(new LineBorder(colors[1], 1));
 				mnMostrar.add(mntmTabla[rows]);
 				mntmTabla[rows].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -584,7 +624,7 @@ public class Main extends JFrame {
 					@Override
 					public void mouseExited(MouseEvent e) {
 						cell = (JMenuItem) e.getSource();
-						cell.setBackground(Color.BLACK);
+						cell.setBackground(colors[0]);
 					}
 				});
 				rows++;
@@ -677,7 +717,7 @@ public class Main extends JFrame {
 		btnInsertar.setEnabled(b);
 		btnModificar.setEnabled(b);
 	}
-
+	
 	//*******************************Crear Tabla****************************
 	@SuppressWarnings({ "serial", "rawtypes" })
 	public void crearTabla(String tb) {
@@ -694,7 +734,7 @@ public class Main extends JFrame {
 			instruc = new JLabel();
 			instruc.setBounds(1, -1, 617, 502);
 			instruc.setIcon(instrucciones);
-//			panel_tabla.add(instruc);
+			enableButtons(false);
 		} else {
 			instruc.setVisible(false);
 			int nCol=0, nRow=0;
@@ -764,7 +804,6 @@ public class Main extends JFrame {
 						return columnTypes[columnIndex];
 					}
 				});				
-				//tabla=new JTable(celdas, titulos);
 			} 
 			catch (SQLException e) {
 				e.printStackTrace();
@@ -775,17 +814,37 @@ public class Main extends JFrame {
 			panel_editables.setBounds(10, 523-move, 620, move);
 		}
 		tabla.setName(tb);
-		tabla.setBackground(color4);
+		tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+		{
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		    {
+		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        c.setBackground(row % 2 == 0 ? colors[5] : Color.WHITE);
+		        return c;
+		    }
+		});
+		
+		tabla.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer()
+		{
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		    {
+		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        c.setBackground(row % 2 == 0 ? colors[5] : Color.WHITE);
+		        return c;
+		    }
+		});
 		tabla.getTableHeader().setOpaque(false);
-		tabla.getTableHeader().setBackground(colorMenu);
-		tabla.getTableHeader().setForeground(color5);
-		tabla.getTableHeader().setBorder(new LineBorder(colorMenu, 1));
+		tabla.getTableHeader().setBackground(colors[0]);
+		tabla.getTableHeader().setForeground(colors[5]);
+		tabla.getTableHeader().setBorder(new LineBorder(colors[0], 1));
 		 
 		panel_tabla.setLayout(null);
-		panel_tabla.setBackground(colorBg);
+		panel_tabla.setBackground(colors[1]);
 		scroll.setViewportView(tabla);
-		scroll.setBackground(colorBg);
-		scroll.getViewport().setBackground(colorBg);
+		scroll.setBackground(colors[1]);
+		scroll.getViewport().setBackground(colors[1]);
 		
 	    panel_tabla.add(scroll);
 	    tabla.setCellSelectionEnabled(true);

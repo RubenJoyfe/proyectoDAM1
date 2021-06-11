@@ -28,9 +28,8 @@ public class Editables {
 	private JPanel contentPane;
 	private String type;	//bool - int - enum - varchar - date
 	
-	private Color bkColor = new Color(143, 100, 62);
-//	private Color borderColor = new Color(0, 100, 0);
-	private LineBorder line = new LineBorder(new Color(200, 100, 0), 2);
+	private Color bkColor = new Color(60, 98, 102);
+	private LineBorder line = new LineBorder(new Color(47, 62, 70), 1);
 	
 
 	// Tipos posibles: DATETIME  -  INT  -  BOOLEAN  -  VARCHAR  -  ENUM
