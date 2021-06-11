@@ -139,3 +139,8 @@ function cargarTienda() {
 		}
 	}
 }
+
+function cashUpdate(cash, errr) {
+	console.log(errr + " - " + cash);
+	document.getElementsByClassName("dineros")[0].childNodes[1].textContent = cash;
+}

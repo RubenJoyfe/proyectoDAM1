@@ -87,6 +87,7 @@
   background: rgba(255,255,255,0.3);
   display: flex;
   justify-content: flex-end;
+  z-index: 100;
 }
 
 #gmdesplegable {

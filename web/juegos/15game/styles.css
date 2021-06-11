@@ -164,6 +164,61 @@ body {
 	background-repeat: no-repeat;
 }
 
+.score-dad {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.score-alert {
+	min-height: 150px;
+	min-width: 300px;
+	background-color: #48A858;
+	padding: 15px;
+	border: 2px solid white;
+	border-radius: 15px;
+}
+
+.score-text {
+	color: white;
+	text-align: center;
+	font-size: 20px;
+}
+
+.score-alert p {
+	margin: 5px 25px;
+	color: white;
+	text-align: left;
+	font-size: 16px;
+}
+
+.score-alert hr {
+	border: 0;
+	border-top: 2px solid white;
+	margin-bottom: 10px; 
+}
+
+.score-alert button {
+	height: 50px;
+	width: 100px;
+	margin: 5px 50%;
+	background-color: rgba(0,0,0,0.01);
+	transition: background-color 0.25s;
+	color: white;
+	border: 1px solid white;
+	border-radius: 15px;
+	transform: translateX(-50%);
+}
+
+.score-alert button:hover {
+	cursor: pointer;
+	background-color: rgba(0,0,0,0.1);
+}
+
 /*************************************Slider*****************************************/
 .slider {
   width: 50%;

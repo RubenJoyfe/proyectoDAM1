@@ -50,6 +50,15 @@
 					<button type="button" id="solucion">Ordenar</button>
 				</div>
 			</div>
+<!-- 			<div class="score-dad">
+				<div class="score-alert">
+					<h3 class="score-text">Puntuacion</h3>
+					<hr>
+					<p>Tiempo: 0h 1min 23s 430m</p>
+					<p>Dineros: 69</p>
+					<button>Aceptar</button>
+				</div>
+			</div> -->
 <!-- 			<div id="desbloqueable">
 				<div class="selectImg">
 					<div class="foto"></div>

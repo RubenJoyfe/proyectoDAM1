@@ -257,14 +257,64 @@ function swap(myTile){
 }
 
 function victory() {
-	console.log("Victoria");
 	pause();
 	// console.log(hour + " " + minute + " " + second + " " + millisecond);
 	let puntos = Math.pow(10,parseInt(sz)-1);
 	let time = parseInt(hour*3600+minute*60+second);
 	puntos = Math.round((puntos/time));
 	playing = false;
+	showScore(puntos);
 }
+
+function showScore(puntos) {
+	const div1 = document.createElement("div");
+	const div2 = document.createElement("div");
+	const titleScore = document.createElement("h3");
+	const hr = document.createElement("hr");
+	const dineros = document.createElement("p");
+	const tiempos = document.createElement("p");
+	const aceptar = document.createElement("button");
+
+
+	titleScore.classList.add("score-text");
+	div2.classList.add("score-alert");
+	div1.classList.add("score-dad");
+	titleScore.innerHTML = "Puntuacion";
+	dineros.innerHTML = "Dineros: " + puntos;
+	tiempos.innerHTML = "Tiempo: " + hour + "h " + minute + "min " + second + "s " + millisecond + "ms";
+	aceptar.innerHTML = "Aceptar";
+
+	div2.appendChild(titleScore);
+	div2.appendChild(hr);
+	div2.appendChild(dineros);
+	div2.appendChild(tiempos);
+	div2.appendChild(aceptar);
+	div1.appendChild(div2);
+	document.getElementById("content").appendChild(div1);
+
+	const dinero = {
+		method: 'POST',
+		body: JSON.stringify({money: puntos, juego: "15game"})
+	}
+
+	fetch('ganarPuntos.php', dinero).then(response => {
+		if(response.ok) {
+			return response.json()
+		}
+		throw new Exception("Error");
+	})
+		.then(data => cashUpdate(data.dinero, data.cod_error))
+		.catch(function(error) {
+			console.log('There has been a problem with your fetch operation: ' + error.message);
+		alertify.error('There has been a problem with your fetch operation: ' + error.message); 
+	});
+
+	aceptar.addEventListener("click", function() {
+		div1.remove();
+	});
+
+}
+
 
 // function fondos() {
 // 	const options = document.getElementsByClassName("foto");
