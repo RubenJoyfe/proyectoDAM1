@@ -12,6 +12,8 @@ let millisecond = 0;
 
 let cron;
 
+let sz;
+
 window.onresize = function(event){
 	fondo = document.getElementsByClassName("square")[0].style.backgroundImage;
 	squares(option.value);
@@ -60,7 +62,7 @@ function loadOptions(){
 function squares(choice){
 	tiles = [];
 	game.innerHTML = '';
-	const sz = parseInt(choice);
+	sz = parseInt(choice);
 	var parentSize = document.getElementById("game").offsetHeight;
 	// if (parentSize%210!==0) {
 	// 	parentSize += 2520-parentSize%2520;
@@ -257,6 +259,10 @@ function swap(myTile){
 function victory() {
 	console.log("Victoria");
 	pause();
+	// console.log(hour + " " + minute + " " + second + " " + millisecond);
+	let puntos = Math.pow(10,parseInt(sz)-1);
+	let time = parseInt(hour*3600+minute*60+second);
+	puntos = Math.round((puntos/time));
 	playing = false;
 }
 
