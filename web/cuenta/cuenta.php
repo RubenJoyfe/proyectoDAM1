@@ -207,8 +207,7 @@
 						/*
 						TRATAR ERRORES DE $rs
 						*/
-						header('Location: ./cuenta.php');
-						exit;
+						echo '<script>window.location=window.location.href</script>';
 					}
 				// FIN Zona submit Guardar perfil
 				 ?>

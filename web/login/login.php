@@ -82,8 +82,7 @@
 				$resultado = $stmt->get_result();
 
 				if ($resultado->num_rows!=1) {
-					header('Location: login.php?relogin=1');
-					exit;
+					echo "<script>window.location=window.location.href + '?relogin=1'</script>";
 				}
 				else {
 					$disql = "SELECT dinero FROM usuario WHERE nick LIKE '".$usrNick."'";
@@ -97,8 +96,7 @@
 						$tema = $tema->fetch_assoc();
 					$_SESSION['usrTema'] = $tema['oscuro'];
 					//redirige
-					header('Location: ../index.php');
-					exit;
+					echo '<script>window.location="../";</script>';
 				}
 			}
 		}

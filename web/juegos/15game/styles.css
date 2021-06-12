@@ -214,6 +214,11 @@ body {
 	transform: translateX(-50%);
 }
 
+.score-alert p a { 
+	color: white;
+	font-weight: 700;
+}
+
 .score-alert button:hover {
 	cursor: pointer;
 	background-color: rgba(0,0,0,0.1);

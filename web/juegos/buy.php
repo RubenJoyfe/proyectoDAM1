@@ -3,13 +3,6 @@ require_once "../config.php";
 session_start();
 	if (isset($_SESSION['usrNick'])) {
 		$usrNick = $_SESSION['usrNick'];
-
-		if (isset($_SESSION['usrDinero'])) {  //coger dinero si existe (está declarado)
-			$dineros=$_SESSION['usrDinero'];
-		}
-		if (isset($_SESSION['usrTema'])) {
-			$tema = $_SESSION['usrTema']; 
-		}
 	}
 
 	$data = json_decode(file_get_contents('php://input'), true);

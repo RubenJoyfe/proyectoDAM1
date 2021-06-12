@@ -306,7 +306,8 @@ function showScore(puntos) {
 		.then(data => cashUpdate(data.dinero, data.cod_error))
 		.catch(function(error) {
 			console.log('There has been a problem with your fetch operation: ' + error.message);
-		alertify.error('There has been a problem with your fetch operation: ' + error.message); 
+			alertify.error('Sesion no iniciada, no se pudo ingresar el dinero.');
+			dineros.innerHTML = "Dineros: <a href='../login/login.php'>Inicia sesion para obtener dinero</a>";
 	});
 
 	aceptar.addEventListener("click", function() {

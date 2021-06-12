@@ -120,8 +120,9 @@ function cargarTienda() {
 				myBlock.childNodes[1].textContent="";
 				break;
 			case "-1": {
-				alertify.error("No se ha podido tramitar la compra. ("+code+")");
+				alertify.error("Sesion no iniciada. (Error "+code+")");
 				// window.location="../login/login.php";
+				break;
 			}
 			default:
 				alertify.error("No se ha podido tramitar la compra. ("+code+")");
@@ -141,6 +142,18 @@ function cargarTienda() {
 }
 
 function cashUpdate(cash, errr) {
+	switch (errr) {
+			case "0":
+				document.getElementsByClassName("dineros")[0].childNodes[1].textContent = cash;
+				dineros = cash;
+				break;
+			case "-1": {
+				alertify.error("Sesion no iniciada, no se pudo ingresar el dinero. ("+code+")");
+				break;
+			}
+			default:
+				alertify.error("Unexpected error. ("+code+")");
+				break;
+		}
 	console.log(errr + " - " + cash);
-	document.getElementsByClassName("dineros")[0].childNodes[1].textContent = cash;
 }
