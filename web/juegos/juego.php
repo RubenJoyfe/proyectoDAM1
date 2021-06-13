@@ -1,6 +1,10 @@
 <?php 
 	require_once "../config.php";
 	session_start();
+	if (!isset($_GET['source'])) {
+		header("Location: ../index.php");
+		exit;
+	}
 	if (isset($_SESSION['usrNick'])) {
 		$usrNick = $_SESSION['usrNick'];
 

@@ -292,23 +292,7 @@ function showScore(puntos) {
 	div1.appendChild(div2);
 	document.getElementById("content").appendChild(div1);
 
-	const dinero = {
-		method: 'POST',
-		body: JSON.stringify({money: puntos, juego: "15game"})
-	}
-
-	fetch('ganarPuntos.php', dinero).then(response => {
-		if(response.ok) {
-			return response.json()
-		}
-		throw new Exception("Error");
-	})
-		.then(data => cashUpdate(data.dinero, data.cod_error))
-		.catch(function(error) {
-			console.log('There has been a problem with your fetch operation: ' + error.message);
-			alertify.error('Sesion no iniciada, no se pudo ingresar el dinero.');
-			dineros.innerHTML = "Dineros: <a href='../login/login.php'>Inicia sesion para obtener dinero</a>";
-	});
+	cashSet(puntos, "15game");
 
 	aceptar.addEventListener("click", function() {
 		div1.remove();

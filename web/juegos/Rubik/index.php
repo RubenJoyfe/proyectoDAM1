@@ -1,13 +1,21 @@
+<?php
+
+  if(isset($_GET['full'])){
+    $path = '';
+  }
+  else{
+    $path = 'Rubik/';
+  }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>PuzzleGames</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<script type="text/javascript" src="js.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $path; ?>styles.css">
+	<script type="text/javascript" src="<?php echo $path; ?>js.js"></script>
 </head>
 <body>
-	<div class="laterales"></div>
-	<div class="content">
 		<div class="app">
 		  <div class="menu expanded">
 		    <header class="menu-header">
@@ -66,12 +74,12 @@
 
 		  <div class="cover">
 		    <div class="panel">
-		      <div class="title">Congratulations! You solved the cube!</div>
+		      <div class="title">Enhorabuena! Has resuelto el cubo!</div>
+		      <p>Dineros obtenidos: 1</p>
 		    </div>
 		  </div>
 		</div>
-		
-	</div>
+
 	
 </body>
 </html>

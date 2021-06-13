@@ -965,7 +965,7 @@ function CubeRotationModifier(cubes, rotAmount) {
 
 	this.cubes      = cubes;
 	this.rotation   = rotAmount;
-	this.ticks      = 0; console.log(settings.rotationTicks);
+	this.ticks      = 0; //console.log(settings.rotationTicks);
 	this.totalTicks = settings.rotationTicks;
 	this.isActive   = true;
 	this.dRotation  = vertexHelper.multiply(rotAmount, 1/this.totalTicks);
@@ -1521,6 +1521,7 @@ Menu.prototype = {
 		this.displayTimeoutId = window.setTimeout(function () {
 			panel.classList.remove(Menu.tags.displayClass);
 		}, 4000);
+		cashSet(1, "Rubik");
 	},
 
 	toggleMenu: function () {
