@@ -339,35 +339,71 @@ public class Main extends JFrame {
 	//********************************* Operaciones MYSQL *****************************************
 	public void inserts(){
 		int resultado=1;
+		String msgError="";
 		String acTab=lblNombreTabla.getText().toLowerCase();
 		
 		switch (acTab) {
 		case "usuario":
 			resultado = insertacion.insertarUsuario(txtEditables);
+				switch (resultado) {
+				case 0: {
+					msgError = "Usuario insertado.";
+					break;
+				}
+				case -1: {
+					msgError = "Error " + resultado + ": el Nick no puede estar vacio";
+					break;
+				}
+				case -2: {
+					msgError = "Error " + resultado + ": la Contraseña no puede estar vacia";
+					break;
+				}
+				case -3: {
+					msgError = "Error " + resultado + ": el Correo no puede estar vacio";
+					break;
+				}
+				case -4: {
+					msgError = "Error " + resultado + ": el Nick introducido ya está en uso";
+					break;
+				}
+				case -5: {
+					msgError = "Error " + resultado + ": el Correo introducido ya está en uso";
+					break;
+				}
+				default:
+					msgError = "Error Inesperado.";
+					break;
+				}
 			break;
 			
 		case "desbloqueo":
 			resultado = insertacion.insertarDesbloqueo(txtEditables);
+			msgError+=resultado;
 			break;
 			
 		case "usuario_desbloqueo":
 			resultado = insertacion.insertarUsuarioDesbloqueo(txtEditables);
+			msgError+=resultado;
 			break;
 			
 		case "usuario_juego":
 			resultado = insertacion.insertarUsuarioJuego(txtEditables);
+			msgError+=resultado;
 			break;
 			
 		case "puntuacion":
 			resultado = insertacion.insertarPuntuacion(txtEditables);
+			msgError+=resultado;
 			break;
 			
 		case "juego":
-			resultado = insertacion.insertarJuego(txtEditables);		
+			resultado = insertacion.insertarJuego(txtEditables);
+			msgError+=resultado;
 			break;
 			
 		case "ajustes":
-			resultado = insertacion.insertarAjustes(txtEditables);	
+			resultado = insertacion.insertarAjustes(txtEditables);
+			msgError+=resultado;
 			break;
 			
 		default:
@@ -378,7 +414,7 @@ public class Main extends JFrame {
 			crearTabla(acTab);
 			JOptionPane.showMessageDialog(null, "Todo correcto", "Success", JOptionPane.INFORMATION_MESSAGE, null);
 		} else {
-			JOptionPane.showMessageDialog(null, "Error "+resultado, "Error", JOptionPane.ERROR_MESSAGE, null);
+			JOptionPane.showMessageDialog(null, msgError, "Error", JOptionPane.ERROR_MESSAGE, null);
 		}
 	}
 	
