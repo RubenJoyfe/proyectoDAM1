@@ -34,37 +34,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PuzzleGames</title>
   
+	<link rel="shortcut icon" href="../iconwb.png">
+	<link rel="stylesheet" type="text/css" href="rubiclogo.css">
+	<link rel="stylesheet" type="text/css" href="left.css">
+	<link rel="stylesheet" type="text/css" href="dark.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+ 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
+	<!-- Tablas -->
+	<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="dataTables.jqueryui.min.css">
 
-<script src="alertify/alertify.min.js"></script>
-<!-- include the style -->
-<link rel="stylesheet" href="alertify/css/alertify.min.css" />
-<!-- include a theme -->
-<link rel="stylesheet" href="alertify/css/themes/default.min.css" />
 
+  	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  	<!-- Tablas -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.25/js/dataTables.jqueryui.min.js"></script>
+	<!--  -->
+  	<script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
+ 
 
-  <script type="text/javascript" src="shop.js"></script>
-  <?php echo "<script type='text/javascript' src='".$_GET['source']."/unlock.js'></script>"; ?>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
-
-  <link rel="shortcut icon" href="../iconwb.png">
-  <link rel="stylesheet" type="text/css" href="rubiclogo.css">
-  <link rel="stylesheet" type="text/css" href="left.css">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" type="text/css" href="dark.css">
-
+  
   <?php 
-
 		$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 		
-		$stmt = $db->prepare("SELECT src FROM juego WHERE nombre = ?");
+		$stmt = $db->prepare("SELECT usuario.nick, juego.nombre, puntuacion.puntos, puntuacion.fecha
+			FROM puntuacion JOIN juego ON puntuacion.fk_juego = juego.id_juego 
+							JOIN usuario ON puntuacion.fk_usuario = usuario.id_usuario
+			WHERE juego.nombre = ? ORDER BY puntuacion.puntos DESC");
+
 		$stmt->bind_param("s", $_GET['source']);
 		$stmt->execute();
 		$resultado = $stmt->get_result();
-
-		$columna = $resultado->fetch_assoc();
-		$src = $_GET['source'];
+		// $columna = $resultado->fetch_assoc();
    ?>
 </head>
 <body <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkbg'";} ?>>
@@ -109,7 +112,7 @@
 					</a>
 				</li>
 				<li>
-					<a href=<?php echo "../puntuaciones/puntuaciones.php?source=".$_GET['source']; ?>>
+					<a href="#">
 						<span class="icon"><i class="fas fa-list-ol"></i></span>
 						<span class="titulo">Puntuaciones</span>
 					</a>
@@ -174,62 +177,40 @@
 		 </ul>
 		<div class="gmcontent-menu"></div>
 	</div>
-		<div class="gmhead">
-			<div></div>
-			<button id="gmdesplegable"><i class="fas fa-store"></i></button>
-			<div id="gmdesbloqueables" class="gmoculto">
-				<p class="gmshop">Tienda</p>
-				<?php 
-					$stmt = $db->prepare("SELECT id_desbloqueo AS id, desbloqueo.nombre AS desbloqueable, desbloqueo.coste FROM juego JOIN desbloqueo ON juego.id_juego = desbloqueo.fk_juego WHERE juego.nombre LIKE ?");
-					$stmt->bind_param("s", $_GET['source']);
-					$stmt->execute();
-					$desbl = $stmt->get_result();
-					$numrws = mysqli_num_rows($desbl);
-					for ($i=0; $i < $numrws; $i++) {
-						$rs = $desbl->fetch_assoc();
-						/*VER SI TIENE DESBLOQUEADO ALGUN DESBLOQUEABLE*/
-							$stmt = $db->prepare("SELECT * FROM usuario_desbloqueo JOIN usuario ON usuario.id_usuario = usuario_desbloqueo.fk_usuario
-								WHERE usuario.nick = ? AND usuario_desbloqueo.fk_desbloqueo = ?;");
-							$stmt->bind_param("si", $usrNick, $rs['id']);
-							$stmt->execute();
-							$lotiene = $stmt->get_result();
-							$lotiene = mysqli_num_rows($lotiene);
-						/*FIN VER SI TIENE DESBLOQUEADO ALGUN DESBLOQUEABLE*/
-						echo "<div class='foto' id='".$_GET['source']."' value='". $rs['id'] ."'>";
-						
-						echo "	<div class='gmbloqueado'>
-									<span>
-										<i class='fas fa-coins'></i><p class='precio'>";
-										if ($lotiene!=0) {
-											echo "0";
-										}
-										else {
-											echo $rs['coste'];
-										}
-										
-										echo "</p></span>
-								</div>";
-
-						echo "</div>";
-					}
-				 ?>
-			</div>
-		</div>
 	<div class="gmcontent">
-		<?php 
-			require $src.'/index.php';
-		?>
+	<table id="miTabla" class="display dataTable">
+	    <thead>
+	        <tr>
+	        	<th>Posicion</th>
+	            <th>Nombre</th>
+	            <th>Juego</th>
+	            <th>Puntuacion</th>
+	            <th>Fecha</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+			<?php
+			$cont = 1;
+			while ($columna = $resultado->fetch_assoc()) {
+				echo "<tr>";
+					echo "<td>". $cont ."</td>";
+					echo "<td>". $columna['nick'] ."</td>";
+					echo "<td>
+						<a href='../juegos/juego.php?source=".$columna['nombre']."'>
+								". $columna['nombre'] ."
+						</a>
+					</td>";
+					echo "<td>". $columna['puntos'] ."</td>";
+					echo "<td>". $columna['fecha'] ."</td>";
+				echo "</tr>";
+				$cont++;
+			}
+			 ?>
+	    </tbody>
+	</table>
 	</div>
+
 	<div class="gmimagen<?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo " gmdark";} ?>"></div>
-<!-- 	<div class="gmblackbg">
-		<div class="gmbuyAlert">
-			<h2>Comprar desbloqueable</h2>
-			<img class="gmbuyImg">
-			<p>Precio: 1200</p>
-			<input id="gmcancelar" type="button" name="cancelar" value="Cancelar">
-			<input id="gmconfirmar" type="submit" name="confirmar" value="Confirmar">
-		</div>
-	</div> -->
 </body>
 
 <script type="text/javascript">
@@ -244,5 +225,9 @@
 		left.classList.toggle('shide2');
 		section.classList.toggle('shide');
 	}
+
+	$(document).ready( function () {
+	    $('#miTabla').DataTable();
+	} );
 </script>
 </html>
