@@ -143,7 +143,10 @@ public class Editables {
 	
 	public void remove() {
 		switch (type) {	//bool - int - enum - varchar - date
-		case "bool", "enum":
+		case "bool":
+			contentPane.remove(cmb);
+			break;
+		case "enum":
 			contentPane.remove(cmb);
 			break;
 		case "int":

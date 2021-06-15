@@ -56,6 +56,7 @@ public class Main extends JFrame {
 	private String tipos[];
 	private String[] txtEditables;
 	private String nombre  = "",  pass = "";
+	static private String nombreDB = "h15af00";
 	
 	private Connection conexion;
 	private Statement comando;
@@ -71,6 +72,7 @@ public class Main extends JFrame {
 	private JPanel panel_editables;
 	private JLabel lblLogOut;
 	private JLabel instruc;
+	private JLabel lblRefresh;
 	
 	private Color colors[] = {	new Color(47, 62, 70),
 								new Color(53, 79, 82),
@@ -78,7 +80,7 @@ public class Main extends JFrame {
 								new Color(79, 123, 120),
 								new Color(115, 162, 146),
 								new Color(202, 210, 197)};
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -88,7 +90,7 @@ public class Main extends JFrame {
 				try {
 					Main frame = new Main();
 					frame.setVisible(true);
-					frame.setTitle("Base de Datos h15af00");
+					frame.setTitle("Base de Datos "+nombreDB);
 					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -113,7 +115,7 @@ public class Main extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		panel_editables = new JPanel();
+		panel_editables = new JPanel();		// Panel inferior con campos editables
 		panel_editables.setBackground(colors[1]);
 		panel_editables.setBounds(10, 523, 619, 0);
 		contentPane.add(panel_editables);
@@ -124,7 +126,7 @@ public class Main extends JFrame {
 		panel_tabla.setBounds(10, 11, 619, 432);
 		contentPane.add(panel_tabla);
 		
-		panel_opciones = new JPanel();
+		panel_opciones = new JPanel();		// Panel derecho
 		panel_opciones.setBackground(colors[2]);
 		panel_opciones.setBorder(new LineBorder(colors[0], 2));
 		panel_opciones.setBounds(638, 11, 184, 502);
@@ -138,6 +140,7 @@ public class Main extends JFrame {
 		lblNombreTabla.setForeground(Color.white);
 		panel_opciones.add(lblNombreTabla);
 		
+		//*************************************Botones Procedimientos**************************************
 		btnInsertar = new JButton("Insertar");
 		btnInsertar.setForeground(Color.WHITE);
 		btnInsertar.setBackground(new Color(105, 48, 175));
@@ -193,7 +196,9 @@ public class Main extends JFrame {
 		});
 		btnEliminar.setBounds(10, 298, 164, 57);
 		panel_opciones.add(btnEliminar);
+		//**************************Fin Botones Procedimientos***************************************
 		
+		//**************************Zona de Scripts Priopios*****************************************
 		txtCustom = new JTextArea();
 		txtCustom.setBackground(colors[5]);
 		txtCustom.setBorder(new LineBorder(colors[0], 1));
@@ -202,6 +207,7 @@ public class Main extends JFrame {
 		JScrollPane sp = new JScrollPane(txtCustom);
 		sp.setBorder(new LineBorder(colors[0], 2));
 		
+		//******************* Colores del Scroll Barr ***********************************************
 		sp.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 			
 			@Override
@@ -254,7 +260,35 @@ public class Main extends JFrame {
 						crearVista(txtCustom.getText());
 						break;
 					}
-					case "insert", "update", "delete":
+					case "insert":
+					{
+						if (JOptionPane.showConfirmDialog(null, "Ejecutar: "+sql+"?",
+			            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
+							try {
+								int f = comando.executeUpdate(txtCustom.getText());
+								crearTabla(lblNombreTabla.getText().toLowerCase());
+								JOptionPane.showMessageDialog(null, f==1?f+" Fila afectada":f+" Filas afectadas", "Success", 1);
+							} catch (SQLException e2) {
+								printSQLException(e2);
+							}
+						}
+						break;
+					}
+					case "update":
+					{
+						if (JOptionPane.showConfirmDialog(null, "Ejecutar: "+sql+"?",
+			            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
+							try {
+								int f = comando.executeUpdate(txtCustom.getText());
+								crearTabla(lblNombreTabla.getText().toLowerCase());
+								JOptionPane.showMessageDialog(null, f==1?f+" Fila afectada":f+" Filas afectadas", "Success", 1);
+							} catch (SQLException e2) {
+								printSQLException(e2);
+							}
+						}
+						break;
+					}
+					case "delete":
 					{
 						if (JOptionPane.showConfirmDialog(null, "Ejecutar: "+sql+"?",
 			            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
@@ -292,10 +326,10 @@ public class Main extends JFrame {
 			}
 		});
 		panel_opciones.add(btnLimpiar);
+		//**************************Fin Zona de Scripts Priopios*****************************************
 		
-		scroll.setBorder(new LineBorder(colors[0], 2));
-		
-		scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+		scroll.setBorder(new LineBorder(colors[0], 2));		//Scroll de la tabla
+		scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {	//Colores del Scroll Barr de la tabla
 			
 			@Override
 		    protected JButton createDecreaseButton(int orientation) {
@@ -325,18 +359,31 @@ public class Main extends JFrame {
 		scroll.getVerticalScrollBar().setBorder(new LineBorder(colors[1], 2));
 		
 		do {
-			login();
-//			nombre = "root";
-//			pass = "";
-		}while (!conexionMysql("localhost", "h15af00", nombre, pass));
+//			login();
+			nombre = "root";
+			pass = "";
+		}while (!conexionMysql("localhost", nombreDB, nombre, pass));
 		startMenu();
 		crearTabla("vacía");
+		// Clases para los Procedimientos
 		insertacion = new Inserts(conexion);
 		eliminacion = new Deletes(conexion);
 		modificacion = new Updates(conexion);
 	}
 	
 	//********************************* Operaciones MYSQL *****************************************
+	
+	public boolean conexionMysql(String ip, String bbdd, String usuario, String pass) {
+		try {	//Conexión para el Login
+			conexion = DriverManager.getConnection(
+			        "jdbc:mysql://" + ip + "/" + bbdd + "?serverTimezone=UTC", usuario, pass);//jdbc:mysql://<ip>:<puerto>/<nombreDB>,"user","pass"
+			return true;
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+		return false;
+	}
+	
 	public void inserts(){
 		int resultado=1;
 		String msgError="";
@@ -508,7 +555,7 @@ public class Main extends JFrame {
 		}
 	}
 	
-	public static void printSQLException(SQLException ex) {
+	public void printSQLException(SQLException ex) {
 	    for (Throwable e : ex) {
 	        if (e instanceof SQLException) {
                 JOptionPane.showMessageDialog(null, e.getMessage(),
@@ -525,7 +572,7 @@ public class Main extends JFrame {
 	
 	//********************************* Fin MYSQL *************************************************
 	
-	public void startMenu() {
+	public void startMenu() {	//Menu superior de Acciones
 		//menu hover
 		UIManager.put("Menu.selectionBackground", colors[3]);
 		UIManager.put("Menu.selectionForeground", Color.WHITE);
@@ -587,6 +634,35 @@ public class Main extends JFrame {
 		});
 		menuBar.add(lblClear);
 		
+		lblRefresh = new JLabel("   Refrescar   ") {
+			private static final long serialVersionUID = 1L;
+			// Maximum size should be larger than what the JMenuBar will ever be.
+		    @Override
+		    public Dimension getMaximumSize() {
+		        return new Dimension((int)lblRefresh.getPreferredSize().getWidth(), 1000);
+		    }
+		};
+		lblRefresh.setForeground(Color.WHITE);
+		lblRefresh.setBackground(colors[3]);
+		lblRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		lblRefresh.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (!lblNombreTabla.getText().equals("TABLA")) {
+					crearTabla(lblNombreTabla.getText());
+				}
+			}
+			public void mouseEntered(MouseEvent e) {
+				lblRefresh.setOpaque(true);
+				lblRefresh.repaint();
+			}
+			public void mouseExited(MouseEvent e) {
+				lblRefresh.setOpaque(false);
+				lblRefresh.repaint();
+			}
+		});
+		menuBar.add(lblRefresh);
+		
 		menuBar.add(Box.createHorizontalGlue());
 		lblLogOut = new JLabel("   Cerrar Sesion   ") {
 			private static final long serialVersionUID = 1L;
@@ -606,7 +682,7 @@ public class Main extends JFrame {
 				try {
 					Main frame = new Main();
 					frame.setVisible(true);
-					frame.setTitle("Base de Datos h15af00");
+					frame.setTitle("Base de Datos "+nombreDB);
 					frame.setResizable(false);
 				} catch (Exception e2) {
 					e2.printStackTrace();
@@ -624,7 +700,7 @@ public class Main extends JFrame {
 		menuBar.add(lblLogOut);
 		
 		String sql = "SELECT table_name AS nombre FROM information_schema.tables"
-				+ " WHERE table_schema = 'h15af00' ORDER BY nombre ASC";
+				+ " WHERE table_schema = '"+nombreDB+"' ORDER BY nombre ASC";
 		try {
 			int rows=0;
 			comando = conexion.createStatement();
@@ -667,13 +743,13 @@ public class Main extends JFrame {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			printSQLException(e);
 		}
 			
 	
 	}
 
-	public void startEditables(String columnas []) {
+	public void startEditables(String columnas []) {	// Crea los campos editables en función de las columnas de la tabla
 		deleteEditables();
 		editaciones = new Editables[columnas.length];
 		for (int i = 0; i < columnas.length; i++) {
@@ -695,27 +771,18 @@ public class Main extends JFrame {
 		}
 	}
 	
-	public boolean conexionMysql(String ip, String bbdd, String usuario, String pass) {
-		try {
-			conexion = DriverManager.getConnection(
-			        "jdbc:mysql://" + ip + "/" + bbdd + "?serverTimezone=UTC", usuario, pass);//jdbc:mysql://<ip>:<puerto>/<nombreDB>,"user","pass"
-			return true;
-		} catch (SQLException e) {
-			printSQLException(e);
-		}
-		return false;
-	}
-	
 	public void login() {
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
-		
 
 			JPanel label = new JPanel(new GridLayout(0, 1, 2, 2));
+			label.add(new JLabel("Base de Datos", SwingConstants.RIGHT));
 		    label.add(new JLabel("Usuario", SwingConstants.RIGHT));
 		    label.add(new JLabel("Contraseña", SwingConstants.RIGHT));
 		    panel.add(label, BorderLayout.WEST);
 		    
 		    JPanel controls = new JPanel(new GridLayout(0, 1, 2, 2));
+		    JTextField db = new JTextField();
+		    controls.add(db);
 		    JTextField username = new JTextField();
 		    controls.add(username);
 		    JPasswordField password = new JPasswordField();
@@ -728,10 +795,11 @@ public class Main extends JFrame {
 			}
 		    
 		    nombre = username.getText();
-		    pass = new String(password.getPassword());		   
+		    pass = new String(password.getPassword());
+		    nombreDB = db.getText();
 	}
 	
-	public void crearVista(String str) {
+	public void crearVista(String str) {	//Para los scripts propios
 		try {
 			comando.executeUpdate("DROP VIEW IF EXISTS custom;");
 			comando.executeUpdate("CREATE VIEW custom AS "+ str +";");
@@ -755,10 +823,9 @@ public class Main extends JFrame {
 	}
 	
 	//*******************************Crear Tabla****************************
-	@SuppressWarnings({ "serial", "rawtypes" })
 	public void crearTabla(String tb) {
 		contentPane.requestFocus();
-		if (tb.equals("vacía")) {
+		if (tb.equals("vacía")) {	//Para cuando no hay tabla seleccionada
 			tabla = new JTable();
 			panel_tabla.setLayout(null);
 			panel_tabla.setBounds(10, 11, 619, 502);
@@ -777,7 +844,7 @@ public class Main extends JFrame {
 			ResultSet rs;
 			String sql = "SELECT * FROM " + tb +";";
 			String sql2= "SELECT COLUMN_NAME as nombreColumna FROM information_schema.COLUMNS WHERE "
-					+ "TABLE_SCHEMA  LIKE 'h15af00' AND TABLE_NAME = '"+tb+"'";
+					+ "TABLE_SCHEMA  LIKE '"+nombreDB+"' AND TABLE_NAME = '"+tb+"'";
 			String sql3 = "SELECT COLUMN_TYPE as tipos FROM information_schema.COLUMNS "
 					+ "WHERE TABLE_NAME = '"+tb+"'";
 			
@@ -789,19 +856,19 @@ public class Main extends JFrame {
 				titulos = new String [nCol]; //nCol asigna su tamano
 				tipos = new String[nCol];
 				rs = comando.executeQuery(sql2);
-				while (rs.next()) { 
+				while (rs.next()) { //guarda los nombres de las columnas
 					titulos[cont]=rs.getString("nombreColumna");
 					cont++;
 				}
 				cont = 0;
 				rs = comando.executeQuery(sql3);
-				while (rs.next()) { 
+				while (rs.next()) { //guarda el tipo de dato de las columnas
 					tipos[cont]=rs.getString("tipos");
 					cont++;
 				}
 				startEditables(titulos);
 				ResultSet rs2 = comando.executeQuery(sql);
-				while (rs2.next()) {nRow++;}
+				while (rs2.next()) {nRow++;} //numero de filas
 				celdas=new Object[nRow][nCol];
 				cont=0;
 				int cont2=0;
@@ -820,7 +887,7 @@ public class Main extends JFrame {
 				}
 				
 				// Establece el tipo de las columnas de enteros
-				Class[] columnasTipo = new Class[tipos.length];
+				Class<?>[] columnasTipo = new Class[tipos.length];
 				for (int i = 0; i < columnasTipo.length; i++) {
 					if (tipos[i].contains("int")) {
 						columnasTipo[i]=Integer.class;
@@ -831,28 +898,33 @@ public class Main extends JFrame {
 				
 				// Inicializa la tabla con el modelo establecido
 				tabla.setModel(new DefaultTableModel(celdas, titulos){
+					private static final long serialVersionUID = 1L;
 					public boolean isCellEditable(int row, int column) {
 						return false;
 					}
-					Class[] columnTypes = columnasTipo;
-					@SuppressWarnings("unchecked")
-					public Class getColumnClass(int columnIndex) {
+					Class<?>[] columnTypes = columnasTipo;
+					public Class<?> getColumnClass(int columnIndex) {
 						return columnTypes[columnIndex];
 					}
 				});				
 			} 
 			catch (SQLException e) {
-				e.printStackTrace();
+				printSQLException(e);
 			}
+			//cambia la altura de la tabla en funcion del numero de casillas te texto que haya
 			int move = 30*(1+(nCol-1)/6);
 			panel_tabla.setBounds(10, 11, 619, 502-move);
 			scroll.setBounds(0, 0, 619, 502-move);
 			panel_editables.setBounds(10, 523-move, 620, move);
 		}
 		tabla.setName(tb);
+		
+		//cambia el color de las filas pares e impares para Objetos
 		tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
-		    @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
 		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 		    {
 		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -861,9 +933,12 @@ public class Main extends JFrame {
 		    }
 		});
 		
+		//cambia el color de las filas pares e impares para Integers
 		tabla.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer()
 		{
-		    @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
 		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 		    {
 		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -871,6 +946,7 @@ public class Main extends JFrame {
 		        return c;
 		    }
 		});
+		//Asignacion de colores y estilos
 		tabla.getTableHeader().setOpaque(false);
 		tabla.getTableHeader().setBackground(colors[0]);
 		tabla.getTableHeader().setForeground(colors[5]);
@@ -882,6 +958,7 @@ public class Main extends JFrame {
 		scroll.setBackground(colors[1]);
 		scroll.getViewport().setBackground(colors[1]);
 		
+		//Asigna la fila seleccionada a los campos editables
 	    panel_tabla.add(scroll);
 	    tabla.setCellSelectionEnabled(true);
 	    tabla.setAutoCreateRowSorter(true);

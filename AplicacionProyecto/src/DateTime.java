@@ -80,7 +80,7 @@ public class DateTime extends JDialog {
 			public void windowGainedFocus(WindowEvent e) {
 			}
 
-			public void windowLostFocus(WindowEvent e) {
+			public void windowLostFocus(WindowEvent e) {	//Si clicas fuera desaparece
 				DateTime.this.setVisible(false);
 			}
 		});
@@ -93,7 +93,7 @@ public class DateTime extends JDialog {
 				txtMinutes.setValue(now.getMinute());
 				txtHours.setValue(now.getHour());
 				calendar.setDate(new Date());
-				actualizaFecha();
+				actualizaFecha();	// Actualiza lblFecha
 			}
 		});
 		btnHoy.setBounds(311, 231, 63, 23);
@@ -103,13 +103,13 @@ public class DateTime extends JDialog {
 		lblFecha = new JLabel("Fecha de hoy");
 		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFecha.setBounds(9, 226, 71, 22);
+		lblFecha.setBounds(9, 226, 75, 22);
 		panel.add(lblFecha);
 
 		lblHora = new JLabel("2021-4-3 15:56:31");
 		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setBounds(9, 247, 71, 22);
+		lblHora.setBounds(9, 247, 75, 22);
 		panel.add(lblHora);
 
 		startButtons();
@@ -123,19 +123,13 @@ public class DateTime extends JDialog {
 		calendar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		calendar.getMonthChooser().getComboBox().setFont(new Font("Tahoma", Font.PLAIN, 12));
 		calendar.setWeekOfYearVisible(false);
-//		calendar.setDecorationBackgroundColor(Color.red);
-//		calendar.setForeground(Color.pink);
-//		calendar.setDecorationBackgroundVisible(true);
-//		calendar.setDecorationBordersVisible(true);
-//		calendar.setDecorationBordersVisible(true);
-		calendar.setSundayForeground(Color.blue);
+		calendar.setSundayForeground(Color.red);
 		calendar.setBounds(0, 0, 385, 220);
 		panel.add(calendar);
-//		panel.setBackground(Color.green);
 		calendar.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
-				if ("calendar".equals(e.getPropertyName())) {
+				if ("calendar".equals(e.getPropertyName())) {	//Solo actualiza si ha cambiado la fecha
 					actualizaFecha();
 				}
 			}
@@ -143,6 +137,7 @@ public class DateTime extends JDialog {
 	}
 
 	public void startTime() {
+		// Labels para poner :
 		JLabel lblTime1 = new JLabel(":");
 		lblTime1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblTime1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -154,7 +149,8 @@ public class DateTime extends JDialog {
 		lblTime2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTime2.setBounds(207, 240, 10, 25);
 		panel.add(lblTime2);
-
+		
+		// Campos de texto formateados para guardar Horas, Minutos y Segundos
 		NumberFormatter nf = new NumberFormatter();
 		txtHours = new JFormattedTextField(nf);
 		txtHours.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -223,7 +219,7 @@ public class DateTime extends JDialog {
 		panel.add(slider);
 		actualizaHora();
 		slider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
+			public void stateChanged(ChangeEvent e) {	//Setea las Labels al cambiar el Slider
 				txtHours.setValue(slider.getValue() / 3600);
 				txtMinutes.setValue((slider.getValue() % 3600) / 60);
 				txtSeconds.setValue(slider.getValue() % 60);
