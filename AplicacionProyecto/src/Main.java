@@ -359,9 +359,9 @@ public class Main extends JFrame {
 		scroll.getVerticalScrollBar().setBorder(new LineBorder(colors[1], 2));
 		
 		do {
-//			login();
-			nombre = "root";
-			pass = "";
+			login();
+//			nombre = "root";
+//			pass = "";
 		}while (!conexionMysql("localhost", nombreDB, nombre, pass));
 		startMenu();
 		crearTabla("vacía");
