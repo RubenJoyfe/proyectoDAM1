@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", function(event){
 	for(let juego of juegos){
 		const name = juego.dataset.juego;
 		// console.log("background-image:url('./juegos/" + name + "/img/portada.png')");
-		juego.style.cssText = "background-image:url('./juegos/" + name + "/img/portada.png')";
+		juego.style.cssText = "background-image:url('../juegos/" + name + "/img/portada.png')";
 		juego.addEventListener("mouseenter", function( event ) {
-			juego.style.cssText = "background-image:url('./juegos/" + name + "/img/portada.gif')";
+			juego.style.cssText = "background-image:url('../juegos/" + name + "/img/portada.gif')";
 		});
 		juego.addEventListener("mouseout", function( event ) {
-			juego.style.cssText = "background-image:url('./juegos/" + name + "/img/portada.png')";
+			juego.style.cssText = "background-image:url('../juegos/" + name + "/img/portada.png')";
 		});
 	}
 
@@ -46,7 +46,7 @@ for (let star of stars){
 			method: 'POST',
 			body: JSON.stringify({nombreJuego: this.value, favorito: this.checked? 1 : 0})
 		}
-		fetch('favorito.php', myFav).then(response => {
+		fetch('../favorito.php', myFav).then(response => {
 			if(response.ok) {
 				return response.json()
 			}
@@ -55,7 +55,7 @@ for (let star of stars){
 			.then(data => addFav(data.cod_error, this.checked? 1 : 0))
 			.catch(function(error) {
 				console.log('There has been a problem with your fetch operation: ' + error.message);
-				alertify.error('Sesion no iniciada, no se pudo añadir a favoritos.');
+				alertify.error('Unexpected error: ' + error.message);
 		});
 	});
 }

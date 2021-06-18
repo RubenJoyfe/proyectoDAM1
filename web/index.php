@@ -28,15 +28,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PuzzleGames</title>
   
-  <script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
+	<script src="juegos/alertify/alertify.min.js"></script>
+	<!-- include the style -->
+	<link rel="stylesheet" href="juegos/alertify/css/alertify.min.css" />
+	<!-- include a theme -->
+	<link rel="stylesheet" href="juegos/alertify/css/themes/default.min.css" />
 
-  <link rel="shortcut icon" href="iconwb.png">
-  <link rel="stylesheet" type="text/css" href="rubiclogo.css">
-  <link rel="stylesheet" type="text/css" href="left.css">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" type="text/css" href="dark.css">
-  <script type="text/javascript" src="js.js"></script>
+	<script src="https://kit.fontawesome.com/0ec605ed6f.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
+
+	<link rel="shortcut icon" href="iconwb.png">
+	<link rel="stylesheet" type="text/css" href="rubiclogo.css">
+	<link rel="stylesheet" type="text/css" href="left.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="dark.css">
+	<script type="text/javascript" src="js.js"></script>
 
 </head>
 <body <?php if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkbg'";} ?>>
@@ -75,7 +81,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="./favoritos/favoritos.php">
 						<span class="icon"><i class="fas fa-star"></i></span>
 						<span class="titulo">Favorites</span>
 					</a>
@@ -174,9 +180,20 @@
 					$consulta = "SELECT * FROM juego LIMIT 50";
 					$resultado = mysqli_query( $conexion, $consulta);
 				}
-
+				$myFav=0;
 				$resultado->num_rows;
+				if (isset($usrNick) && $usrNick!="") {
+					$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+					$favo = "SELECT * FROM usuario_juego_favorito JOIN usuario ON usuario.id_usuario = usuario_juego_favorito.fk_usuario
+							WHERE usuario.nick = ? ORDER BY fk_juego ASC;";
+					$st2 = $db->prepare($favo);
+					$st2->bind_param("s", $usrNick);
+					$st2->execute();
+					$favs = $st2->get_result();
+					$myFav = mysqli_fetch_array($favs);
+				}
 				while ($columna = mysqli_fetch_array($resultado)) {
+
 					$source = $columna['nombre'];
 					$visualizar= "
 					'background-image:url(./juegos/" . $source . "/img/portada.png);
@@ -189,6 +206,15 @@
 					$redireccion = "./juegos/juego.php?source=".$source."";
 					echo " <a href='" . $redireccion . "'>
 								<div data-juego='$source' class='juego";if(isset($_SESSION['usrTema']) && $usrTema==1){echo " darkbg1";}echo "'>
+									<input class='star' type='checkbox' title='bookmark page'"; 
+									if ($myFav['fk_juego'] == $columna['id_juego']) {
+									 	echo "checked";
+									 	$myFav = mysqli_fetch_array($favs);
+									}
+									else{
+										echo $myFav['fk_juego'] ." - ". $columna['id_juego'] ;
+									}
+									echo" value='".$columna["nombre"]."'>
 									<div class='nade'>
 										<div "; 
 										if(isset($_SESSION['usrTema']) && $usrTema==1){echo "class='darkDesc'";}
