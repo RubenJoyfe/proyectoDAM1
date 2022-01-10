@@ -144,7 +144,7 @@ body {
   height: 75%;
 }
 .juego .nade div:hover {
-  overflow-y: scroll;
+  overflow-y: overlay;
 }
 
 .juego .nade div h3 {
